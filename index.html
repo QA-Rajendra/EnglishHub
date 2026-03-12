@@ -9,19 +9,68 @@
 /* ═══════════════════════════════════════════════════
    VARIABLES & RESET
 ═══════════════════════════════════════════════════ */
-:root {
-  --bg:#08080f; --surface:#111118; --card:#181824; --border:#252538;
-  --accent:#f0c040; --accent2:#40c8f0; --accent3:#c040f0;
-  --text:#e8e8f4; --muted:#6060a0; --green:#40f0a0; --orange:#f0a060; --red:#f07070;
+:root,[data-theme="dark"]{
+  --bg:#08080f;--surface:#111118;--card:#181824;--border:#252538;
+  --accent:#f0c040;--accent2:#40c8f0;--accent3:#c040f0;
+  --text:#e8e8f4;--muted:#6060a0;--green:#40f0a0;--orange:#f0a060;--red:#f07070;
+  --shadow:rgba(0,0,0,.4);--grid-color:rgba(240,192,64,.025);
+  --nav-bg:var(--surface);--header-grad:rgba(240,192,64,.07);
+}
+[data-theme="light"]{
+  --bg:#f0f4ff;--surface:#ffffff;--card:#ffffff;--border:#dde3f0;
+  --accent:#2563eb;--accent2:#0891b2;--accent3:#7c3aed;
+  --text:#1e293b;--muted:#64748b;--green:#059669;--orange:#ea580c;--red:#dc2626;
+  --shadow:rgba(37,99,235,.12);--grid-color:rgba(37,99,235,.04);
+  --nav-bg:#ffffff;--header-grad:rgba(37,99,235,.06);
+}
+[data-theme="gradient"]{
+  --bg:#0f0728;--surface:#160a3a;--card:#1e1048;--border:#2d1a5e;
+  --accent:#fb923c;--accent2:#a78bfa;--accent3:#f472b6;
+  --text:#f1e8ff;--muted:#9d77cc;--green:#34d399;--orange:#fb923c;--red:#f87171;
+  --shadow:rgba(251,146,60,.2);--grid-color:rgba(167,139,250,.04);
+  --nav-bg:var(--surface);--header-grad:rgba(167,139,250,.08);
+}
+[data-theme="classroom"]{
+  --bg:#fdf8f0;--surface:#fffef8;--card:#fffff5;--border:#d4c49a;
+  --accent:#8b5e3c;--accent2:#2e7d32;--accent3:#6a1b9a;
+  --text:#3e2a1a;--muted:#8a7060;--green:#2e7d32;--orange:#e65100;--red:#c62828;
+  --shadow:rgba(139,94,60,.15);--grid-color:rgba(139,94,60,.04);
+  --nav-bg:#fffef8;--header-grad:rgba(139,94,60,.05);
+}
+[data-theme="minimal"]{
+  --bg:#ffffff;--surface:#f8fafc;--card:#ffffff;--border:#e2e8f0;
+  --accent:#4a6cf7;--accent2:#7b61ff;--accent3:#ff8a00;
+  --text:#0f172a;--muted:#94a3b8;--green:#10b981;--orange:#f59e0b;--red:#ef4444;
+  --shadow:rgba(74,108,247,.1);--grid-color:rgba(74,108,247,.03);
+  --nav-bg:#ffffff;--header-grad:rgba(74,108,247,.04);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(240,192,64,.025)1px,transparent 1px),linear-gradient(90deg,rgba(240,192,64,.025)1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid-color)1px,transparent 1px),linear-gradient(90deg,var(--grid-color)1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+
+/* ── THEME PICKER ── */
+.theme-bar{display:flex;align-items:center;gap:8px;padding:8px 32px;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;position:relative;z-index:3;flex-wrap:wrap;}
+.theme-bar::-webkit-scrollbar{display:none;}
+.theme-bar-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;white-space:nowrap;}
+.theme-btn{display:flex;align-items:center;gap:5px;border:1.5px solid var(--border);border-radius:20px;padding:5px 12px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;background:var(--card);transition:all .2s;white-space:nowrap;}
+.theme-btn:hover,.theme-btn.active{color:var(--accent);border-color:var(--accent);}
+.theme-swatch{width:10px;height:10px;border-radius:50%;}
+
+/* ── PROGRESS STRIP ── */
+.progress-strip{display:flex;gap:10px;padding:8px 32px;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;z-index:2;flex-wrap:wrap;}
+.progress-strip::-webkit-scrollbar{display:none;}
+.progress-pill{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 12px;white-space:nowrap;transition:all .2s;}
+.progress-pill:hover{border-color:var(--accent);}
+.progress-pill-icon{font-size:13px;}
+.progress-pill-val{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);font-weight:600;}
+.progress-pill-lbl{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);}
+@keyframes flicker{0%,100%{filter:brightness(1)}50%{filter:brightness(1.5) drop-shadow(0 0 4px orange)}}
+.streak-flame{animation:flicker 1.5s ease-in-out infinite;}
 
 /* ═══════════════════════════════════════════════════
    HEADER
 ═══════════════════════════════════════════════════ */
-header{position:relative;z-index:2;padding:32px 48px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(240,192,64,.07)0%,transparent 100%);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+header{position:relative;z-index:2;padding:28px 32px 18px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--header-grad,rgba(240,192,64,.07))0%,transparent 100%);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:14px;}
 .header-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;opacity:.7;}
 h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:900;line-height:1.1;background:linear-gradient(135deg,var(--accent)0%,#fff 45%,var(--accent2)100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .subtitle{margin-top:6px;color:var(--muted);font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:.5px;}
@@ -32,7 +81,7 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);fon
 /* ═══════════════════════════════════════════════════
    NAV TABS
 ═══════════════════════════════════════════════════ */
-.main-nav{position:relative;z-index:2;display:flex;gap:6px;padding:14px 48px;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.main-nav{position:relative;z-index:2;display:flex;gap:6px;padding:10px 32px;background:var(--nav-bg,var(--surface));border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;}
 .main-nav::-webkit-scrollbar{display:none;}
 .nav-tab{background:none;border:1px solid transparent;border-radius:8px;padding:8px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap;letter-spacing:.5px;}
 .nav-tab:hover{color:var(--text);border-color:var(--border);}
@@ -41,7 +90,7 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);fon
 /* ═══════════════════════════════════════════════════
    MAIN & TAB SYSTEM
 ═══════════════════════════════════════════════════ */
-main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:32px 48px 60px;}
+main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32px 80px;}
 .tab-content{display:none;}
 .tab-content.active{display:block;animation:fadeUp .3s ease both;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -643,8 +692,128 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:32px 48p
 .ts-help{color:var(--accent2);}
 .ts-verb{color:var(--green);}
 
-@media(max-width:700px){.ipat-dual-grid{grid-template-columns:1fr;}.ipat-cat-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:460px){.ipat-cat-grid{grid-template-columns:1fr;}}
+/* ═══════════════════════════════════════════════════
+   TAB 9: AI CHAT
+═══════════════════════════════════════════════════ */
+.chat-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.chat-chip{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:7px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .18s;letter-spacing:.3px;white-space:nowrap;}
+.chat-chip:hover{color:var(--accent);border-color:rgba(240,192,64,.4);background:rgba(240,192,64,.07);}
+
+.chat-window{background:var(--card);border:1px solid var(--border);border-radius:16px;min-height:420px;max-height:560px;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;margin-bottom:14px;scroll-behavior:smooth;}
+.chat-window::-webkit-scrollbar{width:4px;}
+.chat-window::-webkit-scrollbar-track{background:transparent;}
+.chat-window::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+/* Welcome screen */
+.chat-welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:40px 20px;text-align:center;gap:12px;opacity:.85;}
+.chat-welcome-icon{font-size:48px;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.chat-welcome-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--accent);}
+.chat-welcome-sub{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--muted);line-height:1.6;max-width:420px;}
+
+/* Message bubbles */
+.chat-msg{display:flex;gap:10px;align-items:flex-start;animation:fadeUp .25s ease both;}
+.chat-msg.user{flex-direction:row-reverse;}
+.chat-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;border:1px solid var(--border);}
+.chat-msg.user  .chat-avatar{background:rgba(240,192,64,.15);border-color:rgba(240,192,64,.3);}
+.chat-msg.ai    .chat-avatar{background:rgba(64,200,240,.12);border-color:rgba(64,200,240,.3);}
+.chat-bubble{max-width:82%;padding:12px 16px;border-radius:14px;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.65;}
+.chat-msg.user  .chat-bubble{background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.2);color:var(--text);border-bottom-right-radius:4px;}
+.chat-msg.ai    .chat-bubble{background:var(--surface);border:1px solid var(--border);color:var(--text);border-bottom-left-radius:4px;}
+
+/* Typing indicator */
+.chat-typing{display:flex;gap:5px;align-items:center;padding:6px 0;}
+.chat-typing span{width:7px;height:7px;border-radius:50%;background:var(--accent2);animation:typingBounce 1.2s ease-in-out infinite;}
+.chat-typing span:nth-child(2){animation-delay:.2s;}
+.chat-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-6px);opacity:1}}
+
+/* Formatted AI response */
+.chat-bubble strong,.chat-bubble b{color:var(--accent);font-weight:600;}
+.chat-bubble em,.chat-bubble i{color:var(--accent2);font-style:normal;}
+.chat-bubble code{font-family:'IBM Plex Mono',monospace;font-size:12px;background:rgba(64,200,240,.1);color:var(--accent2);padding:1px 6px;border-radius:4px;}
+.chat-bubble .mar{color:var(--orange);font-size:13px;}
+.chat-bubble ul,.chat-bubble ol{padding-left:18px;margin:6px 0;}
+.chat-bubble li{margin-bottom:4px;}
+.chat-bubble p{margin-bottom:6px;}
+.chat-bubble p:last-child{margin-bottom:0;}
+.chat-bubble hr{border:none;border-top:1px solid var(--border);margin:8px 0;}
+
+/* Timestamp */
+.chat-ts{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-top:4px;text-align:right;letter-spacing:.5px;}
+.chat-msg.ai .chat-ts{text-align:left;}
+
+/* Input row */
+.chat-input-row{display:flex;gap:10px;align-items:flex-end;}
+.chat-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);resize:none;outline:none;transition:border-color .2s;line-height:1.5;}
+.chat-input:focus{border-color:rgba(240,192,64,.4);}
+.chat-input::placeholder{color:var(--muted);}
+.chat-send-btn{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#e0a820);border:none;cursor:pointer;font-size:18px;color:#0a0a12;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0;}
+.chat-send-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,192,64,.3);}
+.chat-send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.chat-footer-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-align:center;margin-top:8px;letter-spacing:.4px;}
+
+/* Error state */
+.chat-error{background:rgba(240,112,112,.08);border:1px solid rgba(240,112,112,.2);color:var(--red);border-radius:10px;padding:10px 14px;font-size:13px;font-family:'DM Sans',sans-serif;}
+
+@media(max-width:600px){
+  .chat-bubble{max-width:92%;}
+  .chat-chips{gap:6px;}
+  .chat-chip{font-size:10px;padding:6px 12px;}
+}
+
+/* ═══════════════════════════════════════════════════
+   HOME TAB — FEATURE CARDS
+═══════════════════════════════════════════════════ */
+.home-hero{text-align:center;padding:32px 20px 24px;position:relative;}
+.home-hero-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:3px;opacity:.7;margin-bottom:10px;}
+.home-hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;background:linear-gradient(135deg,var(--accent)0%,var(--accent2)50%,var(--accent3)100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;line-height:1.1;}
+.home-hero-sub{font-size:14px;color:var(--muted);line-height:1.6;}
+
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:32px;}
+.home-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 22px 18px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;}
+.home-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--hc1,var(--accent)),var(--hc2,var(--accent2)));}
+.home-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px var(--shadow,rgba(0,0,0,.3));border-color:var(--hc1,var(--accent));}
+.home-card-icon{font-size:28px;margin-bottom:4px;}
+.home-card-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--hc1,var(--accent));line-height:1.2;}
+.home-card-desc{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);line-height:1.5;flex:1;}
+.home-card-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--hc1,var(--accent));opacity:.7;margin-top:4px;}
+.home-card-arrow{position:absolute;right:18px;bottom:18px;font-size:18px;color:var(--hc1,var(--accent));opacity:.5;transition:all .2s;}
+.home-card:hover .home-card-arrow{opacity:1;transform:translateX(4px);}
+
+/* Per-card colours */
+.home-card-gen    {--hc1:var(--accent);   --hc2:var(--orange);}
+.home-card-atma   {--hc1:var(--accent3);  --hc2:var(--accent2);}
+.home-card-tense  {--hc1:var(--accent2);  --hc2:var(--green);}
+.home-card-idiom  {--hc1:var(--green);    --hc2:var(--accent2);}
+.home-card-phrasal{--hc1:var(--orange);   --hc2:var(--red);}
+.home-card-pattern{--hc1:var(--accent2);  --hc2:var(--accent3);}
+.home-card-quiz   {--hc1:var(--red);      --hc2:var(--orange);}
+.home-card-chat   {--hc1:var(--accent3);  --hc2:var(--accent);}
+
+/* Stats row */
+.home-stats-row{display:flex;align-items:center;justify-content:center;gap:0;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;flex-wrap:wrap;gap:0;}
+.home-stat{display:flex;flex-direction:column;align-items:center;padding:0 20px;}
+.home-stat-num{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--accent);line-height:1;}
+.home-stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;margin-top:4px;}
+.home-stat-div{width:1px;height:32px;background:var(--border);}
+@media(max-width:600px){
+  .home-grid{grid-template-columns:1fr 1fr;}
+  .home-stat{padding:8px 12px;}
+  .home-stat-num{font-size:18px;}
+}
+@media(max-width:400px){.home-grid{grid-template-columns:1fr;}}
+
+/* ── Mobile bottom nav ── */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);padding:8px 0 max(8px,env(safe-area-inset-bottom));backdrop-filter:blur(12px);}
+.bottom-nav-inner{display:flex;justify-content:space-around;}
+.bnav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 10px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);cursor:pointer;background:none;border:none;transition:color .2s;letter-spacing:.3px;}
+.bnav-btn .bnav-icon{font-size:18px;line-height:1;}
+.bnav-btn.active,.bnav-btn:hover{color:var(--accent);}
+@media(max-width:700px){
+  .bottom-nav{display:block;}
+  main{padding-bottom:80px;}
+}
 </style>
 </head>
 <body>
@@ -665,8 +834,28 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:32px 48p
   </div>
 </header>
 
+<!-- THEME BAR -->
+<div class="theme-bar">
+  <span class="theme-bar-label">🎨 THEME</span>
+  <button class="theme-btn active" data-theme="dark"    onclick="setTheme('dark')"     ><span class="theme-swatch" style="background:#f0c040"></span>🌙 Dark</button>
+  <button class="theme-btn"        data-theme="light"   onclick="setTheme('light')"    ><span class="theme-swatch" style="background:#2563eb"></span>🌞 Light</button>
+  <button class="theme-btn"        data-theme="gradient" onclick="setTheme('gradient')" ><span class="theme-swatch" style="background:linear-gradient(135deg,#a78bfa,#fb923c)"></span>🌈 Gradient</button>
+  <button class="theme-btn"        data-theme="classroom" onclick="setTheme('classroom')"><span class="theme-swatch" style="background:#8b5e3c"></span>📚 Classroom</button>
+  <button class="theme-btn"        data-theme="minimal" onclick="setTheme('minimal')"  ><span class="theme-swatch" style="background:#4a6cf7"></span>🧩 Minimal</button>
+</div>
+
+<!-- PROGRESS STRIP -->
+<div class="progress-strip" id="progressStrip">
+  <div class="progress-pill"><span class="progress-pill-icon streak-flame">🔥</span><span class="progress-pill-val" id="streakVal">1</span><span class="progress-pill-lbl">Day Streak</span></div>
+  <div class="progress-pill"><span class="progress-pill-icon">📊</span><span class="progress-pill-val" id="sentVal">0</span><span class="progress-pill-lbl">Sentences Made</span></div>
+  <div class="progress-pill"><span class="progress-pill-icon">🧠</span><span class="progress-pill-val" id="quizVal">0%</span><span class="progress-pill-lbl">Quiz Score</span></div>
+  <div class="progress-pill"><span class="progress-pill-icon">🏆</span><span class="progress-pill-val" id="levelVal">Beginner</span><span class="progress-pill-lbl">Level</span></div>
+  <div class="progress-pill"><span class="progress-pill-icon">💬</span><span class="progress-pill-val" id="chatVal">0</span><span class="progress-pill-lbl">AI Chats</span></div>
+</div>
+
 <!-- NAV TABS -->
 <nav class="main-nav">
+  <button class="nav-tab" onclick="switchTab('tab-home',this)">🏠 Home</button>
   <button class="nav-tab active" onclick="switchTab('tab-gen',this)">✍️ Sentence Generator</button>
   <button class="nav-tab" onclick="switchTab('tab-atma',this)">🪄 इंग्रजीचा आत्मा</button>
   <button class="nav-tab" onclick="switchTab('tab-tenses',this)">⏱️ Tense Explorer</button>
@@ -674,9 +863,94 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:32px 48p
   <button class="nav-tab" onclick="switchTab('tab-phrasal',this)">🔗 Phrasal Verbs</button>
   <button class="nav-tab" onclick="switchTab('tab-patterns',this)">📐 Sentence Patterns</button>
   <button class="nav-tab" onclick="switchTab('tab-quiz',this)">🧠 Grammar Quiz</button>
+  <button class="nav-tab" onclick="switchTab('tab-chat',this)">🤖 AI Chat</button>
 </nav>
 
 <main>
+
+<!-- ═══════════════════════════ TAB 0: HOME ═══════════════════════════ -->
+<div id="tab-home" class="tab-content">
+  <div class="home-hero">
+    <div class="home-hero-badge">// English Learning Hub · v5.0</div>
+    <h2 class="home-hero-title">इंग्रजीचा आत्मा</h2>
+    <p class="home-hero-sub">Your complete Marathi–English learning companion · मराठीतून इंग्रजी शिका</p>
+  </div>
+
+  <!-- Feature Cards Grid -->
+  <div class="home-grid">
+    <div class="home-card home-card-gen" onclick="switchTabById('tab-gen')">
+      <div class="home-card-icon">✍️</div>
+      <div class="home-card-title">Sentence Generator</div>
+      <div class="home-card-desc">Create 100s of sentences instantly · वाक्ये तयार करा</div>
+      <div class="home-card-tag">GENERATOR</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-atma" onclick="switchTabById('tab-atma')">
+      <div class="home-card-icon">🪄</div>
+      <div class="home-card-title">इंग्रजीचा आत्मा</div>
+      <div class="home-card-desc">Grammar magic & smart tricks · व्याकरणाची जादू</div>
+      <div class="home-card-tag">GRAMMAR</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-tense" onclick="switchTabById('tab-tenses')">
+      <div class="home-card-icon">⏱️</div>
+      <div class="home-card-title">Tense Explorer</div>
+      <div class="home-card-desc">All 16 tenses explained · सर्व काळ सोप्या भाषेत</div>
+      <div class="home-card-tag">16 TENSES</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-idiom" onclick="switchTabById('tab-idioms')">
+      <div class="home-card-icon">💬</div>
+      <div class="home-card-title">Idioms</div>
+      <div class="home-card-desc">60 daily-use idioms · रोजच्या वापरातील वाक्प्रचार</div>
+      <div class="home-card-tag">60 IDIOMS</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-phrasal" onclick="switchTabById('tab-phrasal')">
+      <div class="home-card-icon">🔗</div>
+      <div class="home-card-title">Phrasal Verbs</div>
+      <div class="home-card-desc">60 essential phrasal verbs · क्रियापदाचे विशेष प्रकार</div>
+      <div class="home-card-tag">60 VERBS</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-pattern" onclick="switchTabById('tab-patterns')">
+      <div class="home-card-icon">📐</div>
+      <div class="home-card-title">Sentence Patterns</div>
+      <div class="home-card-desc">89 patterns × 20 examples each · वाक्य रचना</div>
+      <div class="home-card-tag">1780 EXAMPLES</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-quiz" onclick="switchTabById('tab-quiz')">
+      <div class="home-card-icon">🧠</div>
+      <div class="home-card-title">Grammar Quiz</div>
+      <div class="home-card-desc">Test yourself · व्याकरण परीक्षा द्या</div>
+      <div class="home-card-tag">20 QUESTIONS</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-chat" onclick="switchTabById('tab-chat')">
+      <div class="home-card-icon">🤖</div>
+      <div class="home-card-title">AI Chat Tutor</div>
+      <div class="home-card-desc">Ask anything in Marathi or English · मराठीत विचारा</div>
+      <div class="home-card-tag">POWERED BY AI</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+  </div>
+
+  <!-- Quick Stats Row -->
+  <div class="home-stats-row">
+    <div class="home-stat"><span class="home-stat-num">200</span><span class="home-stat-lbl">Verbs</span></div>
+    <div class="home-stat-div"></div>
+    <div class="home-stat"><span class="home-stat-num">16</span><span class="home-stat-lbl">Tenses</span></div>
+    <div class="home-stat-div"></div>
+    <div class="home-stat"><span class="home-stat-num">89</span><span class="home-stat-lbl">Patterns</span></div>
+    <div class="home-stat-div"></div>
+    <div class="home-stat"><span class="home-stat-num">1780+</span><span class="home-stat-lbl">Examples</span></div>
+    <div class="home-stat-div"></div>
+    <div class="home-stat"><span class="home-stat-num">60</span><span class="home-stat-lbl">Idioms</span></div>
+    <div class="home-stat-div"></div>
+    <div class="home-stat"><span class="home-stat-num">60</span><span class="home-stat-lbl">Phrasal Verbs</span></div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════ TAB 1: GENERATOR ═══════════════════════════ -->
 <div id="tab-gen" class="tab-content active">
@@ -1041,7 +1315,7 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:32px 48p
 <!-- ═══════════════════════════ TAB 6: PATTERNS ═══════════════════════════ -->
 <div id="tab-patterns" class="tab-content">
   <div class="section-title">📐 Sentence Patterns — इंग्रजी वाक्य रचना</div>
-  <p class="section-desc">52 essential patterns across 6 categories · <span style="color:var(--accent)">I</span> · <span style="color:var(--green)">You</span> · <span style="color:var(--accent2)">It</span> · <span style="color:var(--accent3)">Let</span> · <span style="color:var(--green)">Can</span> · <span style="color:var(--orange)">Misc</span> · Click any pattern → 20 bilingual examples</p>
+  <p class="section-desc">89 essential patterns across 7 categories · <span style="color:var(--accent)">I</span> · <span style="color:var(--green)">You</span> · <span style="color:var(--accent2)">It</span> · <span style="color:var(--accent3)">Let</span> · <span style="color:var(--green)">Can</span> · <span style="color:var(--orange)">Misc</span> · Click any pattern → 20 bilingual examples</p>
 
   <!-- Pattern selector grid -->
   <div class="ipat-selector" id="ipatSelector"></div>
@@ -1067,6 +1341,42 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:32px 48p
   <div class="section-title">🧠 Grammar Quiz — व्याकरण सराव</div>
   <p class="section-desc">Test your English grammar knowledge! 20 questions covering tenses, modals, passive voice, conditionals and more.</p>
   <div id="quizContainer"></div>
+</div>
+
+<!-- ═══════════════════════════ TAB 9: AI CHAT ═══════════════════════════ -->
+<div id="tab-chat" class="tab-content">
+  <div class="section-title">🤖 AI English Tutor — इंग्रजी शिक्षक</div>
+  <p class="section-desc">Ask anything about English grammar, Marathi meanings, sentence patterns, or get examples · मराठीत किंवा इंग्रजीत विचारा</p>
+
+  <!-- Quick prompt chips -->
+  <div class="chat-chips" id="chatChips">
+    <button class="chat-chip" onclick="chatQuickPrompt('What is the difference between Simple Past and Present Perfect? Give Marathi examples.')">📚 Past vs Perfect</button>
+    <button class="chat-chip" onclick="chatQuickPrompt('Give me 5 examples of I\'m looking forward to with Marathi translation.')">💡 I\'m looking forward to</button>
+    <button class="chat-chip" onclick="chatQuickPrompt('Explain when to use will vs going to in English with Marathi examples.')">⏱️ will vs going to</button>
+    <button class="chat-chip" onclick="chatQuickPrompt('What are 5 common English idioms used in daily conversation? Give Marathi meaning.')">💬 Daily Idioms</button>
+    <button class="chat-chip" onclick="chatQuickPrompt('Explain passive voice with 5 examples in English and Marathi.')">🔄 Passive Voice</button>
+    <button class="chat-chip" onclick="chatQuickPrompt('Give me 5 polite ways to make requests in English with Marathi translation.')">🙏 Polite Requests</button>
+    <button class="chat-chip" onclick="chatQuickPrompt('What are conditionals in English? Explain all 4 types with Marathi examples.')">❓ Conditionals</button>
+    <button class="chat-chip" onclick="chatQuickPrompt('What is the difference between can and could ? Give Marathi examples.')">🎯 can vs could</button>
+  </div>
+
+  <!-- Chat window -->
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-welcome">
+      <div class="chat-welcome-icon">🤖</div>
+      <div class="chat-welcome-title">नमस्ते! मी तुमचा AI English Tutor आहे</div>
+      <div class="chat-welcome-sub">Ask me anything about English grammar · मराठी किंवा इंग्रजीत विचारा · I'll answer in both languages</div>
+    </div>
+  </div>
+
+  <!-- Input area -->
+  <div class="chat-input-row">
+    <textarea class="chat-input" id="chatInput" placeholder="Ask a grammar question… e.g. 'I'm going to चा वापर कधी करायचा?'" rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
+    <button class="chat-send-btn" id="chatSendBtn" onclick="sendChat()">
+      <span id="chatSendIcon">➤</span>
+    </button>
+  </div>
+  <div class="chat-footer-note">Press Enter to send · Shift+Enter for new line · Powered by Claude AI</div>
 </div>
 
 </main>
@@ -3169,6 +3479,933 @@ const I_PATTERNS = [
       {eng:"You're supposed to set a good example.",mar:"तुम्ही एक चांगला आदर्श ठेवणे अपेक्षित आहे."},
     ]
   }
+,
+/* ── NEW 37 PATTERNS (id 53–89) ── */
+  {
+    id:53, eng:"How often do you", mar:"तुम्ही किती वेळा", cat:"How", color:"var(--accent2)",
+    examples:[
+      {eng:"How often do you exercise?",mar:"तुम्ही किती वेळा व्यायाम करता?"},
+      {eng:"How often do you read books?",mar:"तुम्ही किती वेळा पुस्तके वाचता?"},
+      {eng:"How often do you visit your grandparents?",mar:"तुम्ही किती वेळा आजी-आजोबांना भेटता?"},
+      {eng:"How often do you cook at home?",mar:"तुम्ही किती वेळा घरी स्वयंपाक करता?"},
+      {eng:"How often do you go to the market?",mar:"तुम्ही किती वेळा बाजारात जाता?"},
+      {eng:"How often do you speak English?",mar:"तुम्ही किती वेळा इंग्रजी बोलता?"},
+      {eng:"How often do you travel by train?",mar:"तुम्ही किती वेळा रेल्वेने प्रवास करता?"},
+      {eng:"How often do you watch movies?",mar:"तुम्ही किती वेळा चित्रपट पाहता?"},
+      {eng:"How often do you call your parents?",mar:"तुम्ही किती वेळा पालकांना फोन करता?"},
+      {eng:"How often do you play cricket?",mar:"तुम्ही किती वेळा क्रिकेट खेळता?"},
+      {eng:"How often do you study English?",mar:"तुम्ही किती वेळा इंग्रजीचा अभ्यास करता?"},
+      {eng:"How often do you eat outside?",mar:"तुम्ही किती वेळा बाहेर जेवता?"},
+      {eng:"How often do you clean your room?",mar:"तुम्ही किती वेळा खोली साफ करता?"},
+      {eng:"How often do you take a walk?",mar:"तुम्ही किती वेळा फेरफटका मारता?"},
+      {eng:"How often do you use social media?",mar:"तुम्ही किती वेळा सोशल मीडिया वापरता?"},
+      {eng:"How often do you attend classes?",mar:"तुम्ही किती वेळा वर्गात जाता?"},
+      {eng:"How often do you practice yoga?",mar:"तुम्ही किती वेळा योगाभ्यास करता?"},
+      {eng:"How often do you meet your friends?",mar:"तुम्ही किती वेळा मित्रांना भेटता?"},
+      {eng:"How often do you drink coffee?",mar:"तुम्ही किती वेळा कॉफी पिता?"},
+      {eng:"How often do you write in your diary?",mar:"तुम्ही किती वेळा डायरीत लिहिता?"},
+    ]
+  },
+  {
+    id:54, eng:"Do you want me to + (verb)", mar:"तुम्हाला मी करावे का", cat:"You", color:"var(--green)",
+    examples:[
+      {eng:"Do you want me to help you?",mar:"तुम्हाला मी मदत करावी का?"},
+      {eng:"Do you want me to call the doctor?",mar:"तुम्हाला मी डॉक्टरांना फोन करावा का?"},
+      {eng:"Do you want me to explain this again?",mar:"तुम्हाला मी हे पुन्हा सांगावे का?"},
+      {eng:"Do you want me to come with you?",mar:"तुम्हाला मी तुमच्यासोबत यावे का?"},
+      {eng:"Do you want me to write it down?",mar:"तुम्हाला मी ते लिहून ठेवावे का?"},
+      {eng:"Do you want me to cook something?",mar:"तुम्हाला मी काहीतरी शिजवावे का?"},
+      {eng:"Do you want me to wait for you?",mar:"तुम्हाला मी तुमची वाट पाहावी का?"},
+      {eng:"Do you want me to translate this?",mar:"तुम्हाला मी हे भाषांतर करावे का?"},
+      {eng:"Do you want me to bring anything?",mar:"तुम्हाला मी काही आणावे का?"},
+      {eng:"Do you want me to read this for you?",mar:"तुम्हाला मी हे तुमच्यासाठी वाचावे का?"},
+      {eng:"Do you want me to fix this?",mar:"तुम्हाला मी हे दुरुस्त करावे का?"},
+      {eng:"Do you want me to send this message?",mar:"तुम्हाला मी हा संदेश पाठवावा का?"},
+      {eng:"Do you want me to check your work?",mar:"तुम्हाला मी तुमचे काम तपासावे का?"},
+      {eng:"Do you want me to book a table?",mar:"तुम्हाला मी टेबल बुक करावे का?"},
+      {eng:"Do you want me to stay?",mar:"तुम्हाला मी थांबावे का?"},
+      {eng:"Do you want me to open the window?",mar:"तुम्हाला मी खिडकी उघडावी का?"},
+      {eng:"Do you want me to carry your bag?",mar:"तुम्हाला मी तुमची पिशवी घ्यावी का?"},
+      {eng:"Do you want me to repeat that?",mar:"तुम्हाला मी ते पुन्हा सांगावे का?"},
+      {eng:"Do you want me to remind you?",mar:"तुम्हाला मी आठवण करून द्यावी का?"},
+      {eng:"Do you want me to make tea?",mar:"तुम्हाला मी चहा बनवावा का?"},
+    ]
+  },
+  {
+    id:55, eng:"What do you think about + (verb-ing)", mar:"तुम्हाला काय वाटते", cat:"How", color:"var(--accent2)",
+    examples:[
+      {eng:"What do you think about learning English?",mar:"इंग्रजी शिकण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about joining the gym?",mar:"जिम जॉईन करण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about travelling alone?",mar:"एकट्याने प्रवास करण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about waking up early?",mar:"लवकर उठण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about starting a business?",mar:"व्यवसाय सुरू करण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about cooking at home?",mar:"घरी स्वयंपाक करण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about changing your job?",mar:"नोकरी बदलण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about eating less sugar?",mar:"कमी साखर खाण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about moving to a new city?",mar:"नवीन शहरात जाण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about reading every day?",mar:"रोज वाचण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about adopting a dog?",mar:"कुत्रा दत्तक घेण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about taking a break?",mar:"विश्रांती घेण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about learning to drive?",mar:"गाडी शिकण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about saving money?",mar:"पैसे वाचवण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about going on a trip?",mar:"सहलीला जाण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about volunteering?",mar:"स्वयंसेवा करण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about quitting smoking?",mar:"धूम्रपान सोडण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about studying abroad?",mar:"परदेशात शिकण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about planting trees?",mar:"झाडे लावण्याबद्दल तुम्हाला काय वाटते?"},
+      {eng:"What do you think about trying new food?",mar:"नवीन अन्न चाखण्याबद्दल तुम्हाला काय वाटते?"},
+    ]
+  },
+  {
+    id:56, eng:"Why don't we + (verb)", mar:"आपण का नाही करत", cat:"How", color:"var(--accent2)",
+    examples:[
+      {eng:"Why don't we go for a walk?",mar:"आपण फेरफटक्यासाठी का नाही जात?"},
+      {eng:"Why don't we study together?",mar:"आपण एकत्र अभ्यास का नाही करत?"},
+      {eng:"Why don't we try that new restaurant?",mar:"आपण त्या नवीन रेस्टॉरंटला का नाही जात?"},
+      {eng:"Why don't we take a short break?",mar:"आपण थोडी विश्रांती का नाही घेत?"},
+      {eng:"Why don't we call him now?",mar:"आपण त्याला आत्ता का नाही फोन करत?"},
+      {eng:"Why don't we start early tomorrow?",mar:"आपण उद्या लवकर का नाही सुरू करत?"},
+      {eng:"Why don't we watch a movie tonight?",mar:"आपण आज रात्री चित्रपट का नाही पाहत?"},
+      {eng:"Why don't we plan a picnic?",mar:"आपण遠足चे नियोजन का नाही करत?"},
+      {eng:"Why don't we solve this together?",mar:"आपण हे एकत्र का नाही सोडवत?"},
+      {eng:"Why don't we ask the teacher?",mar:"आपण शिक्षकांना का नाही विचारत?"},
+      {eng:"Why don't we practice speaking English?",mar:"आपण इंग्रजी बोलण्याचा सराव का नाही करत?"},
+      {eng:"Why don't we order pizza tonight?",mar:"आपण आज रात्री पिझ्झा ऑर्डर का नाही करत?"},
+      {eng:"Why don't we visit grandmother this weekend?",mar:"आपण या आठवड्याच्या शेवटी आजीला भेटायला का नाही जात?"},
+      {eng:"Why don't we clean the house today?",mar:"आपण आज घर स्वच्छ का नाही करत?"},
+      {eng:"Why don't we learn a new word every day?",mar:"आपण रोज एक नवीन शब्द का नाही शिकत?"},
+      {eng:"Why don't we make a plan first?",mar:"आपण आधी योजना का नाही बनवत?"},
+      {eng:"Why don't we help each other?",mar:"आपण एकमेकांना का नाही मदत करत?"},
+      {eng:"Why don't we read this chapter together?",mar:"आपण हे प्रकरण एकत्र का नाही वाचत?"},
+      {eng:"Why don't we go to bed early tonight?",mar:"आपण आज रात्री लवकर का नाही झोपत?"},
+      {eng:"Why don't we celebrate this together?",mar:"आपण हे एकत्र का नाही साजरे करत?"},
+    ]
+  },
+  {
+    id:57, eng:"It's too bad that", mar:"हे खूप वाईट आहे की", cat:"It", color:"var(--accent2)",
+    examples:[
+      {eng:"It's too bad that you missed the class.",mar:"हे खूप वाईट आहे की तुम्ही वर्ग चुकवला."},
+      {eng:"It's too bad that he didn't come.",mar:"हे खूप वाईट आहे की तो आला नाही."},
+      {eng:"It's too bad that the trip got cancelled.",mar:"हे खूप वाईट आहे की सहल रद्द झाली."},
+      {eng:"It's too bad that she failed the test.",mar:"हे खूप वाईट आहे की ती परीक्षेत नापास झाली."},
+      {eng:"It's too bad that we lost the match.",mar:"हे खूप वाईट आहे की आम्ही सामना हारलो."},
+      {eng:"It's too bad that the weather is so bad today.",mar:"हे खूप वाईट आहे की आज हवामान खूप वाईट आहे."},
+      {eng:"It's too bad that you don't like it.",mar:"हे खूप वाईट आहे की तुम्हाला ते आवडत नाही."},
+      {eng:"It's too bad that I forgot to bring it.",mar:"हे खूप वाईट आहे की मी ते आणायला विसरलो."},
+      {eng:"It's too bad that the shop is closed.",mar:"हे खूप वाईट आहे की दुकान बंद आहे."},
+      {eng:"It's too bad that you can't attend.",mar:"हे खूप वाईट आहे की तुम्ही उपस्थित राहू शकत नाही."},
+      {eng:"It's too bad that he left so soon.",mar:"हे खूप वाईट आहे की तो एवढ्या लवकर निघून गेला."},
+      {eng:"It's too bad that no one told me.",mar:"हे खूप वाईट आहे की कोणी मला सांगितले नाही."},
+      {eng:"It's too bad that the movie ended so early.",mar:"हे खूप वाईट आहे की चित्रपट एवढ्या लवकर संपला."},
+      {eng:"It's too bad that it rained all day.",mar:"हे खूप वाईट आहे की सारा दिवस पाऊस पडला."},
+      {eng:"It's too bad that you missed the opportunity.",mar:"हे खूप वाईट आहे की तुम्ही संधी गमावली."},
+      {eng:"It's too bad that she is sick today.",mar:"हे खूप वाईट आहे की ती आज आजारी आहे."},
+      {eng:"It's too bad that I didn't know earlier.",mar:"हे खूप वाईट आहे की मला आधी माहित नव्हते."},
+      {eng:"It's too bad that they couldn't stay longer.",mar:"हे खूप वाईट आहे की ते जास्त वेळ राहू शकले नाहीत."},
+      {eng:"It's too bad that the bus left early.",mar:"हे खूप वाईट आहे की बस लवकर गेली."},
+      {eng:"It's too bad that we didn't meet sooner.",mar:"हे खूप वाईट आहे की आपण आधी भेटलो नाही."},
+    ]
+  },
+  {
+    id:58, eng:"You could have + (past participle)", mar:"तुम्ही करू शकला असता", cat:"You", color:"var(--green)",
+    examples:[
+      {eng:"You could have told me earlier.",mar:"तुम्ही मला आधी सांगू शकला असता."},
+      {eng:"You could have come to the party.",mar:"तुम्ही पार्टीला येऊ शकला असता."},
+      {eng:"You could have passed if you studied.",mar:"जर तुम्ही अभ्यास केला असता तर पास होऊ शकला असता."},
+      {eng:"You could have asked for help.",mar:"तुम्ही मदत मागू शकला असता."},
+      {eng:"You could have saved more money.",mar:"तुम्ही अधिक पैसे वाचवू शकला असता."},
+      {eng:"You could have taken a different route.",mar:"तुम्ही वेगळा मार्ग घेऊ शकला असता."},
+      {eng:"You could have finished it by now.",mar:"तुम्ही आतापर्यंत ते पूर्ण करू शकला असता."},
+      {eng:"You could have called me first.",mar:"तुम्ही आधी मला फोन करू शकला असता."},
+      {eng:"You could have avoided this problem.",mar:"तुम्ही ही समस्या टाळू शकला असता."},
+      {eng:"You could have done better.",mar:"तुम्ही अधिक चांगले करू शकला असता."},
+      {eng:"You could have been on time.",mar:"तुम्ही वेळेवर येऊ शकला असता."},
+      {eng:"You could have tried harder.",mar:"तुम्ही अधिक कठोर प्रयत्न करू शकला असता."},
+      {eng:"You could have stayed for dinner.",mar:"तुम्ही जेवणासाठी थांबू शकला असता."},
+      {eng:"You could have said something.",mar:"तुम्ही काहीतरी बोलू शकला असता."},
+      {eng:"You could have applied for the job.",mar:"तुम्ही नोकरीसाठी अर्ज करू शकला असता."},
+      {eng:"You could have learned from that mistake.",mar:"तुम्ही त्या चुकीतून शिकू शकला असता."},
+      {eng:"You could have won the prize.",mar:"तुम्ही बक्षीस जिंकू शकला असता."},
+      {eng:"You could have been more careful.",mar:"तुम्ही अधिक सावधगिरी बाळगू शकला असता."},
+      {eng:"You could have made a better choice.",mar:"तुम्ही चांगली निवड करू शकला असता."},
+      {eng:"You could have talked to the teacher.",mar:"तुम्ही शिक्षकांशी बोलू शकला असता."},
+    ]
+  },
+  {
+    id:59, eng:"If I were you, I would + (verb)", mar:"जर मी तुमच्या जागी असतो तर", cat:"I", color:"var(--accent)",
+    examples:[
+      {eng:"If I were you, I would study harder.",mar:"जर मी तुमच्या जागी असतो तर मी अधिक अभ्यास केला असता."},
+      {eng:"If I were you, I would apologize.",mar:"जर मी तुमच्या जागी असतो तर मी माफी मागितली असती."},
+      {eng:"If I were you, I would take that job.",mar:"जर मी तुमच्या जागी असतो तर मी ती नोकरी घेतली असती."},
+      {eng:"If I were you, I would go to the doctor.",mar:"जर मी तुमच्या जागी असतो तर मी डॉक्टरकडे गेलो असतो."},
+      {eng:"If I were you, I would not worry.",mar:"जर मी तुमच्या जागी असतो तर मी काळजी केली नसती."},
+      {eng:"If I were you, I would tell the truth.",mar:"जर मी तुमच्या जागी असतो तर मी सत्य सांगितले असते."},
+      {eng:"If I were you, I would save more money.",mar:"जर मी तुमच्या जागी असतो तर मी अधिक पैसे वाचवले असते."},
+      {eng:"If I were you, I would leave right now.",mar:"जर मी तुमच्या जागी असतो तर मी आत्ताच निघालो असतो."},
+      {eng:"If I were you, I would accept the offer.",mar:"जर मी तुमच्या जागी असतो तर मी ऑफर स्वीकारली असती."},
+      {eng:"If I were you, I would practise every day.",mar:"जर मी तुमच्या जागी असतो तर मी रोज सराव केला असता."},
+      {eng:"If I were you, I would speak up.",mar:"जर मी तुमच्या जागी असतो तर मी बोललो असतो."},
+      {eng:"If I were you, I would try again.",mar:"जर मी तुमच्या जागी असतो तर मी पुन्हा प्रयत्न केला असता."},
+      {eng:"If I were you, I would not miss this chance.",mar:"जर मी तुमच्या जागी असतो तर मी ही संधी सोडली नसती."},
+      {eng:"If I were you, I would ask for help.",mar:"जर मी तुमच्या जागी असतो तर मी मदत मागितली असती."},
+      {eng:"If I were you, I would read more.",mar:"जर मी तुमच्या जागी असतो तर मी अधिक वाचले असते."},
+      {eng:"If I were you, I would plan ahead.",mar:"जर मी तुमच्या जागी असतो तर मी आधीच योजना केली असती."},
+      {eng:"If I were you, I would be more patient.",mar:"जर मी तुमच्या जागी असतो तर मी अधिक संयमी असतो."},
+      {eng:"If I were you, I would choose differently.",mar:"जर मी तुमच्या जागी असतो तर मी वेगळी निवड केली असती."},
+      {eng:"If I were you, I would take a rest.",mar:"जर मी तुमच्या जागी असतो तर मी विश्रांती घेतली असती."},
+      {eng:"If I were you, I would enjoy the moment.",mar:"जर मी तुमच्या जागी असतो तर मी या क्षणाचा आनंद घेतला असता."},
+    ]
+  },
+  {
+    id:60, eng:"It's gonna be + (adjective)", mar:"ते असणार आहे", cat:"It", color:"var(--accent2)",
+    examples:[
+      {eng:"It's gonna be a great day.",mar:"हा एक उत्तम दिवस असणार आहे."},
+      {eng:"It's gonna be very hot tomorrow.",mar:"उद्या खूप उन्हाळा असणार आहे."},
+      {eng:"It's gonna be fun.",mar:"ते मजेदार असणार आहे."},
+      {eng:"It's gonna be difficult.",mar:"ते कठीण असणार आहे."},
+      {eng:"It's gonna be a long night.",mar:"ही एक लांब रात्र असणार आहे."},
+      {eng:"It's gonna be worth it.",mar:"ते फायदेशीर असणार आहे."},
+      {eng:"It's gonna be fine.",mar:"ते ठीक असणार आहे."},
+      {eng:"It's gonna be amazing.",mar:"ते अद्भुत असणार आहे."},
+      {eng:"It's gonna be very cold tonight.",mar:"आज रात्री खूप थंडी असणार आहे."},
+      {eng:"It's gonna be a busy week.",mar:"हा एक व्यस्त आठवडा असणार आहे."},
+      {eng:"It's gonna be perfect.",mar:"ते एकदम परिपूर्ण असणार आहे."},
+      {eng:"It's gonna be okay.",mar:"सगळे ठीक असणार आहे."},
+      {eng:"It's gonna be unforgettable.",mar:"ते अविस्मरणीय असणार आहे."},
+      {eng:"It's gonna be tiring.",mar:"ते थकवणारे असणार आहे."},
+      {eng:"It's gonna be very easy.",mar:"ते खूप सोपे असणार आहे."},
+      {eng:"It's gonna be exciting.",mar:"ते रोमांचक असणार आहे."},
+      {eng:"It's gonna be a big event.",mar:"हा एक मोठा कार्यक्रम असणार आहे."},
+      {eng:"It's gonna be dangerous.",mar:"ते धोकादायक असणार आहे."},
+      {eng:"It's gonna be a surprise.",mar:"ते एक आश्चर्य असणार आहे."},
+      {eng:"It's gonna be different this time.",mar:"यावेळी ते वेगळे असणार आहे."},
+    ]
+  },
+  {
+    id:61, eng:"It looks like + (noun)", mar:"असे दिसते / वाटते", cat:"It", color:"var(--accent2)",
+    examples:[
+      {eng:"It looks like rain.",mar:"पाऊस येणार असे दिसते."},
+      {eng:"It looks like a good idea.",mar:"ही एक चांगली कल्पना वाटते."},
+      {eng:"It looks like he is tired.",mar:"तो थकलेला दिसतो."},
+      {eng:"It looks like the class is over.",mar:"वर्ग संपला असे दिसते."},
+      {eng:"It looks like a new building.",mar:"ते एक नवीन इमारत दिसते."},
+      {eng:"It looks like she is upset.",mar:"ती नाराज आहे असे दिसते."},
+      {eng:"It looks like a holiday today.",mar:"आज सुट्टी आहे असे दिसते."},
+      {eng:"It looks like a difficult problem.",mar:"ही एक कठीण समस्या वाटते."},
+      {eng:"It looks like the bus is late.",mar:"बस उशिरा येणार असे दिसते."},
+      {eng:"It looks like a fun game.",mar:"हा एक मजेदार खेळ वाटतो."},
+      {eng:"It looks like a fake signature.",mar:"हे बनावट सही असल्यासारखे दिसते."},
+      {eng:"It looks like the meeting is cancelled.",mar:"बैठक रद्द झाल्यासारखे दिसते."},
+      {eng:"It looks like an interesting book.",mar:"हे एक मनोरंजक पुस्तक दिसते."},
+      {eng:"It looks like they are fighting.",mar:"ते भांडत आहेत असे दिसते."},
+      {eng:"It looks like the project is almost done.",mar:"प्रकल्प जवळजवळ पूर्ण झाल्यासारखे दिसते."},
+      {eng:"It looks like a storm is coming.",mar:"वादळ येणार असे दिसते."},
+      {eng:"It looks like she forgot again.",mar:"ती पुन्हा विसरली असे दिसते."},
+      {eng:"It looks like a good opportunity.",mar:"ही एक चांगली संधी दिसते."},
+      {eng:"It looks like everyone is ready.",mar:"सर्वजण तयार असल्यासारखे दिसते."},
+      {eng:"It looks like the answer is correct.",mar:"उत्तर बरोबर असल्यासारखे दिसते."},
+    ]
+  },
+  {
+    id:62, eng:"That's why + (subject + verb)", mar:"म्हणूनच", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"That's why I study every day.",mar:"म्हणूनच मी रोज अभ्यास करतो."},
+      {eng:"That's why she is always happy.",mar:"म्हणूनच ती नेहमी आनंदी असते."},
+      {eng:"That's why we need to be careful.",mar:"म्हणूनच आपल्याला सावधगिरी बाळगणे आवश्यक आहे."},
+      {eng:"That's why he failed the exam.",mar:"म्हणूनच तो परीक्षेत नापास झाला."},
+      {eng:"That's why I always carry an umbrella.",mar:"म्हणूनच मी नेहमी छत्री घेऊन जातो."},
+      {eng:"That's why they left early.",mar:"म्हणूनच ते लवकर निघून गेले."},
+      {eng:"That's why I don't trust him.",mar:"म्हणूनच मी त्याच्यावर विश्वास ठेवत नाही."},
+      {eng:"That's why she is tired.",mar:"म्हणूनच ती थकलेली आहे."},
+      {eng:"That's why practice is important.",mar:"म्हणूनच सराव महत्त्वाचा आहे."},
+      {eng:"That's why he works so hard.",mar:"म्हणूनच तो इतका कठोर परिश्रम करतो."},
+      {eng:"That's why we must save water.",mar:"म्हणूनच आपण पाणी वाचवले पाहिजे."},
+      {eng:"That's why the team won.",mar:"म्हणूनच संघ जिंकला."},
+      {eng:"That's why I asked for help.",mar:"म्हणूनच मी मदत मागितली."},
+      {eng:"That's why children need sleep.",mar:"म्हणूनच मुलांना झोप आवश्यक आहे."},
+      {eng:"That's why honesty matters.",mar:"म्हणूनच प्रामाणिकपणा महत्त्वाचा आहे."},
+      {eng:"That's why I didn't go.",mar:"म्हणूनच मी गेलो नाही."},
+      {eng:"That's why she cried.",mar:"म्हणूनच ती रडली."},
+      {eng:"That's why grammar is important.",mar:"म्हणूनच व्याकरण महत्त्वाचे आहे."},
+      {eng:"That's why I want to learn English.",mar:"म्हणूनच मला इंग्रजी शिकायचे आहे."},
+      {eng:"That's why I am here today.",mar:"म्हणूनच मी आज इथे आहे."},
+    ]
+  },
+  {
+    id:63, eng:"It's time to + (verb)", mar:"आता वेळ आहे", cat:"It", color:"var(--accent2)",
+    examples:[
+      {eng:"It's time to go.",mar:"जाण्याची वेळ आली आहे."},
+      {eng:"It's time to study.",mar:"अभ्यास करण्याची वेळ आली आहे."},
+      {eng:"It's time to wake up.",mar:"उठण्याची वेळ आली आहे."},
+      {eng:"It's time to eat.",mar:"जेवण्याची वेळ आली आहे."},
+      {eng:"It's time to change.",mar:"बदलण्याची वेळ आली आहे."},
+      {eng:"It's time to celebrate.",mar:"साजरे करण्याची वेळ आली आहे."},
+      {eng:"It's time to take action.",mar:"कृती करण्याची वेळ आली आहे."},
+      {eng:"It's time to sleep.",mar:"झोपण्याची वेळ आली आहे."},
+      {eng:"It's time to speak the truth.",mar:"सत्य बोलण्याची वेळ आली आहे."},
+      {eng:"It's time to move on.",mar:"पुढे जाण्याची वेळ आली आहे."},
+      {eng:"It's time to start working.",mar:"काम सुरू करण्याची वेळ आली आहे."},
+      {eng:"It's time to say goodbye.",mar:"निरोप घेण्याची वेळ आली आहे."},
+      {eng:"It's time to make a decision.",mar:"निर्णय घेण्याची वेळ आली आहे."},
+      {eng:"It's time to grow up.",mar:"मोठे होण्याची वेळ आली आहे."},
+      {eng:"It's time to practise.",mar:"सराव करण्याची वेळ आली आहे."},
+      {eng:"It's time to apologize.",mar:"माफी मागण्याची वेळ आली आहे."},
+      {eng:"It's time to help others.",mar:"इतरांना मदत करण्याची वेळ आली आहे."},
+      {eng:"It's time to learn from mistakes.",mar:"चुकांतून शिकण्याची वेळ आली आहे."},
+      {eng:"It's time to try something new.",mar:"नवीन काहीतरी प्रयत्न करण्याची वेळ आली आहे."},
+      {eng:"It's time to shine.",mar:"चमकण्याची वेळ आली आहे."},
+    ]
+  },
+  {
+    id:64, eng:"The point is that + (subject + verb)", mar:"मुद्दा असा आहे की", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"The point is that we need to work harder.",mar:"मुद्दा असा आहे की आपल्याला अधिक कठोर परिश्रम करणे आवश्यक आहे."},
+      {eng:"The point is that honesty matters.",mar:"मुद्दा असा आहे की प्रामाणिकपणा महत्त्वाचा आहे."},
+      {eng:"The point is that she was right.",mar:"मुद्दा असा आहे की ती बरोबर होती."},
+      {eng:"The point is that we should never give up.",mar:"मुद्दा असा आहे की आपण कधीही हार मानू नये."},
+      {eng:"The point is that time is precious.",mar:"मुद्दा असा आहे की वेळ मौल्यवान आहे."},
+      {eng:"The point is that everyone deserves respect.",mar:"मुद्दा असा आहे की प्रत्येकाला आदर मिळायला हवा."},
+      {eng:"The point is that practice makes perfect.",mar:"मुद्दा असा आहे की सराव माणसाला परिपूर्ण बनवतो."},
+      {eng:"The point is that I tried my best.",mar:"मुद्दा असा आहे की मी माझे सर्वोत्तम केले."},
+      {eng:"The point is that we are a team.",mar:"मुद्दा असा आहे की आपण एक संघ आहोत."},
+      {eng:"The point is that he lied to us.",mar:"मुद्दा असा आहे की त्याने आपल्याला खोटे सांगितले."},
+      {eng:"The point is that learning never stops.",mar:"मुद्दा असा आहे की शिकणे कधीच थांबत नाही."},
+      {eng:"The point is that we must act now.",mar:"मुद्दा असा आहे की आपण आत्ता कृती केली पाहिजे."},
+      {eng:"The point is that she didn't try.",mar:"मुद्दा असा आहे की तिने प्रयत्न केला नाही."},
+      {eng:"The point is that money isn't everything.",mar:"मुद्दा असा आहे की पैसाच सर्वस्व नाही."},
+      {eng:"The point is that health comes first.",mar:"मुद्दा असा आहे की आरोग्य सर्वप्रथम आहे."},
+      {eng:"The point is that we made a mistake.",mar:"मुद्दा असा आहे की आपण चूक केली."},
+      {eng:"The point is that he needs our support.",mar:"मुद्दा असा आहे की त्याला आपल्या पाठिंब्याची गरज आहे."},
+      {eng:"The point is that kindness is powerful.",mar:"मुद्दा असा आहे की दयाळूपणा खूप शक्तिशाली आहे."},
+      {eng:"The point is that education is important.",mar:"मुद्दा असा आहे की शिक्षण महत्त्वाचे आहे."},
+      {eng:"The point is that you can do it.",mar:"मुद्दा असा आहे की तुम्ही हे करू शकता."},
+    ]
+  },
+  {
+    id:65, eng:"How was + (noun)", mar:"कसे होते", cat:"How", color:"var(--accent2)",
+    examples:[
+      {eng:"How was your day?",mar:"तुमचा दिवस कसा होता?"},
+      {eng:"How was the exam?",mar:"परीक्षा कशी होती?"},
+      {eng:"How was the trip?",mar:"सहल कशी होती?"},
+      {eng:"How was the food?",mar:"जेवण कसे होते?"},
+      {eng:"How was the movie?",mar:"चित्रपट कसा होता?"},
+      {eng:"How was the match?",mar:"सामना कसा होता?"},
+      {eng:"How was your weekend?",mar:"तुमचा आठवड्याचा शेवट कसा होता?"},
+      {eng:"How was the interview?",mar:"मुलाखत कशी होती?"},
+      {eng:"How was your first day at school?",mar:"शाळेत तुमचा पहिला दिवस कसा होता?"},
+      {eng:"How was the party?",mar:"पार्टी कशी होती?"},
+      {eng:"How was the meeting?",mar:"बैठक कशी होती?"},
+      {eng:"How was the performance?",mar:"सादरीकरण कसे होते?"},
+      {eng:"How was your journey?",mar:"तुमचा प्रवास कसा होता?"},
+      {eng:"How was the speech?",mar:"भाषण कसे होते?"},
+      {eng:"How was the new restaurant?",mar:"नवीन रेस्टॉरंट कसे होते?"},
+      {eng:"How was the weather there?",mar:"तिथले हवामान कसे होते?"},
+      {eng:"How was the class today?",mar:"आजचा वर्ग कसा होता?"},
+      {eng:"How was the hospital?",mar:"रुग्णालय कसे होते?"},
+      {eng:"How was your experience?",mar:"तुमचा अनुभव कसा होता?"},
+      {eng:"How was the farewell function?",mar:"निरोप समारंभ कसा होता?"},
+    ]
+  },
+  {
+    id:66, eng:"How about + (verb-ing)", mar:"असे का नाही करत / काय वाटते", cat:"How", color:"var(--accent2)",
+    examples:[
+      {eng:"How about going for a walk?",mar:"फेरफटक्यासाठी जाणे कसे वाटते?"},
+      {eng:"How about trying a new recipe?",mar:"नवीन रेसिपी करणे कसे वाटते?"},
+      {eng:"How about studying together?",mar:"एकत्र अभ्यास करणे कसे वाटते?"},
+      {eng:"How about ordering pizza?",mar:"पिझ्झा ऑर्डर करणे कसे वाटते?"},
+      {eng:"How about watching a movie tonight?",mar:"आज रात्री चित्रपट पाहणे कसे वाटते?"},
+      {eng:"How about calling him first?",mar:"आधी त्याला फोन करणे कसे वाटते?"},
+      {eng:"How about visiting the museum?",mar:"संग्रहालयाला भेट देणे कसे वाटते?"},
+      {eng:"How about taking a short break?",mar:"थोडी विश्रांती घेणे कसे वाटते?"},
+      {eng:"How about learning a new language?",mar:"नवीन भाषा शिकणे कसे वाटते?"},
+      {eng:"How about meeting this weekend?",mar:"या आठवड्याच्या शेवटी भेटणे कसे वाटते?"},
+      {eng:"How about making tea?",mar:"चहा बनवणे कसे वाटते?"},
+      {eng:"How about planting some flowers?",mar:"काही फुले लावणे कसे वाटते?"},
+      {eng:"How about reading this book?",mar:"हे पुस्तक वाचणे कसे वाटते?"},
+      {eng:"How about going to bed early?",mar:"लवकर झोपणे कसे वाटते?"},
+      {eng:"How about joining the yoga class?",mar:"योगा वर्गात सामील होणे कसे वाटते?"},
+      {eng:"How about playing chess?",mar:"बुद्धिबळ खेळणे कसे वाटते?"},
+      {eng:"How about cooking at home?",mar:"घरी स्वयंपाक करणे कसे वाटते?"},
+      {eng:"How about starting a new habit?",mar:"नवीन सवय सुरू करणे कसे वाटते?"},
+      {eng:"How about writing a letter?",mar:"एक पत्र लिहिणे कसे वाटते?"},
+      {eng:"How about celebrating together?",mar:"एकत्र साजरे करणे कसे वाटते?"},
+    ]
+  },
+  {
+    id:67, eng:"What if + (subject + verb)", mar:"जर असे झाले तर / काय होईल जर", cat:"How", color:"var(--accent2)",
+    examples:[
+      {eng:"What if it rains tomorrow?",mar:"उद्या पाऊस आला तर काय होईल?"},
+      {eng:"What if I miss the bus?",mar:"मी बस चुकलो तर काय होईल?"},
+      {eng:"What if she says no?",mar:"ती नाही म्हणाली तर काय होईल?"},
+      {eng:"What if we start right now?",mar:"आपण आत्ताच सुरुवात केली तर काय होईल?"},
+      {eng:"What if I fail the exam?",mar:"मी परीक्षेत नापास झालो तर काय होईल?"},
+      {eng:"What if we take a different route?",mar:"आपण वेगळा मार्ग घेतला तर काय होईल?"},
+      {eng:"What if he doesn't come?",mar:"तो आला नाही तर काय होईल?"},
+      {eng:"What if I try again?",mar:"मी पुन्हा प्रयत्न केला तर काय होईल?"},
+      {eng:"What if we tell the truth?",mar:"आपण सत्य सांगितले तर काय होईल?"},
+      {eng:"What if it gets worse?",mar:"जर ते आणखी वाईट झाले तर?"},
+      {eng:"What if I apologize?",mar:"मी माफी मागितली तर काय होईल?"},
+      {eng:"What if we ask for help?",mar:"आपण मदत मागितली तर काय होईल?"},
+      {eng:"What if the plan fails?",mar:"योजना अयशस्वी झाली तर काय होईल?"},
+      {eng:"What if I change my mind?",mar:"मी माझे मत बदलले तर काय होईल?"},
+      {eng:"What if you had more time?",mar:"तुमच्याकडे अधिक वेळ असता तर?"},
+      {eng:"What if we do this together?",mar:"आपण हे एकत्र केले तर काय होईल?"},
+      {eng:"What if no one comes?",mar:"कोणी आले नाही तर काय होईल?"},
+      {eng:"What if I say yes?",mar:"मी हो म्हणालो तर काय होईल?"},
+      {eng:"What if things get better?",mar:"जर सगळे सुधारले तर काय होईल?"},
+      {eng:"What if we try a new approach?",mar:"आपण नवीन पद्धत वापरली तर काय होईल?"},
+    ]
+  },
+  {
+    id:68, eng:"How much does it cost to + (verb)", mar:"किती खर्च येतो", cat:"How", color:"var(--accent2)",
+    examples:[
+      {eng:"How much does it cost to fly to Delhi?",mar:"दिल्लीला विमानाने जाण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to learn driving?",mar:"गाडी शिकण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to repair this phone?",mar:"हा फोन दुरुस्त करण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to join the gym?",mar:"जिम जॉईन करण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to study abroad?",mar:"परदेशात शिकण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to build a house?",mar:"घर बांधण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to open a shop?",mar:"दुकान उघडण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to buy this book?",mar:"हे पुस्तक विकत घेण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to visit Mumbai?",mar:"मुंबईला जाण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to host a party?",mar:"पार्टी आयोजित करण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to take this course?",mar:"हा अभ्यासक्रम घेण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to print this?",mar:"हे प्रिंट करण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to ship this parcel?",mar:"हे पार्सल पाठवण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to rent a bike?",mar:"बाईक भाड्याने घेण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to paint the house?",mar:"घर रंगवण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to register the business?",mar:"व्यवसाय नोंदणीसाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to see a doctor?",mar:"डॉक्टरांना भेटण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to install solar panels?",mar:"सौर पॅनेल बसवण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to eat at that restaurant?",mar:"त्या रेस्टॉरंटमध्ये जेवण्यासाठी किती खर्च येतो?"},
+      {eng:"How much does it cost to fix this laptop?",mar:"हा लॅपटॉप दुरुस्त करण्यासाठी किती खर्च येतो?"},
+    ]
+  },
+  {
+    id:69, eng:"How come + (subject + verb)", mar:"मग का / कसे काय", cat:"How", color:"var(--accent2)",
+    examples:[
+      {eng:"How come you are late?",mar:"तुम्हाला उशीर कसा झाला?"},
+      {eng:"How come she knows everything?",mar:"तिला सर्वकाही कसे माहित आहे?"},
+      {eng:"How come he didn't tell me?",mar:"त्याने मला का सांगितले नाही?"},
+      {eng:"How come you didn't come yesterday?",mar:"तुम्ही काल का आला नाहीत?"},
+      {eng:"How come the shop is closed?",mar:"दुकान बंद कसे आहे?"},
+      {eng:"How come you know my name?",mar:"तुम्हाला माझे नाव कसे माहित आहे?"},
+      {eng:"How come no one told us?",mar:"कोणी आम्हाला का सांगितले नाही?"},
+      {eng:"How come it is so expensive?",mar:"ते एवढे महाग कसे आहे?"},
+      {eng:"How come they are not here?",mar:"ते इथे का नाहीत?"},
+      {eng:"How come the train is early?",mar:"रेल्वे लवकर कशी आली?"},
+      {eng:"How come you finished so fast?",mar:"तुम्ही एवढ्या लवकर कसे संपवले?"},
+      {eng:"How come she is always smiling?",mar:"ती नेहमी हसत कशी असते?"},
+      {eng:"How come you don't remember?",mar:"तुम्हाला आठवत कसे नाही?"},
+      {eng:"How come they won so easily?",mar:"ते एवढ्या सहजपणे कसे जिंकले?"},
+      {eng:"How come it works now?",mar:"आता ते कसे काम करत आहे?"},
+      {eng:"How come he got the award?",mar:"त्याला पुरस्कार कसा मिळाला?"},
+      {eng:"How come you are not tired?",mar:"तुम्हाला थकवा कसा येत नाही?"},
+      {eng:"How come we have so much homework?",mar:"आम्हाला एवढा गृहपाठ कसा आहे?"},
+      {eng:"How come it disappeared?",mar:"ते गायब कसे झाले?"},
+      {eng:"How come you don't know this?",mar:"तुम्हाला हे माहित कसे नाही?"},
+    ]
+  },
+  {
+    id:70, eng:"What are the chances of + (verb-ing)", mar:"शक्यता काय आहे", cat:"How", color:"var(--accent2)",
+    examples:[
+      {eng:"What are the chances of winning?",mar:"जिंकण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of getting selected?",mar:"निवड होण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of passing the exam?",mar:"परीक्षा पास होण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of it raining today?",mar:"आज पाऊस पडण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of finding a job?",mar:"नोकरी मिळण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of meeting her again?",mar:"तिला पुन्हा भेटण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of getting a scholarship?",mar:"शिष्यवृत्ती मिळण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of succeeding?",mar:"यश मिळण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of getting promoted?",mar:"पदोन्नती मिळण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of surviving this?",mar:"यातून बाहेर पडण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of making it on time?",mar:"वेळेवर पोहोचण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of getting a discount?",mar:"सवलत मिळण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of it going wrong?",mar:"ते चुकण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of finding the key?",mar:"चावी मिळण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of it working?",mar:"ते काम करण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of her agreeing?",mar:"ती सहमत होण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of getting a table?",mar:"टेबल मिळण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of changing his mind?",mar:"त्याचे मत बदलण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of flying safely?",mar:"सुरक्षितपणे विमानाने जाण्याची शक्यता काय आहे?"},
+      {eng:"What are the chances of that happening again?",mar:"ते पुन्हा घडण्याची शक्यता काय आहे?"},
+    ]
+  },
+  {
+    id:71, eng:"There is something wrong with + (noun)", mar:"यात काहीतरी चुकीचे आहे", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"There is something wrong with my phone.",mar:"माझ्या फोनमध्ये काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with this plan.",mar:"या योजनेत काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with the engine.",mar:"इंजिनमध्ये काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with the answer.",mar:"उत्तरात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with his behaviour.",mar:"त्याच्या वर्तनात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with this sentence.",mar:"या वाक्यात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with the water.",mar:"पाण्यात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with my hearing.",mar:"माझ्या ऐकण्यात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with the system.",mar:"प्रणालीत काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with the electricity.",mar:"विजेत काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with this application.",mar:"या अर्जात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with my eyes.",mar:"माझ्या डोळ्यांमध्ये काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with the food.",mar:"जेवणात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with this machine.",mar:"या यंत्रात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with the connection.",mar:"कनेक्शनमध्ये काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with his thinking.",mar:"त्याच्या विचारसरणीत काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with this door.",mar:"या दरवाजात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with my stomach.",mar:"माझ्या पोटात काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with this calculation.",mar:"या गणनेत काहीतरी चुकीचे आहे."},
+      {eng:"There is something wrong with the schedule.",mar:"वेळापत्रकात काहीतरी चुकीचे आहे."},
+    ]
+  },
+  {
+    id:72, eng:"Let's not + (verb)", mar:"आपण नको करूया", cat:"Let", color:"var(--accent3)",
+    examples:[
+      {eng:"Let's not waste time.",mar:"आपण वेळ वाया घालवूया नको."},
+      {eng:"Let's not argue about this.",mar:"आपण यावर वाद घालूया नको."},
+      {eng:"Let's not forget what happened.",mar:"आपण जे झाले ते विसरूया नको."},
+      {eng:"Let's not make this a big deal.",mar:"आपण याला मोठी गोष्ट बनवूया नको."},
+      {eng:"Let's not tell anyone yet.",mar:"आपण आत्ता कोणाला सांगूया नको."},
+      {eng:"Let's not give up.",mar:"आपण हार मानूया नको."},
+      {eng:"Let's not be late.",mar:"आपण उशीर करूया नको."},
+      {eng:"Let's not eat too much.",mar:"आपण जास्त खाऊया नको."},
+      {eng:"Let's not panic.",mar:"आपण घाबरूया नको."},
+      {eng:"Let's not spend too much money.",mar:"आपण जास्त पैसे खर्च करूया नको."},
+      {eng:"Let's not rush.",mar:"आपण घाई करूया नको."},
+      {eng:"Let's not talk about it now.",mar:"आपण आत्ता त्याबद्दल बोलूया नको."},
+      {eng:"Let's not judge others.",mar:"आपण इतरांवर निर्णय देऊया नको."},
+      {eng:"Let's not blame each other.",mar:"आपण एकमेकांना दोष देऊया नको."},
+      {eng:"Let's not skip this class.",mar:"आपण हा वर्ग चुकवूया नको."},
+      {eng:"Let's not lie about this.",mar:"आपण याबद्दल खोटे बोलूया नको."},
+      {eng:"Let's not ignore the problem.",mar:"आपण समस्येकडे दुर्लक्ष करूया नको."},
+      {eng:"Let's not make the same mistake again.",mar:"आपण तीच चूक पुन्हा करूया नको."},
+      {eng:"Let's not miss this opportunity.",mar:"आपण ही संधी सोडूया नको."},
+      {eng:"Let's not worry too much.",mar:"आपण जास्त काळजी करूया नको."},
+    ]
+  },
+  {
+    id:73, eng:"Let's say that + (subject + verb)", mar:"असे मानूया की", cat:"Let", color:"var(--accent3)",
+    examples:[
+      {eng:"Let's say that you are the teacher.",mar:"असे मानूया की तुम्ही शिक्षक आहात."},
+      {eng:"Let's say that we have only one hour.",mar:"असे मानूया की आपल्याकडे फक्त एक तास आहे."},
+      {eng:"Let's say that he agrees.",mar:"असे मानूया की तो सहमत आहे."},
+      {eng:"Let's say that the plan works.",mar:"असे मानूया की योजना काम करते."},
+      {eng:"Let's say that you get the job.",mar:"असे मानूया की तुम्हाला नोकरी मिळते."},
+      {eng:"Let's say that it rains tomorrow.",mar:"असे मानूया की उद्या पाऊस पडतो."},
+      {eng:"Let's say that I am wrong.",mar:"असे मानूया की मी चुकीचा आहे."},
+      {eng:"Let's say that there are ten students.",mar:"असे मानूया की दहा विद्यार्थी आहेत."},
+      {eng:"Let's say that you win the prize.",mar:"असे मानूया की तुम्ही बक्षीस जिंकता."},
+      {eng:"Let's say that everything goes well.",mar:"असे मानूया की सर्वकाही ठीक होते."},
+      {eng:"Let's say that you have all the money.",mar:"असे मानूया की तुमच्याकडे सर्व पैसे आहेत."},
+      {eng:"Let's say that she doesn't know.",mar:"असे मानूया की तिला माहित नाही."},
+      {eng:"Let's say that we need to change.",mar:"असे मानूया की आपल्याला बदलणे आवश्यक आहे."},
+      {eng:"Let's say that the exam is tomorrow.",mar:"असे मानूया की परीक्षा उद्या आहे."},
+      {eng:"Let's say that I am the manager.",mar:"असे मानूया की मी व्यवस्थापक आहे."},
+      {eng:"Let's say that this costs too much.",mar:"असे मानूया की हे खूप महाग आहे."},
+      {eng:"Let's say that he comes back.",mar:"असे मानूया की तो परत येतो."},
+      {eng:"Let's say that the answer is yes.",mar:"असे मानूया की उत्तर हो आहे."},
+      {eng:"Let's say that you had three options.",mar:"असे मानूया की तुमच्याकडे तीन पर्याय होते."},
+      {eng:"Let's say that we have a second chance.",mar:"असे मानूया की आपल्याला दुसरी संधी मिळते."},
+    ]
+  },
+  {
+    id:74, eng:"There's no need to + (verb)", mar:"करण्याची गरज नाही", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"There's no need to worry.",mar:"काळजी करण्याची गरज नाही."},
+      {eng:"There's no need to apologize.",mar:"माफी मागण्याची गरज नाही."},
+      {eng:"There's no need to rush.",mar:"घाई करण्याची गरज नाही."},
+      {eng:"There's no need to shout.",mar:"ओरडण्याची गरज नाही."},
+      {eng:"There's no need to explain.",mar:"समजावून सांगण्याची गरज नाही."},
+      {eng:"There's no need to cry.",mar:"रडण्याची गरज नाही."},
+      {eng:"There's no need to pay again.",mar:"पुन्हा पैसे देण्याची गरज नाही."},
+      {eng:"There's no need to repeat yourself.",mar:"पुन्हा सांगण्याची गरज नाही."},
+      {eng:"There's no need to lie.",mar:"खोटे बोलण्याची गरज नाही."},
+      {eng:"There's no need to wait.",mar:"वाट पाहण्याची गरज नाही."},
+      {eng:"There's no need to prove anything.",mar:"काहीही सिद्ध करण्याची गरज नाही."},
+      {eng:"There's no need to be nervous.",mar:"घाबरण्याची गरज नाही."},
+      {eng:"There's no need to print this.",mar:"हे प्रिंट करण्याची गरज नाही."},
+      {eng:"There's no need to buy new ones.",mar:"नवीन विकत घेण्याची गरज नाही."},
+      {eng:"There's no need to invite everyone.",mar:"सर्वांना आमंत्रण देण्याची गरज नाही."},
+      {eng:"There's no need to take a taxi.",mar:"टॅक्सी घेण्याची गरज नाही."},
+      {eng:"There's no need to translate this.",mar:"हे भाषांतर करण्याची गरज नाही."},
+      {eng:"There's no need to change the plan.",mar:"योजना बदलण्याची गरज नाही."},
+      {eng:"There's no need to call them.",mar:"त्यांना फोन करण्याची गरज नाही."},
+      {eng:"There's no need to make it complicated.",mar:"ते गुंतागुंतीचे करण्याची गरज नाही."},
+    ]
+  },
+  {
+    id:75, eng:"It takes + (time) + to + (verb)", mar:"यास वेळ लागतो", cat:"It", color:"var(--accent2)",
+    examples:[
+      {eng:"It takes time to learn English.",mar:"इंग्रजी शिकण्यासाठी वेळ लागतो."},
+      {eng:"It takes an hour to reach the station.",mar:"स्थानकावर पोहोचण्यासाठी एक तास लागतो."},
+      {eng:"It takes courage to speak the truth.",mar:"सत्य बोलण्यासाठी धाडस लागते."},
+      {eng:"It takes years to master a skill.",mar:"एखादे कौशल्य आत्मसात करण्यासाठी वर्षे लागतात."},
+      {eng:"It takes two minutes to boil water.",mar:"पाणी उकळण्यासाठी दोन मिनिटे लागतात."},
+      {eng:"It takes patience to teach children.",mar:"मुलांना शिकवण्यासाठी संयम लागतो."},
+      {eng:"It takes practice to become fluent.",mar:"अस्खलित होण्यासाठी सराव लागतो."},
+      {eng:"It takes effort to build a habit.",mar:"सवय तयार करण्यासाठी प्रयत्न लागतात."},
+      {eng:"It takes a lot of money to travel abroad.",mar:"परदेशात जाण्यासाठी खूप पैसे लागतात."},
+      {eng:"It takes ten minutes to walk to school.",mar:"शाळेत चालत जाण्यासाठी दहा मिनिटे लागतात."},
+      {eng:"It takes strength to forgive someone.",mar:"कोणाला माफ करण्यासाठी शक्ती लागते."},
+      {eng:"It takes discipline to wake up early.",mar:"लवकर उठण्यासाठी शिस्त लागते."},
+      {eng:"It takes months to complete this course.",mar:"हा अभ्यासक्रम पूर्ण करण्यासाठी महिने लागतात."},
+      {eng:"It takes a second to make a mistake.",mar:"एक चूक करण्यासाठी फक्त एक क्षण लागतो."},
+      {eng:"It takes hardwork to succeed.",mar:"यशस्वी होण्यासाठी कठोर परिश्रम लागतात."},
+      {eng:"It takes trust to build a relationship.",mar:"नाते बांधण्यासाठी विश्वास लागतो."},
+      {eng:"It takes five hours to drive to Mumbai.",mar:"मुंबईला गाडीने जाण्यासाठी पाच तास लागतात."},
+      {eng:"It takes smart planning to save money.",mar:"पैसे वाचवण्यासाठी चतुर नियोजन लागते."},
+      {eng:"It takes kindness to make friends.",mar:"मित्र बनवण्यासाठी दयाळूपणा लागतो."},
+      {eng:"It takes focus to finish a difficult task.",mar:"कठीण काम पूर्ण करण्यासाठी एकाग्रता लागते."},
+    ]
+  },
+  {
+    id:76, eng:"Please make sure that + (subject + verb)", mar:"कृपया हे नक्की करा", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"Please make sure that you submit the form.",mar:"कृपया तुम्ही फॉर्म सादर करणे नक्की करा."},
+      {eng:"Please make sure that the door is locked.",mar:"कृपया दरवाजा बंद असणे नक्की करा."},
+      {eng:"Please make sure that everyone is present.",mar:"कृपया सर्वजण उपस्थित असणे नक्की करा."},
+      {eng:"Please make sure that you eat on time.",mar:"कृपया तुम्ही वेळेवर जेवणे नक्की करा."},
+      {eng:"Please make sure that the gas is off.",mar:"कृपया गॅस बंद असणे नक्की करा."},
+      {eng:"Please make sure that he gets the message.",mar:"कृपया त्याला संदेश मिळणे नक्की करा."},
+      {eng:"Please make sure that the work is done.",mar:"कृपया काम पूर्ण होणे नक्की करा."},
+      {eng:"Please make sure that you arrive on time.",mar:"कृपया तुम्ही वेळेवर पोहोचणे नक्की करा."},
+      {eng:"Please make sure that children are safe.",mar:"कृपया मुले सुरक्षित असणे नक्की करा."},
+      {eng:"Please make sure that you carry your ID.",mar:"कृपया तुम्ही ओळखपत्र सोबत असणे नक्की करा."},
+      {eng:"Please make sure that the report is ready.",mar:"कृपया अहवाल तयार असणे नक्की करा."},
+      {eng:"Please make sure that you bring your book.",mar:"कृपया तुम्ही पुस्तक आणणे नक्की करा."},
+      {eng:"Please make sure that the lights are off.",mar:"कृपया दिवे बंद असणे नक्की करा."},
+      {eng:"Please make sure that he follows the rules.",mar:"कृपया तो नियम पाळणे नक्की करा."},
+      {eng:"Please make sure that payment is done.",mar:"कृपया पैसे भरणे नक्की करा."},
+      {eng:"Please make sure that no one is left behind.",mar:"कृपया कोणी मागे राहणार नाही याची नक्की करा."},
+      {eng:"Please make sure that the medicine is taken.",mar:"कृपया औषध घेणे नक्की करा."},
+      {eng:"Please make sure that you save your work.",mar:"कृपया तुम्ही काम सेव्ह करणे नक्की करा."},
+      {eng:"Please make sure that the answers are correct.",mar:"कृपया उत्तरे बरोबर असणे नक्की करा."},
+      {eng:"Please make sure that the windows are closed.",mar:"कृपया खिडक्या बंद असणे नक्की करा."},
+    ]
+  },
+  {
+    id:77, eng:"Here's to + (noun)", mar:"याच्यासाठी / हे असो", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"Here's to new beginnings.",mar:"नव्या सुरुवातीसाठी."},
+      {eng:"Here's to our friendship.",mar:"आपल्या मैत्रीसाठी."},
+      {eng:"Here's to good health.",mar:"चांगल्या आरोग्यासाठी."},
+      {eng:"Here's to success.",mar:"यशासाठी."},
+      {eng:"Here's to the future.",mar:"भविष्यासाठी."},
+      {eng:"Here's to all our dreams.",mar:"आपल्या सर्व स्वप्नांसाठी."},
+      {eng:"Here's to the team.",mar:"संघासाठी."},
+      {eng:"Here's to a wonderful year.",mar:"एका अद्भुत वर्षासाठी."},
+      {eng:"Here's to love and happiness.",mar:"प्रेम आणि आनंदासाठी."},
+      {eng:"Here's to hard work and dedication.",mar:"कठोर परिश्रम आणि समर्पणासाठी."},
+      {eng:"Here's to the birthday boy.",mar:"वाढदिवसाच्या मुलासाठी."},
+      {eng:"Here's to a better tomorrow.",mar:"उत्तम उद्यासाठी."},
+      {eng:"Here's to everyone here tonight.",mar:"आज रात्री इथे असलेल्या सर्वांसाठी."},
+      {eng:"Here's to our teachers.",mar:"आपल्या शिक्षकांसाठी."},
+      {eng:"Here's to the winners.",mar:"विजेत्यांसाठी."},
+      {eng:"Here's to a long journey.",mar:"एका मोठ्या प्रवासासाठी."},
+      {eng:"Here's to making memories.",mar:"आठवणी बनवण्यासाठी."},
+      {eng:"Here's to courage.",mar:"धाडसासाठी."},
+      {eng:"Here's to growth and learning.",mar:"वाढ आणि शिकण्यासाठी."},
+      {eng:"Here's to us.",mar:"आपल्यासाठी."},
+    ]
+  },
+  {
+    id:78, eng:"It's no use + (verb-ing)", mar:"करण्यात काही फायदा नाही", cat:"It", color:"var(--accent2)",
+    examples:[
+      {eng:"It's no use crying over spilt milk.",mar:"सांडलेल्या दुधावर रडण्यात काही फायदा नाही."},
+      {eng:"It's no use worrying.",mar:"काळजी करण्यात काही फायदा नाही."},
+      {eng:"It's no use arguing with him.",mar:"त्याच्याशी वाद घालण्यात काही फायदा नाही."},
+      {eng:"It's no use pretending.",mar:"नाटक करण्यात काही फायदा नाही."},
+      {eng:"It's no use running now.",mar:"आता धावण्यात काही फायदा नाही."},
+      {eng:"It's no use complaining.",mar:"तक्रार करण्यात काही फायदा नाही."},
+      {eng:"It's no use blaming others.",mar:"इतरांना दोष देण्यात काही फायदा नाही."},
+      {eng:"It's no use waiting for him.",mar:"त्याची वाट पाहण्यात काही फायदा नाही."},
+      {eng:"It's no use hiding the truth.",mar:"सत्य लपवण्यात काही फायदा नाही."},
+      {eng:"It's no use asking twice.",mar:"दोनदा विचारण्यात काही फायदा नाही."},
+      {eng:"It's no use giving up.",mar:"हार मानण्यात काही फायदा नाही."},
+      {eng:"It's no use shouting at them.",mar:"त्यांच्यावर ओरडण्यात काही फायदा नाही."},
+      {eng:"It's no use repeating it.",mar:"ते पुन्हा पुन्हा सांगण्यात काही फायदा नाही."},
+      {eng:"It's no use feeling sorry now.",mar:"आता वाईट वाटण्यात काही फायदा नाही."},
+      {eng:"It's no use running away.",mar:"पळून जाण्यात काही फायदा नाही."},
+      {eng:"It's no use trying to impress them.",mar:"त्यांना प्रभावित करण्याचा प्रयत्न करण्यात काही फायदा नाही."},
+      {eng:"It's no use explaining to someone stubborn.",mar:"हट्टी माणसाला समजावण्यात काही फायदा नाही."},
+      {eng:"It's no use spending more time on this.",mar:"यावर अधिक वेळ घालवण्यात काही फायदा नाही."},
+      {eng:"It's no use wishing it never happened.",mar:"ते घडलेच नसते असे इच्छिण्यात काही फायदा नाही."},
+      {eng:"It's no use making the same mistake again.",mar:"तीच चूक पुन्हा करण्यात काही फायदा नाही."},
+    ]
+  },
+  {
+    id:79, eng:"There's no way + (subject + verb)", mar:"कोणताही मार्ग नाही", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"There's no way he can do this alone.",mar:"तो एकट्याने हे करू शकतो असा कोणताही मार्ग नाही."},
+      {eng:"There's no way I'm going to fail.",mar:"मी नापास होणार नाही."},
+      {eng:"There's no way she knew about this.",mar:"तिला याबद्दल माहित होते असा कोणताही मार्ग नाही."},
+      {eng:"There's no way we can finish in time.",mar:"आपण वेळेत संपवू शकतो असा कोणताही मार्ग नाही."},
+      {eng:"There's no way this is correct.",mar:"हे बरोबर आहे असा कोणताही मार्ग नाही."},
+      {eng:"There's no way they will agree.",mar:"ते सहमत होतील असा कोणताही मार्ग नाही."},
+      {eng:"There's no way I'm going to give up.",mar:"मी हार मानणार नाही."},
+      {eng:"There's no way out of this problem.",mar:"या समस्येतून बाहेर पडण्याचा कोणताही मार्ग नाही."},
+      {eng:"There's no way you could have known.",mar:"तुम्हाला माहित असणे शक्य नव्हते."},
+      {eng:"There's no way I will let that happen.",mar:"मी ते होऊ देणार नाही."},
+      {eng:"There's no way the story is true.",mar:"ही गोष्ट खरी आहे असा कोणताही मार्ग नाही."},
+      {eng:"There's no way I missed that class.",mar:"मी तो वर्ग चुकवला असा कोणताही मार्ग नाही."},
+      {eng:"There's no way he finished so fast.",mar:"तो एवढ्या लवकर संपवला असा कोणताही मार्ग नाही."},
+      {eng:"There's no way to avoid this.",mar:"याला टाळण्याचा कोणताही मार्ग नाही."},
+      {eng:"There's no way we're going back.",mar:"आपण परत जाणार नाही."},
+      {eng:"There's no way I would do that.",mar:"मी असे करीन असा कोणताही मार्ग नाही."},
+      {eng:"There's no way she passed without studying.",mar:"ती अभ्यासाशिवाय पास झाली असा कोणताही मार्ग नाही."},
+      {eng:"There's no way this will work.",mar:"हे काम करेल असा कोणताही मार्ग नाही."},
+      {eng:"There's no way I'm missing this event.",mar:"हा कार्यक्रम मी चुकवणार नाही."},
+      {eng:"There's no way I can carry all of this.",mar:"मी हे सर्व घेऊन जाऊ शकतो असा कोणताही मार्ग नाही."},
+    ]
+  },
+  {
+    id:80, eng:"It's very kind of you to + (verb)", mar:"तुम्ही करणे खूप दयाळूपणाचे आहे", cat:"It", color:"var(--accent2)",
+    examples:[
+      {eng:"It's very kind of you to help me.",mar:"तुम्ही मला मदत करणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to say that.",mar:"तुम्ही असे म्हणणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to invite us.",mar:"तुम्ही आम्हाला आमंत्रण देणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to share this.",mar:"तुम्ही हे शेअर करणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to wait.",mar:"तुम्ही वाट पाहणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to think of us.",mar:"तुम्ही आमची आठवण ठेवणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to offer.",mar:"तुम्ही ऑफर करणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to explain this.",mar:"तुम्ही हे समजावून सांगणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to come all this way.",mar:"तुम्ही एवढ्या लांबून येणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to remember my birthday.",mar:"तुम्ही माझा वाढदिवस लक्षात ठेवणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to teach me.",mar:"तुम्ही मला शिकवणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to listen.",mar:"तुम्ही ऐकणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to give me a chance.",mar:"तुम्ही मला संधी देणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to care so much.",mar:"तुम्ही एवढी काळजी घेणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to drop me home.",mar:"तुम्ही मला घरी सोडणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to write to me.",mar:"तुम्ही मला पत्र लिहिणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to forgive me.",mar:"तुम्ही मला माफ करणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to bring this.",mar:"तुम्ही हे आणणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to consider my feelings.",mar:"तुम्ही माझ्या भावनांचा विचार करणे खूप दयाळूपणाचे आहे."},
+      {eng:"It's very kind of you to support me.",mar:"तुम्ही माझ्या पाठीशी राहणे खूप दयाळूपणाचे आहे."},
+    ]
+  },
+  {
+    id:81, eng:"There's nothing + (subject) + can + (verb)", mar:"असे काहीही नाही जे करता येईल", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"There's nothing I can do now.",mar:"आता मी काहीही करू शकत नाही."},
+      {eng:"There's nothing you can say to change my mind.",mar:"तुम्ही असे काहीही सांगू शकत नाही जे माझे मत बदलेल."},
+      {eng:"There's nothing she can do about it.",mar:"ती याबद्दल काहीही करू शकत नाही."},
+      {eng:"There's nothing we can prove.",mar:"आपण काहीही सिद्ध करू शकत नाही."},
+      {eng:"There's nothing they can hide.",mar:"ते काहीही लपवू शकत नाहीत."},
+      {eng:"There's nothing he can offer.",mar:"तो काहीही देऊ शकत नाही."},
+      {eng:"There's nothing I can say that will help.",mar:"मी असे काहीही बोलू शकत नाही जे मदत करेल."},
+      {eng:"There's nothing you can do to stop me.",mar:"तुम्ही मला थांबवण्यासाठी काहीही करू शकत नाही."},
+      {eng:"There's nothing he can add.",mar:"तो काहीही अधिक सांगू शकत नाही."},
+      {eng:"There's nothing we can change.",mar:"आपण काहीही बदलू शकत नाही."},
+      {eng:"There's nothing I can remember.",mar:"मला काहीही आठवत नाही."},
+      {eng:"There's nothing she can regret.",mar:"तिला पश्चाताप करण्यासारखे काहीही नाही."},
+      {eng:"There's nothing they can teach me.",mar:"ते मला काहीही शिकवू शकत नाहीत."},
+      {eng:"There's nothing you can lose.",mar:"तुम्हाला काहीही गमावण्यासारखे नाही."},
+      {eng:"There's nothing I can control.",mar:"मी काहीही नियंत्रित करू शकत नाही."},
+      {eng:"There's nothing we can imagine.",mar:"आपण काहीही कल्पना करू शकत नाही."},
+      {eng:"There's nothing he can say now.",mar:"आता तो काहीही बोलू शकत नाही."},
+      {eng:"There's nothing they can take from you.",mar:"ते तुमच्याकडून काहीही घेऊ शकत नाहीत."},
+      {eng:"There's nothing I can bring back.",mar:"मी काहीही परत आणू शकत नाही."},
+      {eng:"There's nothing you can regret.",mar:"तुम्हाला पश्चाताप करण्यासारखे काहीही नाही."},
+    ]
+  },
+  {
+    id:82, eng:"Rumor has it that + (subject + verb)", mar:"असे ऐकले आहे की / अफवा आहे की", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"Rumor has it that he is getting married.",mar:"असे ऐकले आहे की तो लग्न करत आहे."},
+      {eng:"Rumor has it that the school will close.",mar:"अफवा आहे की शाळा बंद होणार आहे."},
+      {eng:"Rumor has it that she won a prize.",mar:"असे ऐकले आहे की तिने बक्षीस जिंकले."},
+      {eng:"Rumor has it that they are moving abroad.",mar:"अफवा आहे की ते परदेशात जात आहेत."},
+      {eng:"Rumor has it that prices will rise.",mar:"असे ऐकले आहे की किंमती वाढतील."},
+      {eng:"Rumor has it that a new shop is opening.",mar:"अफवा आहे की नवीन दुकान उघडत आहे."},
+      {eng:"Rumor has it that the teacher is leaving.",mar:"असे ऐकले आहे की शिक्षक निघून जात आहे."},
+      {eng:"Rumor has it that he got promoted.",mar:"अफवा आहे की त्याला पदोन्नती मिळाली."},
+      {eng:"Rumor has it that there will be a holiday.",mar:"असे ऐकले आहे की सुट्टी असेल."},
+      {eng:"Rumor has it that she wrote a book.",mar:"अफवा आहे की तिने एक पुस्तक लिहिले."},
+      {eng:"Rumor has it that the match is cancelled.",mar:"असे ऐकले आहे की सामना रद्द झाला आहे."},
+      {eng:"Rumor has it that he is very rich.",mar:"अफवा आहे की तो खूप श्रीमंत आहे."},
+      {eng:"Rumor has it that they will announce results today.",mar:"असे ऐकले आहे की आज निकाल जाहीर होतील."},
+      {eng:"Rumor has it that the plan was rejected.",mar:"अफवा आहे की योजना नाकारली गेली."},
+      {eng:"Rumor has it that a celebrity visited.",mar:"असे ऐकले आहे की एक सेलिब्रिटी आली होती."},
+      {eng:"Rumor has it that fees will increase.",mar:"अफवा आहे की शुल्क वाढणार आहे."},
+      {eng:"Rumor has it that he quit his job.",mar:"असे ऐकले आहे की त्याने नोकरी सोडली."},
+      {eng:"Rumor has it that she is the new manager.",mar:"अफवा आहे की ती नवीन व्यवस्थापक आहे."},
+      {eng:"Rumor has it that the project was a success.",mar:"असे ऐकले आहे की प्रकल्प यशस्वी झाला."},
+      {eng:"Rumor has it that there is a surprise party.",mar:"अफवा आहे की एक आश्चर्याची पार्टी आहे."},
+    ]
+  },
+  {
+    id:83, eng:"You seem + (adjective)", mar:"तुम्ही वाटता / दिसता", cat:"You", color:"var(--green)",
+    examples:[
+      {eng:"You seem tired today.",mar:"तुम्ही आज थकलेले वाटता."},
+      {eng:"You seem happy.",mar:"तुम्ही आनंदी वाटता."},
+      {eng:"You seem worried.",mar:"तुम्ही काळजीत वाटता."},
+      {eng:"You seem excited.",mar:"तुम्ही उत्साहित वाटता."},
+      {eng:"You seem busy.",mar:"तुम्ही व्यस्त वाटता."},
+      {eng:"You seem confident.",mar:"तुम्ही आत्मविश्वासू वाटता."},
+      {eng:"You seem upset.",mar:"तुम्ही नाराज वाटता."},
+      {eng:"You seem nervous.",mar:"तुम्ही घाबरलेले वाटता."},
+      {eng:"You seem different today.",mar:"तुम्ही आज वेगळे वाटता."},
+      {eng:"You seem angry.",mar:"तुम्ही रागावलेले वाटता."},
+      {eng:"You seem bored.",mar:"तुम्ही कंटाळलेले वाटता."},
+      {eng:"You seem distracted.",mar:"तुम्ही विचलित वाटता."},
+      {eng:"You seem strong.",mar:"तुम्ही मजबूत वाटता."},
+      {eng:"You seem proud.",mar:"तुम्ही अभिमानी वाटता."},
+      {eng:"You seem curious.",mar:"तुम्ही उत्सुक वाटता."},
+      {eng:"You seem unhappy about this.",mar:"तुम्ही याबद्दल नाखूश वाटता."},
+      {eng:"You seem ready.",mar:"तुम्ही तयार वाटता."},
+      {eng:"You seem surprised.",mar:"तुम्ही आश्चर्यचकित वाटता."},
+      {eng:"You seem okay.",mar:"तुम्ही ठीक वाटता."},
+      {eng:"You seem interested.",mar:"तुम्ही स्वारस्य दाखवत वाटता."},
+    ]
+  },
+  {
+    id:84, eng:"You'd better + (verb)", mar:"तुम्ही करणे चांगले", cat:"You", color:"var(--green)",
+    examples:[
+      {eng:"You'd better study for the exam.",mar:"परीक्षेसाठी अभ्यास करणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better apologize.",mar:"माफी मागणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better leave now.",mar:"आत्ता निघणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better eat something.",mar:"काहीतरी खाणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better tell the truth.",mar:"सत्य सांगणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better hurry.",mar:"घाई करणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better take the medicine.",mar:"औषध घेणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better be careful.",mar:"सावधगिरी बाळगणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better rest.",mar:"आराम करणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better listen to me.",mar:"माझे ऐकणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better check your work.",mar:"तुमचे काम तपासणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better not be late.",mar:"उशीर न करणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better ask the teacher.",mar:"शिक्षकांना विचारणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better finish this today.",mar:"हे आज संपवणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better keep your promise.",mar:"वचन पाळणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better sleep early tonight.",mar:"आज रात्री लवकर झोपणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better bring your ID.",mar:"ओळखपत्र आणणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better speak up.",mar:"बोलणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better not do that again.",mar:"पुन्हा असे न करणे तुमच्यासाठी चांगले आहे."},
+      {eng:"You'd better save some money.",mar:"थोडे पैसे वाचवणे तुमच्यासाठी चांगले आहे."},
+    ]
+  },
+  {
+    id:85, eng:"Are you into + (noun)", mar:"तुम्हाला आवड आहे का", cat:"You", color:"var(--green)",
+    examples:[
+      {eng:"Are you into cricket?",mar:"तुम्हाला क्रिकेटची आवड आहे का?"},
+      {eng:"Are you into music?",mar:"तुम्हाला संगीताची आवड आहे का?"},
+      {eng:"Are you into cooking?",mar:"तुम्हाला स्वयंपाकाची आवड आहे का?"},
+      {eng:"Are you into reading?",mar:"तुम्हाला वाचनाची आवड आहे का?"},
+      {eng:"Are you into photography?",mar:"तुम्हाला छायाचित्रणाची आवड आहे का?"},
+      {eng:"Are you into painting?",mar:"तुम्हाला चित्रकलेची आवड आहे का?"},
+      {eng:"Are you into gaming?",mar:"तुम्हाला गेमिंगची आवड आहे का?"},
+      {eng:"Are you into travelling?",mar:"तुम्हाला प्रवासाची आवड आहे का?"},
+      {eng:"Are you into yoga?",mar:"तुम्हाला योगाची आवड आहे का?"},
+      {eng:"Are you into gardening?",mar:"तुम्हाला बागकामाची आवड आहे का?"},
+      {eng:"Are you into technology?",mar:"तुम्हाला तंत्रज्ञानाची आवड आहे का?"},
+      {eng:"Are you into dancing?",mar:"तुम्हाला नृत्याची आवड आहे का?"},
+      {eng:"Are you into football?",mar:"तुम्हाला फुटबॉलची आवड आहे का?"},
+      {eng:"Are you into writing?",mar:"तुम्हाला लेखनाची आवड आहे का?"},
+      {eng:"Are you into filmmaking?",mar:"तुम्हाला चित्रपट निर्मितीची आवड आहे का?"},
+      {eng:"Are you into poetry?",mar:"तुम्हाला कवितेची आवड आहे का?"},
+      {eng:"Are you into astronomy?",mar:"तुम्हाला खगोलशास्त्राची आवड आहे का?"},
+      {eng:"Are you into fitness?",mar:"तुम्हाला तंदुरुस्तीची आवड आहे का?"},
+      {eng:"Are you into meditation?",mar:"तुम्हाला ध्यानाची आवड आहे का?"},
+      {eng:"Are you into fashion?",mar:"तुम्हाला फॅशनची आवड आहे का?"},
+    ]
+  },
+  {
+    id:86, eng:"Are you trying to + (verb)", mar:"तुम्ही प्रयत्न करत आहात का", cat:"You", color:"var(--green)",
+    examples:[
+      {eng:"Are you trying to learn English?",mar:"तुम्ही इंग्रजी शिकण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to help me?",mar:"तुम्ही मला मदत करण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to say something?",mar:"तुम्ही काहीतरी सांगण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to make me laugh?",mar:"तुम्ही मला हसवण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to fix this?",mar:"तुम्ही हे दुरुस्त करण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to avoid me?",mar:"तुम्ही मला टाळण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to impress her?",mar:"तुम्ही तिला प्रभावित करण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to find a solution?",mar:"तुम्ही उपाय शोधण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to finish early?",mar:"तुम्ही लवकर संपवण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to change your habits?",mar:"तुम्ही तुमच्या सवयी बदलण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to lose weight?",mar:"तुम्ही वजन कमी करण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to get my attention?",mar:"तुम्ही माझे लक्ष वेधण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to call him?",mar:"तुम्ही त्याला फोन करण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to understand this?",mar:"तुम्ही हे समजून घेण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to save money?",mar:"तुम्ही पैसे वाचवण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to tell me something?",mar:"तुम्ही मला काहीतरी सांगण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to sleep?",mar:"तुम्ही झोपण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to make things better?",mar:"तुम्ही गोष्टी सुधारण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to remember?",mar:"तुम्ही आठवण्याचा प्रयत्न करत आहात का?"},
+      {eng:"Are you trying to write a story?",mar:"तुम्ही कथा लिहिण्याचा प्रयत्न करत आहात का?"},
+    ]
+  },
+  {
+    id:87, eng:"Please + (verb)", mar:"कृपया / please करा", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"Please sit down.",mar:"कृपया बसा."},
+      {eng:"Please be quiet.",mar:"कृपया शांत व्हा."},
+      {eng:"Please help me.",mar:"कृपया मला मदत करा."},
+      {eng:"Please listen carefully.",mar:"कृपया लक्षपूर्वक ऐका."},
+      {eng:"Please come on time.",mar:"कृपया वेळेवर या."},
+      {eng:"Please do not disturb.",mar:"कृपया त्रास देऊ नका."},
+      {eng:"Please write your name here.",mar:"कृपया इथे तुमचे नाव लिहा."},
+      {eng:"Please turn off your phone.",mar:"कृपया तुमचा फोन बंद करा."},
+      {eng:"Please close the door.",mar:"कृपया दरवाजा बंद करा."},
+      {eng:"Please speak slowly.",mar:"कृपया हळू बोला."},
+      {eng:"Please repeat that.",mar:"कृपया ते पुन्हा सांगा."},
+      {eng:"Please wait a moment.",mar:"कृपया एक क्षण थांबा."},
+      {eng:"Please bring your books.",mar:"कृपया तुमची पुस्तके आणा."},
+      {eng:"Please send me the details.",mar:"कृपया मला तपशील पाठवा."},
+      {eng:"Please don't be late.",mar:"कृपया उशीर करू नका."},
+      {eng:"Please take care of yourself.",mar:"कृपया स्वतःची काळजी घ्या."},
+      {eng:"Please read this carefully.",mar:"कृपया हे काळजीपूर्वक वाचा."},
+      {eng:"Please accept my apology.",mar:"कृपया माझी माफी स्वीकारा."},
+      {eng:"Please give me a chance.",mar:"कृपया मला एक संधी द्या."},
+      {eng:"Please try to understand.",mar:"कृपया समजून घेण्याचा प्रयत्न करा."},
+    ]
+  },
+  {
+    id:88, eng:"Don't + (verb)", mar:"करू नका", cat:"Misc", color:"var(--orange)",
+    examples:[
+      {eng:"Don't worry.",mar:"काळजी करू नका."},
+      {eng:"Don't give up.",mar:"हार मानू नका."},
+      {eng:"Don't be late.",mar:"उशीर करू नका."},
+      {eng:"Don't shout.",mar:"ओरडू नका."},
+      {eng:"Don't lie.",mar:"खोटे बोलू नका."},
+      {eng:"Don't forget.",mar:"विसरू नका."},
+      {eng:"Don't touch this.",mar:"हे स्पर्श करू नका."},
+      {eng:"Don't run in the corridor.",mar:"कॉरिडॉरमध्ये धावू नका."},
+      {eng:"Don't eat too much.",mar:"जास्त खाऊ नका."},
+      {eng:"Don't waste water.",mar:"पाणी वाया घालवू नका."},
+      {eng:"Don't make noise.",mar:"आवाज करू नका."},
+      {eng:"Don't sleep in class.",mar:"वर्गात झोपू नका."},
+      {eng:"Don't copy from others.",mar:"दुसऱ्यांकडून नक्कल करू नका."},
+      {eng:"Don't miss this chance.",mar:"ही संधी सोडू नका."},
+      {eng:"Don't talk while eating.",mar:"जेवताना बोलू नका."},
+      {eng:"Don't interrupt.",mar:"मध्येच बोलू नका."},
+      {eng:"Don't be rude.",mar:"उद्धट वागू नका."},
+      {eng:"Don't look back.",mar:"मागे पाहू नका."},
+      {eng:"Don't tell anyone.",mar:"कोणाला सांगू नका."},
+      {eng:"Don't blame yourself.",mar:"स्वतःला दोष देऊ नका."},
+    ]
+  },
+  {
+    id:89, eng:"Do you like", mar:"तुम्हाला आवडते का", cat:"You", color:"var(--green)",
+    examples:[
+      {eng:"Do you like English?",mar:"तुम्हाला इंग्रजी आवडते का?"},
+      {eng:"Do you like cricket?",mar:"तुम्हाला क्रिकेट आवडते का?"},
+      {eng:"Do you like reading books?",mar:"तुम्हाला पुस्तके वाचणे आवडते का?"},
+      {eng:"Do you like cooking?",mar:"तुम्हाला स्वयंपाक करणे आवडते का?"},
+      {eng:"Do you like rainy weather?",mar:"तुम्हाला पावसाळी हवामान आवडते का?"},
+      {eng:"Do you like singing?",mar:"तुम्हाला गाणे आवडते का?"},
+      {eng:"Do you like this colour?",mar:"तुम्हाला हा रंग आवडतो का?"},
+      {eng:"Do you like travelling?",mar:"तुम्हाला प्रवास करणे आवडते का?"},
+      {eng:"Do you like spicy food?",mar:"तुम्हाला तिखट जेवण आवडते का?"},
+      {eng:"Do you like playing chess?",mar:"तुम्हाला बुद्धिबळ खेळणे आवडते का?"},
+      {eng:"Do you like listening to music?",mar:"तुम्हाला संगीत ऐकणे आवडते का?"},
+      {eng:"Do you like the new teacher?",mar:"तुम्हाला नवीन शिक्षक आवडतात का?"},
+      {eng:"Do you like this story?",mar:"तुम्हाला ही कथा आवडते का?"},
+      {eng:"Do you like early mornings?",mar:"तुम्हाला सकाळची वेळ आवडते का?"},
+      {eng:"Do you like watching movies?",mar:"तुम्हाला चित्रपट पाहणे आवडते का?"},
+      {eng:"Do you like helping others?",mar:"तुम्हाला इतरांना मदत करणे आवडते का?"},
+      {eng:"Do you like drawing?",mar:"तुम्हाला चित्र काढणे आवडते का?"},
+      {eng:"Do you like this city?",mar:"तुम्हाला हे शहर आवडते का?"},
+      {eng:"Do you like learning new things?",mar:"तुम्हाला नवीन गोष्टी शिकणे आवडते का?"},
+      {eng:"Do you like this song?",mar:"तुम्हाला हे गाणे आवडते का?"},
+    ]
+  },
 ];
 
 
@@ -3182,6 +4419,7 @@ const CAT_META={
   'It'  :{color:'var(--accent2)',  bg:'rgba(64,200,240,.08)', border:'rgba(64,200,240,.3)',  label:'It  ·  ते'},
   'Let' :{color:'var(--accent3)',  bg:'rgba(192,64,240,.08)', border:'rgba(192,64,240,.3)',  label:'Let  ·  करू दे'},
   'Can' :{color:'var(--green)',    bg:'rgba(64,240,160,.08)', border:'rgba(64,240,160,.3)',  label:'Can  ·  शकतो'},
+  'How' :{color:'var(--accent2)',  bg:'rgba(64,200,240,.08)', border:'rgba(64,200,240,.3)',  label:'How / What / Why  ·  कसे / काय / का'},
   'Misc':{color:'var(--orange)',   bg:'rgba(240,160,96,.08)', border:'rgba(240,160,96,.3)',  label:'Misc  ·  इतर'},
 };
 /* Patch cat/color onto original 29 patterns that were created before cat was added */
@@ -3202,7 +4440,7 @@ function renderIpatSelector(){
   const g=document.getElementById('ipatSelector');
   if(!g) return;
   /* Group by cat */
-  const order=['I','You','It','Let','Can','Misc'];
+  const order=['I','You','It','Let','Can','How','Misc'];
   const groups={};
   I_PATTERNS.forEach(p=>{ (groups[p.cat]=groups[p.cat]||[]).push(p); });
   let html='';
@@ -3295,8 +4533,162 @@ function coloriseIpat(eng, cat){
 }
 
 /* ════════════════════════════════════════════════════════
-   INIT
+   AI CHAT — इंग्रजी शिक्षक
 ════════════════════════════════════════════════════════ */
+const CHAT_SYSTEM = `You are an expert English language tutor for Marathi-speaking students in Maharashtra, India. 
+Your role is to help them learn English through clear, bilingual explanations.
+
+RULES:
+- Always respond in BOTH English AND Marathi (Devanagari script)
+- Use simple, everyday language that Marathi-medium students can understand
+- Give concrete sentence examples for every rule or concept
+- Use **bold** for important English words/patterns
+- Use *italics* for Marathi translations of key terms  
+- Highlight patterns like: "Subject + Verb + Object"
+- Keep responses focused and practical — students want to USE English, not just know theory
+- When giving examples, always show: English sentence → मराठी अर्थ
+- Be encouraging and supportive — learning a new language takes courage
+- If asked in Marathi, respond primarily in Marathi with English explanations
+- Format lists clearly with numbers or bullets
+- Keep responses concise but complete (aim for 150-300 words)`;
+
+let chatHistory = [];
+let chatBusy = false;
+
+function chatTimestamp(){
+  const d = new Date();
+  return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}
+
+function appendMsg(role, html, ts){
+  const win = document.getElementById('chatWindow');
+  // Remove welcome screen on first message
+  const welcome = win.querySelector('.chat-welcome');
+  if(welcome) welcome.remove();
+
+  const isUser = role === 'user';
+  const avatar = isUser ? '👤' : '🤖';
+  const div = document.createElement('div');
+  div.className = `chat-msg ${role}`;
+  div.innerHTML = `
+    <div class="chat-avatar">${avatar}</div>
+    <div>
+      <div class="chat-bubble">${html}</div>
+      <div class="chat-ts">${ts}</div>
+    </div>`;
+  win.appendChild(div);
+  win.scrollTop = win.scrollHeight;
+  return div;
+}
+
+function showTyping(){
+  const win = document.getElementById('chatWindow');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ai';
+  div.id = 'chatTypingIndicator';
+  div.innerHTML = `
+    <div class="chat-avatar">🤖</div>
+    <div class="chat-bubble">
+      <div class="chat-typing"><span></span><span></span><span></span></div>
+    </div>`;
+  win.appendChild(div);
+  win.scrollTop = win.scrollHeight;
+}
+
+function removeTyping(){
+  document.getElementById('chatTypingIndicator')?.remove();
+}
+
+function escapeHtml(t){
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function markdownToHtml(text){
+  // Convert markdown-ish formatting to HTML
+  return text
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em style="color:var(--accent2);font-style:normal">$1</em>')
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/^### (.+)$/gm,'<strong style="color:var(--accent);font-size:13px;display:block;margin:8px 0 4px">$1</strong>')
+    .replace(/^## (.+)$/gm,'<strong style="color:var(--accent);font-size:14px;display:block;margin:8px 0 4px">$1</strong>')
+    .replace(/^- (.+)$/gm,'<li>$1</li>')
+    .replace(/^(\d+)\. (.+)$/gm,'<li><strong style="color:var(--accent2)">$1.</strong> $2</li>')
+    .replace(/(<li>.*<\/li>(\n|$))+/g, m=>`<ul style="padding-left:16px;margin:6px 0">${m}</ul>`)
+    .replace(/→/g,'<span style="color:var(--accent2)">→</span>')
+    .replace(/↳/g,'<span style="color:var(--orange)">↳</span>')
+    .replace(/---/g,'<hr>')
+    .replace(/\n\n/g,'</p><p style="margin-top:6px">')
+    .replace(/\n/g,'<br>');
+}
+
+async function sendChat(){
+  if(chatBusy) return;
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+
+  // Show user message
+  appendMsg('user', escapeHtml(text), chatTimestamp());
+  chatHistory.push({role:'user', content: text});
+  input.value = '';
+  input.style.height = 'auto';
+
+  // Disable send
+  chatBusy = true;
+  const btn = document.getElementById('chatSendBtn');
+  btn.disabled = true;
+  document.getElementById('chatSendIcon').textContent = '⏳';
+
+  showTyping();
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: CHAT_SYSTEM,
+        messages: chatHistory.map(m => ({role: m.role, content: m.content}))
+      })
+    });
+
+    const data = await response.json();
+
+    if(data.error){
+      removeTyping();
+      appendMsg('ai',`<div class="chat-error">⚠️ Error: ${escapeHtml(data.error.message||'Something went wrong. Please try again.')}</div>`, chatTimestamp());
+    } else {
+      const reply = data.content?.[0]?.text || '';
+      chatHistory.push({role:'assistant', content: reply});
+      removeTyping();
+      appendMsg('ai', `<p>${markdownToHtml(reply)}</p>`, chatTimestamp());
+    }
+  } catch(err) {
+    removeTyping();
+    appendMsg('ai',`<div class="chat-error">⚠️ Connection error. Please check your internet and try again.</div>`, chatTimestamp());
+  }
+
+  chatBusy = false;
+  btn.disabled = false;
+  document.getElementById('chatSendIcon').textContent = '➤';
+  document.getElementById('chatInput').focus();
+}
+
+function chatQuickPrompt(text){
+  document.getElementById('chatInput').value = text;
+  sendChat();
+}
+
+/* Auto-resize textarea */
+document.addEventListener('DOMContentLoaded', ()=>{
+  const ta = document.getElementById('chatInput');
+  if(ta) ta.addEventListener('input', function(){
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+});
+
 document.addEventListener('DOMContentLoaded',()=>{
   initVerbDict();
   renderTenses();
@@ -3314,6 +4706,133 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('v3').value='written';
   document.getElementById('vmar').value='लिहिणे';
 });
+
+/* ════════════════════════════════════════════════════════
+   THEME SWITCHER
+════════════════════════════════════════════════════════ */
+function setTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.theme === theme);
+  });
+  try{ localStorage.setItem('hub-theme', theme); }catch(e){}
+}
+// Load saved theme
+(function(){
+  try{
+    const saved = localStorage.getItem('hub-theme');
+    if(saved) setTheme(saved);
+  }catch(e){}
+})();
+
+/* ════════════════════════════════════════════════════════
+   PROGRESS TRACKER
+════════════════════════════════════════════════════════ */
+const PROG = {
+  sentences: parseInt(localStorage.getItem('hub-sentences')||'0'),
+  quizScore:  parseInt(localStorage.getItem('hub-quizScore')||'0'),
+  quizTotal:  parseInt(localStorage.getItem('hub-quizTotal')||'0'),
+  chats:      parseInt(localStorage.getItem('hub-chats')||'0'),
+  streak:     parseInt(localStorage.getItem('hub-streak')||'1'),
+};
+function updateProgressUI(){
+  const pct = PROG.quizTotal>0 ? Math.round((PROG.quizScore/PROG.quizTotal)*100) : 0;
+  const levels=[['Beginner',0],['Elementary',20],['Intermediate',50],['Advanced',75],['Expert',90]];
+  const level = levels.filter(l=>pct>=l[1]).pop()[0];
+  const el = id=>document.getElementById(id);
+  if(el('streakVal')) el('streakVal').textContent = PROG.streak;
+  if(el('sentVal'))   el('sentVal').textContent   = PROG.sentences;
+  if(el('quizVal'))   el('quizVal').textContent   = pct+'%';
+  if(el('levelVal'))  el('levelVal').textContent  = level;
+  if(el('chatVal'))   el('chatVal').textContent   = PROG.chats;
+}
+function trackSentence(){
+  PROG.sentences++;
+  try{localStorage.setItem('hub-sentences', PROG.sentences);}catch(e){}
+  updateProgressUI();
+}
+function trackQuiz(score, total){
+  PROG.quizScore = score; PROG.quizTotal = total;
+  try{localStorage.setItem('hub-quizScore',score);localStorage.setItem('hub-quizTotal',total);}catch(e){}
+  updateProgressUI();
+}
+function trackChat(){
+  PROG.chats++;
+  try{localStorage.setItem('hub-chats', PROG.chats);}catch(e){}
+  updateProgressUI();
+}
+
+/* ════════════════════════════════════════════════════════
+   HOME TAB — switchTabById helper
+════════════════════════════════════════════════════════ */
+function switchTabById(tabId){
+  // find nav button with onclick matching tabId
+  const btn = [...document.querySelectorAll('.nav-tab')].find(b=>b.getAttribute('onclick')?.includes(tabId));
+  if(btn) switchTab(tabId, btn);
+  // also update bottom nav
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tabId));
+}
+
+/* ════════════════════════════════════════════════════════
+   MICRO ANIMATIONS — confetti on correct quiz answer
+════════════════════════════════════════════════════════ */
+function launchConfetti(){
+  const colors=['var(--accent)','var(--accent2)','var(--accent3)','var(--green)','var(--orange)'];
+  for(let i=0;i<18;i++){
+    const c=document.createElement('div');
+    const size=6+Math.random()*8;
+    c.style.cssText=`position:fixed;width:${size}px;height:${size}px;border-radius:${Math.random()>.5?'50%':'2px'};background:${colors[i%colors.length]};top:50%;left:${30+Math.random()*40}%;z-index:9999;pointer-events:none;animation:confettiFall ${0.8+Math.random()*.6}s ease forwards;animation-delay:${Math.random()*.2}s`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 1400);
+  }
+}
+// Add confetti keyframe CSS dynamically
+const confettiStyle=document.createElement('style');
+confettiStyle.textContent='@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(-120px) rotate(360deg);opacity:0}}';
+document.head.appendChild(confettiStyle);
+
+/* Patch answerQuiz to launch confetti + track score */
+const _origAnswerQuiz = typeof answerQuiz !== 'undefined' ? answerQuiz : null;
+if(typeof answerQuiz !== 'undefined'){
+  const _orig = answerQuiz;
+  window.answerQuiz = function(idx){
+    _orig(idx);
+    const q=QUIZ[qIdx];
+    if(idx===q.ans) launchConfetti();
+  };
+}
+
+/* Patch generateSentences to track count */
+if(typeof generateSentences !== 'undefined'){
+  const _origGen = generateSentences;
+  window.generateSentences = function(){
+    _origGen();
+    trackSentence();
+  };
+}
+
+/* Patch sendChat to track chats */
+if(typeof sendChat !== 'undefined'){
+  const _origSend = sendChat;
+  window.sendChat = function(){
+    trackChat();
+    return _origSend();
+  };
+}
+
+// Init progress UI
+document.addEventListener('DOMContentLoaded', updateProgressUI);
 </script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bnav-btn" data-tab="tab-home"     onclick="switchTabById('tab-home')">    <span class="bnav-icon">🏠</span>Home</button>
+    <button class="bnav-btn" data-tab="tab-gen"      onclick="switchTabById('tab-gen')">     <span class="bnav-icon">✍️</span>Generate</button>
+    <button class="bnav-btn" data-tab="tab-patterns" onclick="switchTabById('tab-patterns')"><span class="bnav-icon">📐</span>Patterns</button>
+    <button class="bnav-btn" data-tab="tab-quiz"     onclick="switchTabById('tab-quiz')">    <span class="bnav-icon">🧠</span>Quiz</button>
+    <button class="bnav-btn" data-tab="tab-chat"     onclick="switchTabById('tab-chat')">    <span class="bnav-icon">🤖</span>AI Chat</button>
+  </div>
+</nav>
 </body>
 </html>
