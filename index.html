@@ -14,6 +14,7 @@
   --accent:#f0c040;--accent2:#40c8f0;--accent3:#c040f0;
   --text:#e8e8f4;--muted:#6060a0;--green:#40f0a0;--orange:#f0a060;--red:#f07070;
   --shadow:rgba(0,0,0,.4);--grid-color:rgba(240,192,64,.025);
+  --h1-mid:#e8e8ff;
   --nav-bg:var(--surface);--header-grad:rgba(240,192,64,.07);
 }
 [data-theme="light"]{
@@ -21,6 +22,7 @@
   --accent:#2563eb;--accent2:#0891b2;--accent3:#7c3aed;
   --text:#1e293b;--muted:#64748b;--green:#059669;--orange:#ea580c;--red:#dc2626;
   --shadow:rgba(37,99,235,.12);--grid-color:rgba(37,99,235,.04);
+  --h1-mid:#1e40af;
   --nav-bg:#ffffff;--header-grad:rgba(37,99,235,.06);
 }
 [data-theme="gradient"]{
@@ -28,6 +30,7 @@
   --accent:#fb923c;--accent2:#a78bfa;--accent3:#f472b6;
   --text:#f1e8ff;--muted:#9d77cc;--green:#34d399;--orange:#fb923c;--red:#f87171;
   --shadow:rgba(251,146,60,.2);--grid-color:rgba(167,139,250,.04);
+  --h1-mid:#f9d0ff;
   --nav-bg:var(--surface);--header-grad:rgba(167,139,250,.08);
 }
 [data-theme="classroom"]{
@@ -35,6 +38,7 @@
   --accent:#8b5e3c;--accent2:#2e7d32;--accent3:#6a1b9a;
   --text:#3e2a1a;--muted:#8a7060;--green:#2e7d32;--orange:#e65100;--red:#c62828;
   --shadow:rgba(139,94,60,.15);--grid-color:rgba(139,94,60,.04);
+  --h1-mid:#5c3a1e;
   --nav-bg:#fffef8;--header-grad:rgba(139,94,60,.05);
 }
 [data-theme="minimal"]{
@@ -42,8 +46,90 @@
   --accent:#4a6cf7;--accent2:#7b61ff;--accent3:#ff8a00;
   --text:#0f172a;--muted:#94a3b8;--green:#10b981;--orange:#f59e0b;--red:#ef4444;
   --shadow:rgba(74,108,247,.1);--grid-color:rgba(74,108,247,.03);
+  --h1-mid:#3730a3;
   --nav-bg:#ffffff;--header-grad:rgba(74,108,247,.04);
 }
+
+/* ══════════════════════════════════════════════════
+   PER-THEME COMPONENT OVERRIDES
+   Ensures text, buttons, and UI elements are
+   always readable across all 5 themes
+══════════════════════════════════════════════════ */
+
+/* ── LIGHT theme overrides ── */
+[data-theme="light"] .header-tag { color: var(--accent); }
+[data-theme="light"] .subtitle   { color: var(--muted); }
+[data-theme="light"] .theme-btn  { color: #475569; background: #f8faff; border-color: #cbd5e1; }
+[data-theme="light"] .theme-btn:hover,
+[data-theme="light"] .theme-btn.active { color: var(--accent); border-color: var(--accent); background: #eff6ff; }
+[data-theme="light"] .theme-bar  { background: #eef2ff; }
+[data-theme="light"] .theme-bar-label { color: #475569; }
+[data-theme="light"] .nav-tab    { color: #475569; }
+[data-theme="light"] .nav-tab:hover  { color: #1e293b; background: #f0f4ff; border-color: #cbd5e1; }
+[data-theme="light"] .nav-tab.active { color: var(--accent); background: #eff6ff; border-color: var(--accent); }
+[data-theme="light"] .progress-pill  { background: #f0f4ff; border-color: #cbd5e1; }
+[data-theme="light"] .progress-pill span { color: #1e293b; }
+[data-theme="light"] .section-tag { color: var(--accent); opacity: 0.7; }
+[data-theme="light"] header { background: linear-gradient(180deg,rgba(37,99,235,.06) 0%,transparent 100%); }
+
+/* ── CLASSROOM theme overrides ── */
+[data-theme="classroom"] .header-tag { color: #8b5e3c; }
+[data-theme="classroom"] .subtitle   { color: #8a7060; }
+[data-theme="classroom"] .theme-btn  { color: #5c3a1e; background: #fdf8f0; border-color: #d4c49a; }
+[data-theme="classroom"] .theme-btn:hover,
+[data-theme="classroom"] .theme-btn.active { color: #8b5e3c; border-color: #8b5e3c; background: #f5ebe0; }
+[data-theme="classroom"] .theme-bar  { background: #f5ebe0; border-bottom-color: #d4c49a; }
+[data-theme="classroom"] .nav-tab    { color: #8a7060; }
+[data-theme="classroom"] .nav-tab:hover  { color: #3e2a1a; background: #f5ebe0; }
+[data-theme="classroom"] .nav-tab.active { color: #8b5e3c; background: #f5ebe0; border-color: #8b5e3c; }
+[data-theme="classroom"] .progress-pill  { background: #fdf8f0; border-color: #d4c49a; }
+[data-theme="classroom"] .section-tag { color: #8b5e3c; }
+[data-theme="classroom"] header { background: linear-gradient(180deg,rgba(139,94,60,.07) 0%,transparent 100%); }
+
+/* ── MINIMAL theme overrides ── */
+[data-theme="minimal"] .header-tag { color: var(--accent); }
+[data-theme="minimal"] .subtitle   { color: var(--muted); }
+[data-theme="minimal"] .theme-btn  { color: #475569; background: #f8fafc; border-color: #e2e8f0; }
+[data-theme="minimal"] .theme-btn:hover,
+[data-theme="minimal"] .theme-btn.active { color: var(--accent); border-color: var(--accent); background: #eef2ff; }
+[data-theme="minimal"] .theme-bar  { background: #f8fafc; border-bottom-color: #e2e8f0; }
+[data-theme="minimal"] .nav-tab    { color: #64748b; }
+[data-theme="minimal"] .nav-tab:hover  { color: #0f172a; background: #f1f5f9; }
+[data-theme="minimal"] .nav-tab.active { color: var(--accent); background: #eef2ff; border-color: var(--accent); }
+[data-theme="minimal"] .progress-pill  { background: #f8fafc; border-color: #e2e8f0; }
+[data-theme="minimal"] .section-tag { color: var(--accent); }
+
+/* ── GRADIENT theme overrides ── */
+[data-theme="gradient"] .theme-btn  { color: #c4b5fd; border-color: #4c1d95; background: rgba(109,40,217,.2); }
+[data-theme="gradient"] .theme-btn:hover,
+[data-theme="gradient"] .theme-btn.active { color: #fb923c; border-color: #fb923c; }
+[data-theme="gradient"] .nav-tab    { color: #9d77cc; }
+[data-theme="gradient"] .nav-tab:hover  { color: #f1e8ff; }
+[data-theme="gradient"] .nav-tab.active { color: #fb923c; border-color: #fb923c; background: rgba(251,146,60,.1); }
+
+/* ── DARK theme (ensure clean defaults) ── */
+[data-theme="dark"] .theme-btn  { color: var(--muted); }
+[data-theme="dark"] .theme-btn:hover,
+[data-theme="dark"] .theme-btn.active { color: var(--accent); border-color: var(--accent); }
+[data-theme="dark"] .nav-tab    { color: var(--muted); }
+[data-theme="dark"] .nav-tab.active { color: var(--accent); border-color: rgba(240,192,64,.4); background: rgba(240,192,64,.08); }
+
+/* ── All light-bg themes: fix card/table readability ── */
+[data-theme="light"] .master-table th,
+[data-theme="classroom"] .master-table th,
+[data-theme="minimal"] .master-table th  { background: var(--surface); }
+
+[data-theme="light"] .group-header td,
+[data-theme="classroom"] .group-header td,
+[data-theme="minimal"] .group-header td  { background: var(--surface); }
+
+[data-theme="light"] .ref-panel,
+[data-theme="classroom"] .ref-panel,
+[data-theme="minimal"] .ref-panel { border-color: var(--border); }
+
+/* ── Legend dots always match theme accent ── */
+.legend-item { color: var(--muted); }
+
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid-color)1px,transparent 1px),linear-gradient(90deg,var(--grid-color)1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
@@ -54,7 +140,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .theme-bar-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;white-space:nowrap;}
 .theme-btn{display:flex;align-items:center;gap:5px;border:1.5px solid var(--border);border-radius:20px;padding:5px 12px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;background:var(--card);transition:all .2s;white-space:nowrap;}
 .theme-btn:hover,.theme-btn.active{color:var(--accent);border-color:var(--accent);}
-.theme-swatch{width:10px;height:10px;border-radius:50%;}
+.theme-swatch{width:14px;height:14px;border-radius:4px;flex-shrink:0;border:1px solid rgba(128,128,128,.2);}
 
 /* ── PROGRESS STRIP ── */
 .progress-strip{display:flex;gap:10px;padding:8px 32px;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;z-index:2;flex-wrap:wrap;}
@@ -72,7 +158,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 ═══════════════════════════════════════════════════ */
 header{position:relative;z-index:2;padding:28px 32px 18px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--header-grad,rgba(240,192,64,.07))0%,transparent 100%);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:14px;}
 .header-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;opacity:.7;}
-h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:900;line-height:1.1;background:linear-gradient(135deg,var(--accent)0%,#fff 45%,var(--accent2)100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:900;line-height:1.1;background:linear-gradient(135deg,var(--accent)0%,var(--h1-mid)45%,var(--accent2)100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .subtitle{margin-top:6px;color:var(--muted);font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:.5px;}
 .legend{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
 .legend-item{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--muted);}
@@ -789,7 +875,11 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
 .home-card-phrasal{--hc1:var(--orange);   --hc2:var(--red);}
 .home-card-pattern{--hc1:var(--accent2);  --hc2:var(--accent3);}
 .home-card-quiz   {--hc1:var(--red);      --hc2:var(--orange);}
-.home-card-chat   {--hc1:var(--accent3);  --hc2:var(--accent);}
+.home-card-chat      {--hc1:var(--accent3);  --hc2:var(--accent);}
+.home-card-vocab    {--hc1:var(--green);    --hc2:var(--accent2);}
+.home-card-challenge{--hc1:var(--orange);   --hc2:var(--red);}
+.home-card-fixer    {--hc1:var(--accent2);  --hc2:var(--green);}
+.home-card-games    {--hc1:var(--accent3);  --hc2:var(--accent2);}
 
 /* Stats row */
 .home-stats-row{display:flex;align-items:center;justify-content:center;gap:0;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;flex-wrap:wrap;gap:0;}
@@ -814,6 +904,285 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
   .bottom-nav{display:block;}
   main{padding-bottom:80px;}
 }
+
+/* ═══════════════════════════════════════════════════
+   VOCABULARY BUILDER
+═══════════════════════════════════════════════════ */
+.vocab-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.vcat-btn{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .2s;}
+.vcat-btn:hover,.vcat-btn.active{color:var(--accent);border-color:var(--accent);background:rgba(240,192,64,.08);}
+[data-theme="light"] .vcat-btn:hover,[data-theme="light"] .vcat-btn.active{background:rgba(37,99,235,.08);}
+[data-theme="minimal"] .vcat-btn:hover,[data-theme="minimal"] .vcat-btn.active{background:rgba(74,108,247,.08);}
+
+.word-of-day{background:linear-gradient(135deg,rgba(240,192,64,.12),rgba(64,200,240,.08));border:1.5px solid rgba(240,192,64,.3);border-radius:18px;padding:24px 28px;margin-bottom:24px;position:relative;overflow:hidden;}
+[data-theme="light"] .word-of-day,[data-theme="minimal"] .word-of-day{background:linear-gradient(135deg,rgba(37,99,235,.07),rgba(8,145,178,.05));border-color:rgba(37,99,235,.25);}
+[data-theme="classroom"] .word-of-day{background:linear-gradient(135deg,rgba(139,94,60,.1),rgba(46,125,50,.07));border-color:rgba(139,94,60,.3);}
+[data-theme="gradient"] .word-of-day{background:linear-gradient(135deg,rgba(251,146,60,.12),rgba(167,139,250,.1));border-color:rgba(251,146,60,.3);}
+.word-of-day::before{content:'⭐';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:60px;opacity:.08;}
+.wod-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:10px;}
+.wod-word{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:900;color:var(--accent);line-height:1.1;margin-bottom:4px;}
+.wod-phonetic{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent2);margin-bottom:10px;}
+.wod-meaning{font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);margin-bottom:8px;line-height:1.5;}
+.wod-example{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);font-style:italic;margin-bottom:14px;}
+.wod-next-btn{background:var(--accent);color:#000;border:none;border-radius:10px;padding:8px 20px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;transition:all .2s;font-weight:600;}
+.wod-next-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:24px;}
+.vocab-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;transition:all .2s;position:relative;}
+.vocab-card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 24px var(--shadow,rgba(0,0,0,.2));}
+.vocab-card.learned{border-color:var(--green);background:rgba(64,240,160,.05);}
+[data-theme="light"] .vocab-card.learned,[data-theme="minimal"] .vocab-card.learned{background:rgba(5,150,105,.05);}
+.vc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;}
+.vc-word{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--accent);}
+.vc-pos{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent2);background:rgba(64,200,240,.1);border-radius:6px;padding:2px 8px;}
+.vc-phonetic{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:8px;}
+.vc-meaning-en{font-size:14px;color:var(--text);margin-bottom:4px;line-height:1.4;}
+.vc-meaning-mar{font-size:13px;color:var(--orange);margin-bottom:10px;}
+.vc-example{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);border-left:2px solid var(--accent);padding-left:10px;margin-bottom:10px;line-height:1.5;font-style:italic;}
+.vc-synonyms{font-size:11px;color:var(--muted);}
+.vc-synonyms strong{color:var(--green);}
+.vc-antonyms{font-size:11px;color:var(--muted);}
+.vc-antonyms strong{color:var(--red);}
+.vc-learn-btn{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--muted);cursor:pointer;transition:all .2s;}
+.vc-learn-btn:hover{border-color:var(--green);color:var(--green);}
+.vocab-card.learned .vc-learn-btn{background:rgba(64,240,160,.1);border-color:var(--green);color:var(--green);}
+[data-theme="light"] .vc-pos{background:rgba(8,145,178,.1);}
+[data-theme="minimal"] .vc-pos{background:rgba(123,97,255,.1);}
+
+.vocab-progress-bar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;}
+.vpb-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:8px;}
+.vpb-track{background:var(--border);border-radius:6px;height:8px;}
+.vpb-fill{background:linear-gradient(90deg,var(--green),var(--accent2));height:8px;border-radius:6px;transition:width .4s ease;}
+
+/* ═══════════════════════════════════════════════════
+   30-DAY CHALLENGE
+═══════════════════════════════════════════════════ */
+.chal-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.chal-stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;}
+.chal-stat-val{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--accent);line-height:1;}
+.chal-stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:.5px;}
+@media(max-width:600px){.chal-stats{grid-template-columns:repeat(2,1fr);}}
+
+.chal-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-bottom:24px;}
+@media(max-width:700px){.chal-grid{grid-template-columns:repeat(6,1fr);}}
+@media(max-width:400px){.chal-grid{grid-template-columns:repeat(5,1fr);}}
+.chal-day-btn{aspect-ratio:1;background:var(--card);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+.chal-day-btn:hover{border-color:var(--accent);color:var(--accent);}
+.chal-day-btn.active{border-color:var(--accent);background:rgba(240,192,64,.12);color:var(--accent);}
+.chal-day-btn.done{background:rgba(64,240,160,.1);border-color:var(--green);color:var(--green);}
+.chal-day-btn.locked{opacity:.35;cursor:not-allowed;}
+.chal-day-num{font-size:13px;font-weight:700;}
+.chal-day-icon{font-size:12px;margin-top:2px;}
+
+.chal-task-panel{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;}
+.chal-task-header{background:linear-gradient(135deg,rgba(240,192,64,.1),rgba(64,200,240,.06));border-bottom:1px solid var(--border);padding:18px 24px;display:flex;align-items:baseline;gap:14px;}
+[data-theme="light"] .chal-task-header,[data-theme="minimal"] .chal-task-header{background:linear-gradient(135deg,rgba(37,99,235,.06),rgba(8,145,178,.04));}
+.chal-task-day{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;}
+.chal-task-topic{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);}
+.chal-task-body{padding:20px 24px;}
+.chal-task-body p{font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;color:var(--text);margin-bottom:10px;}
+.chal-task-body .chal-examples{background:var(--surface);border-radius:10px;padding:14px;margin-top:12px;}
+.chal-task-body .chal-ex-row{font-family:'IBM Plex Mono',monospace;font-size:12px;margin-bottom:6px;color:var(--muted);}
+.chal-task-body .chal-ex-row strong{color:var(--accent2);}
+.chal-task-input-row{display:flex;gap:10px;padding:0 24px 20px;align-items:flex-end;}
+.chal-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);resize:none;outline:none;transition:border-color .2s;line-height:1.5;}
+.chal-input:focus{border-color:var(--accent);}
+.chal-submit-btn{background:linear-gradient(135deg,var(--accent),var(--orange));color:#000;border:none;border-radius:12px;padding:12px 22px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.chal-submit-btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
+.chal-submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.chal-feedback{margin:0 24px 20px;padding:14px 18px;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.6;}
+.chal-feedback.success{background:rgba(64,240,160,.1);border:1px solid var(--green);color:var(--text);}
+.chal-feedback.loading{background:rgba(64,200,240,.08);border:1px solid var(--accent2);color:var(--muted);}
+
+/* ═══════════════════════════════════════════════════
+   GRAMMAR FIXER
+═══════════════════════════════════════════════════ */
+.fixer-wrap{display:flex;flex-direction:column;gap:18px;}
+.fixer-input-box{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;}
+.fixer-input-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:1px;margin-bottom:10px;}
+.fixer-textarea{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);resize:vertical;outline:none;transition:border-color .2s;line-height:1.6;}
+.fixer-textarea:focus{border-color:var(--accent);}
+.fixer-btn-row{display:flex;gap:10px;margin-top:12px;}
+.fixer-btn{background:linear-gradient(135deg,var(--accent2),var(--accent3));color:#fff;border:none;border-radius:12px;padding:11px 24px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.fixer-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+[data-theme="light"] .fixer-btn,[data-theme="minimal"] .fixer-btn{color:#fff;}
+.fixer-clear-btn{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:11px 18px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s;}
+.fixer-clear-btn:hover{border-color:var(--red);color:var(--red);}
+.fixer-examples{margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.fixer-eg-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap;}
+.fixer-eg-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:4px 12px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;transition:all .2s;}
+.fixer-eg-btn:hover{border-color:var(--accent2);color:var(--accent2);}
+
+.fixer-result{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;}
+.fixer-loading{display:flex;flex-direction:column;align-items:center;gap:12px;padding:20px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;}
+.fixer-dots{display:flex;gap:6px;}
+.fixer-dots span{width:8px;height:8px;border-radius:50%;background:var(--accent2);animation:typingBounce 1.2s ease-in-out infinite;}
+.fixer-dots span:nth-child(2){animation-delay:.2s;}
+.fixer-dots span:nth-child(3){animation-delay:.4s;}
+
+/* Fixer output blocks */
+.fixer-corrected{background:rgba(64,240,160,.07);border:1px solid var(--green);border-radius:12px;padding:16px;margin-bottom:16px;}
+[data-theme="light"] .fixer-corrected,[data-theme="minimal"] .fixer-corrected{background:rgba(5,150,105,.06);}
+.fixer-corrected-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:1.5px;margin-bottom:8px;}
+.fixer-corrected-text{font-size:16px;font-family:'DM Sans',sans-serif;color:var(--text);font-weight:500;line-height:1.5;}
+.fixer-corrected-text mark{background:rgba(64,240,160,.25);color:var(--green);border-radius:4px;padding:0 3px;}
+[data-theme="light"] .fixer-corrected-text mark,[data-theme="minimal"] .fixer-corrected-text mark{background:rgba(5,150,105,.15);}
+
+.fixer-errors-list{margin-bottom:16px;}
+.fixer-error-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;border-left:3px solid var(--red);}
+.fixer-err-wrong{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--red);text-decoration:line-through;margin-bottom:4px;}
+.fixer-err-right{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);margin-bottom:6px;}
+.fixer-err-explain{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);line-height:1.5;}
+.fixer-err-explain-mar{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--orange);margin-top:4px;}
+
+.fixer-no-errors{text-align:center;padding:24px;color:var(--green);}
+.fixer-no-errors .fixer-check-icon{font-size:40px;margin-bottom:8px;}
+
+.fixer-history{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;}
+.fixer-history-title{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1.5px;margin-bottom:14px;}
+.fixer-hist-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;}
+.fixer-hist-item:hover{border-color:var(--accent2);}
+.fixer-hist-orig{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);margin-bottom:4px;}
+.fixer-hist-fixed{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);}
+
+/* ═══════════════════════════════════════════════════
+   WORD GAMES
+═══════════════════════════════════════════════════ */
+.game-selector{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:20px;}
+.game-tile{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .25s;text-align:center;}
+.game-tile:hover,.game-tile.active-game{border-color:var(--accent);background:rgba(240,192,64,.07);transform:translateY(-2px);}
+[data-theme="light"] .game-tile:hover,[data-theme="light"] .game-tile.active-game{background:rgba(37,99,235,.06);}
+[data-theme="minimal"] .game-tile:hover,[data-theme="minimal"] .game-tile.active-game{background:rgba(74,108,247,.06);}
+.game-tile-icon{font-size:28px;margin-bottom:8px;}
+.game-tile-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--accent);margin-bottom:4px;}
+.game-tile-desc{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);}
+
+.game-score-bar{display:flex;align-items:center;gap:20px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 20px;margin-bottom:20px;flex-wrap:wrap;}
+.game-score-item{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);}
+.game-score-item strong{color:var(--accent);}
+.game-reset-btn{margin-left:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:7px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .2s;}
+.game-reset-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.game-arena{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;min-height:320px;}
+.game-question{font-family:'Playfair Display',serif;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--text);margin-bottom:20px;line-height:1.4;}
+.game-question strong{color:var(--accent2);}
+
+/* Scramble */
+.scramble-word-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.scramble-slot{min-width:44px;height:44px;background:var(--surface);border:1.5px dashed var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted);transition:all .2s;cursor:pointer;}
+.scramble-slot.filled{border-style:solid;border-color:var(--accent2);color:var(--text);background:rgba(64,200,240,.08);}
+.scramble-slot.correct{border-color:var(--green);color:var(--green);background:rgba(64,240,160,.1);}
+.scramble-slot.wrong{border-color:var(--red);color:var(--red);animation:shake .3s ease;}
+.scramble-words-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.scramble-word-chip{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text);cursor:pointer;transition:all .2s;user-select:none;}
+.scramble-word-chip:hover{border-color:var(--accent);color:var(--accent);}
+.scramble-word-chip.used{opacity:.3;cursor:not-allowed;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* Word Match */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.match-col-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;margin-bottom:8px;text-align:center;}
+.match-item{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);cursor:pointer;transition:all .2s;text-align:center;min-height:44px;display:flex;align-items:center;justify-content:center;}
+.match-item:hover{border-color:var(--accent2);}
+.match-item.selected{border-color:var(--accent);background:rgba(240,192,64,.1);color:var(--accent);}
+.match-item.matched{border-color:var(--green);background:rgba(64,240,160,.1);color:var(--green);cursor:default;}
+.match-item.wrong-flash{border-color:var(--red);background:rgba(240,112,112,.1);animation:shake .3s ease;}
+
+/* Fill in blank */
+.fill-sentence{font-size:18px;font-family:'DM Sans',sans-serif;color:var(--text);margin-bottom:18px;line-height:1.8;}
+.fill-blank{display:inline-block;min-width:100px;border-bottom:2px solid var(--accent);padding:0 8px;font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--accent2);vertical-align:bottom;text-align:center;}
+.fill-options{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.fill-option{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:9px 18px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text);cursor:pointer;transition:all .2s;}
+.fill-option:hover{border-color:var(--accent2);}
+.fill-option.correct{border-color:var(--green);background:rgba(64,240,160,.1);color:var(--green);}
+.fill-option.wrong{border-color:var(--red);background:rgba(240,112,112,.08);color:var(--red);}
+
+/* Meaning game */
+.meaning-word{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:6px;}
+.meaning-phonetic{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent2);margin-bottom:16px;}
+.meaning-options{display:flex;flex-direction:column;gap:10px;}
+.meaning-opt{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);cursor:pointer;transition:all .2s;text-align:left;}
+.meaning-opt:hover{border-color:var(--accent2);}
+.meaning-opt.correct{border-color:var(--green);background:rgba(64,240,160,.1);color:var(--green);}
+.meaning-opt.wrong{border-color:var(--red);background:rgba(240,112,112,.08);color:var(--red);}
+
+/* Shared game elements */
+.game-next-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;border:none;border-radius:12px;padding:11px 26px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;cursor:pointer;margin-top:16px;transition:all .2s;}
+.game-next-btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
+.game-result-badge{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:20px;margin-left:8px;}
+.game-result-badge.correct{background:rgba(64,240,160,.15);color:var(--green);}
+.game-result-badge.wrong{background:rgba(240,112,112,.12);color:var(--red);}
+.game-mar-hint{font-size:12px;color:var(--orange);margin-top:6px;font-family:'DM Sans',sans-serif;}
+
+
+/* ═══════════════════════════════════════════════════
+   SENTENCE ANALYSER  — AI Structural Breakdown
+═══════════════════════════════════════════════════ */
+.analyse-strip{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:16px;position:relative;overflow:hidden;}
+.analyse-strip::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));}
+.analyse-hd{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.analyse-hd span{font-size:14px;}
+.analyse-sent-display{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--accent);margin-bottom:18px;line-height:1.4;letter-spacing:.3px;}
+.analyse-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px;}
+.analyse-part{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;position:relative;overflow:hidden;}
+.analyse-part::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ap-color,var(--accent));}
+.analyse-part-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;}
+.analyse-part-value{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--ap-color,var(--accent));margin-bottom:3px;}
+.analyse-part-mar{font-size:11px;color:var(--orange);font-style:italic;}
+.analyse-part-note{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.4;}
+.analyse-formula{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:14px;line-height:1.8;letter-spacing:.3px;}
+.analyse-formula .af-sub{color:var(--red);}
+.analyse-formula .af-help{color:var(--accent2);}
+.analyse-formula .af-verb{color:var(--green);}
+.analyse-formula .af-obj{color:var(--accent3);}
+.analyse-formula .af-rem{color:var(--orange);}
+.analyse-formula .af-plus{color:var(--muted);margin:0 4px;}
+.analyse-maravali{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--accent2);background:rgba(64,200,240,.06);border:1px solid rgba(64,200,240,.15);border-radius:8px;padding:10px 14px;margin-bottom:10px;}
+.analyse-empty{text-align:center;padding:32px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;}
+.analyse-loading{text-align:center;padding:24px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:1px;}
+
+/* Smart Analyse bar above the table */
+.smart-analyse-bar{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px;flex-wrap:wrap;}
+.smart-analyse-input{flex:1;min-width:220px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s;}
+.smart-analyse-input:focus{border-color:rgba(240,192,64,.4);}
+.smart-analyse-btn{background:linear-gradient(135deg,var(--accent),var(--orange));color:#000;border:none;border-radius:10px;padding:11px 22px;font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;font-weight:700;letter-spacing:.5px;white-space:nowrap;transition:all .2s;}
+.smart-analyse-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(240,192,64,.35);}
+
+/* Row analyse button inside table */
+.row-analyse-btn{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 9px;border-radius:6px;border:1px solid rgba(240,192,64,.3);background:rgba(240,192,64,.07);color:var(--accent);cursor:pointer;letter-spacing:.5px;transition:all .18s;margin-left:6px;}
+.row-analyse-btn:hover{background:rgba(240,192,64,.18);border-color:var(--accent);}
+
+/* Analyse part color tokens */
+.ap-sub{--ap-color:var(--red);}
+.ap-help{--ap-color:var(--accent2);}
+.ap-verb{--ap-color:var(--green);}
+.ap-obj{--ap-color:var(--accent3);}
+.ap-rem{--ap-color:var(--orange);}
+.ap-full{--ap-color:var(--accent);}
+
+
+/* ══ Structured sentence colour-coded display ══ */
+.structured-sent{display:inline-flex;flex-wrap:wrap;gap:4px;align-items:baseline;margin-bottom:4px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;line-height:1.6;}
+.w-sub {color:var(--red);}
+.w-help{color:var(--accent2);}
+.w-verb{color:var(--green);}
+.w-obj {color:var(--accent3);}
+.w-rem {color:var(--orange);font-weight:400;font-style:italic;}
+.w-dot {color:var(--muted);}
+
+/* ══ Structured table part cells ══ */
+.sc-sub {color:var(--red);    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;}
+.sc-help{color:var(--accent2);font-family:'IBM Plex Mono',monospace;font-size:12px;}
+.sc-verb{color:var(--green);  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;}
+.sc-obj {color:var(--accent3);font-family:'IBM Plex Mono',monospace;font-size:12px;}
+.sc-rem {color:var(--orange); font-family:'IBM Plex Mono',monospace;font-size:11px;}
+
+/* wider table */
+.structured-table th,.structured-table td{vertical-align:top;padding:10px 12px;}
+.structured-table th{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;}
+
+/* formula bar legend update */
+.f-rem{color:var(--orange);font-weight:700;}
 </style>
 </head>
 <body>
@@ -837,10 +1206,10 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
 <!-- THEME BAR -->
 <div class="theme-bar">
   <span class="theme-bar-label">🎨 THEME</span>
-  <button class="theme-btn active" data-theme="dark"    onclick="setTheme('dark')"     ><span class="theme-swatch" style="background:#f0c040"></span>🌙 Dark</button>
-  <button class="theme-btn"        data-theme="light"   onclick="setTheme('light')"    ><span class="theme-swatch" style="background:#2563eb"></span>🌞 Light</button>
-  <button class="theme-btn"        data-theme="gradient" onclick="setTheme('gradient')" ><span class="theme-swatch" style="background:linear-gradient(135deg,#a78bfa,#fb923c)"></span>🌈 Gradient</button>
-  <button class="theme-btn"        data-theme="classroom" onclick="setTheme('classroom')"><span class="theme-swatch" style="background:#8b5e3c"></span>📚 Classroom</button>
+  <button class="theme-btn active" data-theme="dark"    onclick="setTheme('dark')"     ><span class="theme-swatch" style="background:linear-gradient(135deg,#08080f 50%,#f0c040 50%)"></span>🌙 Dark</button>
+  <button class="theme-btn"        data-theme="light"   onclick="setTheme('light')"    ><span class="theme-swatch" style="background:linear-gradient(135deg,#f0f4ff 50%,#2563eb 50%)"></span>🌞 Light</button>
+  <button class="theme-btn"        data-theme="gradient" onclick="setTheme('gradient')" ><span class="theme-swatch" style="background:linear-gradient(135deg,#0f0728,#fb923c,#a78bfa)"></span>🌈 Gradient</button>
+  <button class="theme-btn"        data-theme="classroom" onclick="setTheme('classroom')"><span class="theme-swatch" style="background:linear-gradient(135deg,#fdf8f0 50%,#8b5e3c 50%)"></span>📚 Classroom</button>
   <button class="theme-btn"        data-theme="minimal" onclick="setTheme('minimal')"  ><span class="theme-swatch" style="background:#4a6cf7"></span>🧩 Minimal</button>
 </div>
 
@@ -864,6 +1233,11 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
   <button class="nav-tab" onclick="switchTab('tab-patterns',this)">📐 Sentence Patterns</button>
   <button class="nav-tab" onclick="switchTab('tab-quiz',this)">🧠 Grammar Quiz</button>
   <button class="nav-tab" onclick="switchTab('tab-chat',this)">🤖 AI Chat</button>
+  <button class="nav-tab" onclick="switchTab('tab-vocab',this)">📚 Vocabulary</button>
+  <button class="nav-tab" onclick="switchTab('tab-games',this)">🎮 Word Games</button>
+  <button class="nav-tab" onclick="switchTab('tab-correct',this)">✅ Grammar Check</button>
+  <button class="nav-tab" onclick="switchTab('tab-challenge',this)">🏆 30-Day Challenge</button>
+  <button class="nav-tab" onclick="switchTab('tab-convo',this)">🗣️ Conversation</button>
 </nav>
 
 <main>
@@ -932,6 +1306,36 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
       <div class="home-card-title">AI Chat Tutor</div>
       <div class="home-card-desc">Ask anything in Marathi or English · मराठीत विचारा</div>
       <div class="home-card-tag">POWERED BY AI</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+  </div>
+
+    <div class="home-card home-card-vocab" onclick="switchTabById('tab-vocab')">
+      <div class="home-card-icon">📖</div>
+      <div class="home-card-title">Vocabulary Builder</div>
+      <div class="home-card-desc">Daily words with meaning, usage & synonyms · शब्दसंग्रह</div>
+      <div class="home-card-tag">200+ WORDS</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-challenge" onclick="switchTabById('tab-challenge')">
+      <div class="home-card-icon">🔥</div>
+      <div class="home-card-title">30-Day Challenge</div>
+      <div class="home-card-desc">Structured daily tasks · ३० दिवसांचे इंग्रजी आव्हान</div>
+      <div class="home-card-tag">30 DAYS</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-fixer" onclick="switchTabById('tab-fixer')">
+      <div class="home-card-icon">🔧</div>
+      <div class="home-card-title">Grammar Fixer</div>
+      <div class="home-card-desc">AI detects & explains your mistakes · व्याकरण दुरुस्ती</div>
+      <div class="home-card-tag">AI POWERED</div>
+      <div class="home-card-arrow">→</div>
+    </div>
+    <div class="home-card home-card-games" onclick="switchTabById('tab-games')">
+      <div class="home-card-icon">🎮</div>
+      <div class="home-card-title">Word Games</div>
+      <div class="home-card-desc">Scramble · Match · Fill-in-the-blank · खेळत शिका</div>
+      <div class="home-card-tag">4 GAMES</div>
       <div class="home-card-arrow">→</div>
     </div>
   </div>
@@ -1082,12 +1486,22 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
     <div class="formula-bar">
       <span class="f-sub">Subject (कर्ता)</span><span class="f-plus">+</span>
       <span class="f-help">Helping / Modal Verb</span><span class="f-plus">+</span>
-      <span class="f-verb">Verb (V1 / V2 / V3 / V-ing)</span><span class="f-plus">+</span>
-      <span class="f-obj">Object (कर्म)</span>
+      <span class="f-verb">Main Verb (V1/V2/V3/V-ing)</span><span class="f-plus">+</span>
+      <span class="f-obj">Object (कर्म)</span><span class="f-plus">+</span>
+      <span class="f-rem">Remaining Part (वेळ · ठिकाण · कारण · पद्धत)</span>
     </div>
   </div>
 
-  <div id="output-wrapper">
+  <!-- ═══ SMART ANALYSE BAR ═══ -->
+<div class="smart-analyse-bar" style="margin-top:18px;">
+  <input class="smart-analyse-input" id="analyseInput" 
+    placeholder="Paste or type any sentence here to analyse its structure… e.g. She will write a long letter tonight."
+    onkeydown="if(event.key==='Enter')analyseSentence()"/>
+  <button class="smart-analyse-btn" onclick="analyseSentence()">🧩 Analyse Sentence</button>
+</div>
+<div id="analysePanel"></div>
+
+<div id="output-wrapper">
     <div class="stats-bar">
       <div class="stat"><div class="stat-value" id="stat-total">0</div><div class="stat-label">Total Sentences</div></div>
       <div class="stat"><div class="stat-value" id="stat-subjects">11</div><div class="stat-label">Subjects</div></div>
@@ -1357,7 +1771,7 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
     <button class="chat-chip" onclick="chatQuickPrompt('Explain passive voice with 5 examples in English and Marathi.')">🔄 Passive Voice</button>
     <button class="chat-chip" onclick="chatQuickPrompt('Give me 5 polite ways to make requests in English with Marathi translation.')">🙏 Polite Requests</button>
     <button class="chat-chip" onclick="chatQuickPrompt('What are conditionals in English? Explain all 4 types with Marathi examples.')">❓ Conditionals</button>
-    <button class="chat-chip" onclick="chatQuickPrompt('What is the difference between can and could ? Give Marathi examples.')">🎯 can vs could</button>
+    <button class="chat-chip" onclick="chatQuickPrompt('What is the difference between can and could? Give Marathi examples.')">🎯 can vs could</button>
   </div>
 
   <!-- Chat window -->
@@ -1377,6 +1791,193 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
     </button>
   </div>
   <div class="chat-footer-note">Press Enter to send · Shift+Enter for new line · Powered by Claude AI</div>
+</div>
+
+<!-- ═══════════════════════════ TAB: VOCABULARY BUILDER ═══════════════════════════ -->
+<div id="tab-vocab" class="tab-content">
+  <div class="section-title">📖 Vocabulary Builder<span class="section-badge">Daily Words</span></div>
+  <p class="section-desc">Learn 5 new words every day — meaning, example, synonyms & antonyms in English & Marathi</p>
+
+  <!-- Category Filter -->
+  <div class="vocab-cats">
+    <button class="vcat-btn active" onclick="filterVocab('all',this)">All Words</button>
+    <button class="vcat-btn" onclick="filterVocab('daily',this)">🌅 Daily Life</button>
+    <button class="vcat-btn" onclick="filterVocab('emotion',this)">❤️ Emotions</button>
+    <button class="vcat-btn" onclick="filterVocab('work',this)">💼 Work</button>
+    <button class="vcat-btn" onclick="filterVocab('academic',this)">📚 Academic</button>
+    <button class="vcat-btn" onclick="filterVocab('nature',this)">🌿 Nature</button>
+  </div>
+
+  <!-- Word of the Day Banner -->
+  <div class="word-of-day" id="wordOfDay">
+    <div class="wod-label">⭐ WORD OF THE DAY</div>
+    <div class="wod-word" id="wodWord">Persevere</div>
+    <div class="wod-phonetic" id="wodPhon">/ˌpɜːrsɪˈvɪər/</div>
+    <div class="wod-meaning" id="wodMean">To continue despite difficulty · अडचणींवर मात करत पुढे जाणे</div>
+    <div class="wod-example" id="wodEx">"I will persevere and achieve my goal."</div>
+    <button class="wod-next-btn" onclick="nextWordOfDay()">Next Word →</button>
+  </div>
+
+  <!-- Vocab Grid -->
+  <div class="vocab-grid" id="vocabGrid"></div>
+
+  <!-- Learned counter -->
+  <div class="vocab-progress-bar">
+    <div class="vpb-label"><span id="learnedCount">0</span> words learned this session</div>
+    <div class="vpb-track"><div class="vpb-fill" id="vpbFill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ TAB: 30-DAY CHALLENGE ═══════════════════════════ -->
+<div id="tab-challenge" class="tab-content">
+  <div class="section-title">🔥 30-Day English Challenge<span class="section-badge">Streak Builder</span></div>
+  <p class="section-desc">Complete one task every day for 30 days and master English · ३० दिवस, ३० आव्हाने</p>
+
+  <!-- Streak & Stats Bar -->
+  <div class="chal-stats">
+    <div class="chal-stat"><div class="chal-stat-val" id="chalStreak">0</div><div class="chal-stat-lbl">🔥 Current Streak</div></div>
+    <div class="chal-stat"><div class="chal-stat-val" id="chalDone">0</div><div class="chal-stat-lbl">✅ Days Done</div></div>
+    <div class="chal-stat"><div class="chal-stat-val" id="chalPoints">0</div><div class="chal-stat-lbl">🏆 Points</div></div>
+    <div class="chal-stat"><div class="chal-stat-val" id="chalBadge">—</div><div class="chal-stat-lbl">🎖️ Badge</div></div>
+  </div>
+
+  <!-- Day Calendar Grid -->
+  <div class="chal-grid" id="chalGrid"></div>
+
+  <!-- Active Day Task -->
+  <div class="chal-task-panel" id="chalTaskPanel">
+    <div class="chal-task-header">
+      <div class="chal-task-day" id="chalTaskDay">Day 1</div>
+      <div class="chal-task-topic" id="chalTaskTopic">Introductions</div>
+    </div>
+    <div class="chal-task-body" id="chalTaskBody"></div>
+    <div class="chal-task-input-row">
+      <textarea class="chal-input" id="chalInput" rows="3" placeholder="Write your answer here in English..."></textarea>
+      <button class="chal-submit-btn" id="chalSubmitBtn" onclick="submitChalDay()">✓ Complete Day</button>
+    </div>
+    <div class="chal-feedback" id="chalFeedback" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ TAB: GRAMMAR FIXER ═══════════════════════════ -->
+<div id="tab-correct" class="tab-content">
+  <div class="section-title">🔧 Grammar Fixer<span class="section-badge">AI Powered</span></div>
+  <p class="section-desc">Type any English sentence — AI will find mistakes, explain them in Marathi, and show the corrected version</p>
+
+  <div class="fixer-wrap">
+    <!-- Input area -->
+    <div class="fixer-input-box">
+      <div class="fixer-input-label">✏️ Your sentence (इंग्रजी वाक्य लिहा)</div>
+      <textarea class="fixer-textarea" id="fixerInput" rows="4" placeholder="Example: He go to school everyday. / I have went to market yesterday."></textarea>
+      <div class="fixer-btn-row">
+        <button class="fixer-btn" onclick="fixGrammar()">🔍 Check & Fix Grammar</button>
+        <button class="fixer-clear-btn" onclick="clearFixer()">✕ Clear</button>
+      </div>
+      <!-- Quick examples -->
+      <div class="fixer-examples">
+        <span class="fixer-eg-label">Try these:</span>
+        <button class="fixer-eg-btn" onclick="document.getElementById('fixerInput').value=this.dataset.s" data-s="He go to market everyday.">He go to market</button>
+        <button class="fixer-eg-btn" onclick="document.getElementById('fixerInput').value=this.dataset.s" data-s="I have went to Mumbai yesterday.">I have went</button>
+        <button class="fixer-eg-btn" onclick="document.getElementById('fixerInput').value=this.dataset.s" data-s="She don't knows the answer.">She don't knows</button>
+        <button class="fixer-eg-btn" onclick="document.getElementById('fixerInput').value=this.dataset.s" data-s="I am very much tired since morning.">very much tired</button>
+        <button class="fixer-eg-btn" onclick="document.getElementById('fixerInput').value=this.dataset.s" data-s="Yesterday I am going to school.">Yesterday I am going</button>
+      </div>
+    </div>
+
+    <!-- Result area -->
+    <div class="fixer-result" id="fixerResult" style="display:none">
+      <div class="fixer-loading" id="fixerLoading" style="display:none">
+        <div class="fixer-dots"><span></span><span></span><span></span></div>
+        <div>Analysing your sentence…</div>
+      </div>
+      <div id="fixerOutput"></div>
+    </div>
+
+    <!-- History -->
+    <div class="fixer-history" id="fixerHistory" style="display:none">
+      <div class="fixer-history-title">📋 Recent Corrections</div>
+      <div id="fixerHistoryList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ TAB: WORD GAMES ═══════════════════════════ -->
+<div id="tab-games" class="tab-content">
+  <div class="section-title">🎮 Word Games<span class="section-badge">Learn by Playing</span></div>
+  <p class="section-desc">Fun games to build vocabulary and grammar · खेळत इंग्रजी शिका</p>
+
+  <!-- Game Selector -->
+  <div class="game-selector">
+    <div class="game-tile active-game" data-game="scramble" onclick="selectGame('scramble',this)">
+      <div class="game-tile-icon">🔀</div>
+      <div class="game-tile-title">Sentence Scramble</div>
+      <div class="game-tile-desc">Arrange words into correct order</div>
+    </div>
+    <div class="game-tile" data-game="match" onclick="selectGame('match',this)">
+      <div class="game-tile-icon">🧩</div>
+      <div class="game-tile-title">Word Match</div>
+      <div class="game-tile-desc">Match English words with Marathi</div>
+    </div>
+    <div class="game-tile" data-game="fill" onclick="selectGame('fill',this)">
+      <div class="game-tile-icon">🖊️</div>
+      <div class="game-tile-title">Fill in the Blank</div>
+      <div class="game-tile-desc">Complete the sentence</div>
+    </div>
+    <div class="game-tile" data-game="meaning" onclick="selectGame('meaning',this)">
+      <div class="game-tile-icon">📖</div>
+      <div class="game-tile-title">Word Meaning</div>
+      <div class="game-tile-desc">Choose the correct definition</div>
+    </div>
+  </div>
+
+  <!-- Score Bar -->
+  <div class="game-score-bar">
+    <div class="game-score-item">🏆 Score: <strong id="gameScore">0</strong></div>
+    <div class="game-score-item">✅ Correct: <strong id="gameCorrect">0</strong></div>
+    <div class="game-score-item">❌ Wrong: <strong id="gameWrong">0</strong></div>
+    <button class="game-reset-btn" onclick="resetGame()">↺ New Game</button>
+  </div>
+
+  <!-- Game Arena -->
+  <div class="game-arena" id="gameArena"></div>
+</div>
+
+
+<!-- ═══════════════════════════ TAB: CONVERSATION PRACTICE ═══════════════════════════ -->
+<div id="tab-convo" class="tab-content">
+  <div class="section-tag">// AI ROLEPLAY</div>
+  <h2 class="section-title">🗣️ Conversation Practice <span style="color:var(--muted);font-size:14px;font-family:'DM Sans',sans-serif;font-weight:400;">संभाषण सराव</span></h2>
+  <p class="section-desc">Practice real-life English conversations with AI · AI सोबत इंग्रजीत संवाद साधा</p>
+
+  <div class="convo-scenario-row" id="convoScenarios">
+    <button class="convo-scene-btn active" data-scene="restaurant" onclick="startConvo('restaurant',this)">🍽️ Restaurant</button>
+    <button class="convo-scene-btn" data-scene="interview" onclick="startConvo('interview',this)">💼 Job Interview</button>
+    <button class="convo-scene-btn" data-scene="doctor" onclick="startConvo('doctor',this)">🏥 Doctor Visit</button>
+    <button class="convo-scene-btn" data-scene="shopping" onclick="startConvo('shopping',this)">🛒 Shopping</button>
+    <button class="convo-scene-btn" data-scene="travel" onclick="startConvo('travel',this)">✈️ Travel</button>
+    <button class="convo-scene-btn" data-scene="school" onclick="startConvo('school',this)">🏫 School</button>
+    <button class="convo-scene-btn" data-scene="phone" onclick="startConvo('phone',this)">📞 Phone Call</button>
+    <button class="convo-scene-btn" data-scene="bank" onclick="startConvo('bank',this)">🏦 Bank</button>
+  </div>
+
+  <div class="convo-scene-info" id="convoInfo"></div>
+
+  <div class="convo-window" id="convoWindow">
+    <div class="convo-welcome">
+      <div style="font-size:48px;animation:float 3s ease-in-out infinite">🗣️</div>
+      <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--accent);margin-top:12px;">Choose a Scenario</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:8px;">Select a scenario above to start practicing · वर एक परिस्थिती निवडा</div>
+    </div>
+  </div>
+
+  <div class="convo-input-row">
+    <div class="convo-hints" id="convoHints"></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <textarea class="chat-input" id="convoInput" rows="1" placeholder="Type your response in English..."></textarea>
+      <button class="chat-send-btn" onclick="sendConvo()">Send</button>
+    </div>
+    <div class="convo-footer">💡 Make mistakes freely — AI will gently correct you · चुका केल्या तरी चालेल</div>
+  </div>
 </div>
 
 </main>
@@ -1570,38 +2171,215 @@ function makeVing(v){
   if(m&&v.length<=5)return v+v[v.length-1]+'ing';
   return v+'ing';
 }
-function build(s,h,v,o){return (h?[s,h,v,o]:[s,v,o]).join(' ')+'.';}
+/* ── Remaining Parts (time · place · reason · manner) ── */
+const REMAINING_PARTS = [
+  // time
+  {eng:'every day',             mar:'दररोज',                    type:'time'},
+  {eng:'every morning',         mar:'दररोज सकाळी',              type:'time'},
+  {eng:'in the evening',        mar:'संध्याकाळी',                type:'time'},
+  {eng:'last night',            mar:'काल रात्री',                type:'time'},
+  {eng:'after school',          mar:'शाळेनंतर',                  type:'time'},
+  {eng:'before breakfast',      mar:'नाश्त्यापूर्वी',            type:'time'},
+  {eng:'during the holidays',   mar:'सुट्टीत',                   type:'time'},
+  {eng:'on Sunday morning',     mar:'रविवारी सकाळी',             type:'time'},
+  {eng:'twice a week',          mar:'आठवड्यातून दोनदा',          type:'time'},
+  {eng:'since last year',       mar:'गेल्या वर्षापासून',         type:'time'},
+  {eng:'for three hours',       mar:'तीन तास',                   type:'time'},
+  {eng:'right now',             mar:'आत्ताच',                    type:'time'},
+  // place
+  {eng:'at school',             mar:'शाळेत',                     type:'place'},
+  {eng:'in the classroom',      mar:'वर्गात',                    type:'place'},
+  {eng:'at home',               mar:'घरी',                       type:'place'},
+  {eng:'in the library',        mar:'वाचनालयात',                 type:'place'},
+  {eng:'at the playground',     mar:'मैदानावर',                  type:'place'},
+  {eng:'in the garden',         mar:'बागेत',                     type:'place'},
+  {eng:'at the office',         mar:'कार्यालयात',                type:'place'},
+  {eng:'near the river',        mar:'नदीजवळ',                    type:'place'},
+  {eng:'on the rooftop',        mar:'छतावर',                     type:'place'},
+  {eng:'in the market',         mar:'बाजारात',                   type:'place'},
+  // reason
+  {eng:'to improve her skills', mar:'तिच्या कौशल्यात सुधारणा करण्यासाठी', type:'reason'},
+  {eng:'to pass the exam',      mar:'परीक्षेत उत्तीर्ण होण्यासाठी',        type:'reason'},
+  {eng:'because he loves it',   mar:'कारण त्याला ते आवडते',               type:'reason'},
+  {eng:'to help the family',    mar:'कुटुंबाला मदत करण्यासाठी',           type:'reason'},
+  {eng:'to earn money',         mar:'पैसे मिळवण्यासाठी',                  type:'reason'},
+  {eng:'for better health',     mar:'चांगल्या आरोग्यासाठी',               type:'reason'},
+  {eng:'to complete the task',  mar:'काम पूर्ण करण्यासाठी',               type:'reason'},
+  // manner
+  {eng:'very carefully',        mar:'अत्यंत काळजीपूर्वक',       type:'manner'},
+  {eng:'with great enthusiasm', mar:'मोठ्या उत्साहाने',          type:'manner'},
+  {eng:'without any mistake',   mar:'कोणत्याही चुकाशिवाय',      type:'manner'},
+  {eng:'quietly and quickly',   mar:'शांतपणे आणि लवकर',         type:'manner'},
+  {eng:'with full concentration',mar:'पूर्ण एकाग्रतेने',         type:'manner'},
+  {eng:'in a friendly manner',  mar:'मैत्रीपूर्ण पद्धतीने',     type:'manner'},
+  {eng:'with a lot of effort',  mar:'खूप मेहनतीने',              type:'manner'},
+];
+
+/* Return a remaining part cycling by index */
+function getRem(i){ return REMAINING_PARTS[i % REMAINING_PARTS.length]; }
+
+/* Conjugate V1 for 3rd-person singular (He/She/It/This/That) */
+function makeV1s(v1){
+  if(!v1) return v1;
+  if(/[sxz]$/.test(v1)||/[cs]h$/.test(v1)) return v1+'es';
+  if(/[^aeiou]y$/.test(v1)) return v1.slice(0,-1)+'ies';
+  return v1+'s';
+}
+
+/* Build sentence: Subject + [Helping] + Verb + Object + Remaining */
+function build(s, h, v, o, rem){
+  const parts = [s];
+  if(h) parts.push(h);
+  parts.push(v);
+  if(o) parts.push(o);
+  if(rem) parts.push(rem);
+  return parts.join(' ')+'.';
+}
+
 function marEnd(g,r){if(g==='f')return r+'ते';if(g==='p')return r+'तात';return r+'तो';}
 
 function getTemplates(sub,v1,v2,v3,ving,vmar){
-  const s=sub.word,sm=sub.mar.split('/')[0],g=sub.gender;
+  const s=sub.word, sm=sub.mar.split('/')[0], g=sub.gender;
   const pr=SAFE_PRN[s]||['him','her','them','you','us'];
-  const BP=sub.be.pr,BA=sub.be.pa,HV=sub.hv.pr;
+  const BP=sub.be.pr, BA=sub.be.pa, HV=sub.hv.pr;
   const vr=vmar?vmar.replace(/णे$/,''):'';
+  // 3rd-person singular conjugation for Simple Present
+  const v1s = (sub.doV.pr==='does') ? makeV1s(v1) : v1;
   const p=i=>pr[i%pr.length];
   const mp=i=>MAR_PRN[p(i)]||p(i);
-  // Dynamic verb-aware object lookup
   const vo=i=>getVerbObj(v1,i);
   const n=i=>vo(i).eng;
   const nm=i=>vo(i).mar;
   const adj=i=>ADJECTIVES[i%ADJECTIVES.length];
-  const mar=(sb,ob,vp)=>vmar?`${sb} ${ob} ${vp}.`:'';
+  // Remaining parts: time/place/reason/manner cycling per template slot
+  const r=i=>getRem(i).eng;
+  const rm=i=>getRem(i).mar;
+  // ── Marathi sentence builder ──
+  // Always produces Marathi: uses vr (verb root) when available, else uses object+remaining only
+  const mar=(sb,ob,vp,remMar)=>{
+    if(vr) return `${sb} ${ob} ${vp}${remMar?' '+remMar:''}.`;
+    // No Marathi verb typed → show subject + object + remaining in Marathi
+    return `${sb} ${ob}${remMar?' '+remMar:''}.`;
+  };
+  // Full Marathi with verb ending for tense-specific constructions  
+  const marFull=(sb,obMar,verbPhrase,remMar)=>{
+    return `${sb} ${obMar} ${verbPhrase}${remMar?' '+remMar:''}.`;
+  };
+
+  // Helper: verb ending by gender/number
+  const ve=(ending)=> vr ? vr+ending : '';
+  // Helper: always-on Marathi builder — uses verb root if available, else shows obj+remaining
+  const M=(sb,obMar,verbPart,remMar)=>{
+    const vp = vr ? verbPart : '—';
+    return `${sb} ${obMar} ${vp}${remMar ? ' ' + remMar : ''}.`;
+  };
+
   return [
-    {eng:build(s,'',v1,n(0)),mar:mar(sm,nm(0),vr?marEnd(g,vr):''),tense:'Simple Present (साधा वर्तमान)',type:'helping',helper:sub.doV.pr},
-    {eng:build(s,'',v2,n(1)),mar:mar(sm,nm(1),vr?vr+'ले':''),tense:'Simple Past (साधा भूतकाळ)',type:'helping',helper:'did'},
-    {eng:build(s,BP,ving,n(2)),mar:mar(sm,nm(2),vr?vr+'त आहे':''),tense:'Present Continuous (चालू वर्तमान)',type:'helping',helper:BP},
-    {eng:build(s,BA,ving,p(0)),mar:mar(sm,mp(0),vr?vr+'त होतो/होती':''),tense:'Past Continuous (चालू भूतकाळ)',type:'helping',helper:BA},
-    {eng:build(s,HV,v3,n(3)),mar:mar(sm,nm(3),vr?vr+'ले आहे':''),tense:'Present Perfect (पूर्ण वर्तमान)',type:'helping',helper:HV},
-    {eng:build(s,'had',v3,p(1)),mar:mar(sm,mp(1),vr?vr+'ले होते':''),tense:'Past Perfect (पूर्ण भूतकाळ)',type:'helping',helper:'had'},
-    {eng:build(s,'will',v1,n(4)),mar:mar(sm,nm(4),vr?vr+'ईल':''),tense:'Future - will (भविष्यकाळ)',type:'modal',helper:'will'},
-    {eng:build(s,'can',v1,p(2)),mar:mar(sm,mp(2),vr?vr+' शकतो/शकते':''),tense:'Ability - can (शकतो)',type:'modal',helper:'can'},
-    {eng:build(s,'should',v1,n(5)),mar:mar(sm,nm(5),vr?vr+'णे पाहिजे':''),tense:'Advice - should (पाहिजे)',type:'modal',helper:'should'},
-    {eng:build(s,'used to',v1,p(3)),mar:vmar?`${sm} आधी ${mp(3)} ${vr}त असे.`:'',tense:'Past Habit - used to (करायचो)',type:'modal',helper:'used to'},
-    {eng:build(s,'must',v1,n(6)),mar:mar(sm,nm(6),vr?vr+'च पाहिजे':''),tense:'Obligation - must (पाहिजेच)',type:'modal',helper:'must'},
-    {eng:build(s,'may',v1,n(7)),mar:mar(sm,nm(7),vr?'कदाचित '+vr+'ईल':''),tense:'Possibility - may (कदाचित)',type:'modal',helper:'may'},
-    {eng:`${s} ${BP} ${adj(0).eng}.`,mar:`${sm} ${adj(0).mar} आहे/आहेत.`,tense:'Adj: To Be + Adjective (विशेषण)',type:'helping',helper:BP},
-    {eng:`${s} ${BA} ${adj(1).eng}.`,mar:`${sm} ${adj(1).mar} होता/होती.`,tense:'Adj: Past + Adjective',type:'helping',helper:BA},
-    {eng:build(s,'will',v1,n(0)),mar:mar(sm,nm(0),vr?vr+'ईल':''),tense:'Future + Noun Object (will)',type:'modal',helper:'will'},
+    // 1. Simple Present — मी/तो/ती + object + verb(तो/ते/तात) + remaining
+    {
+      eng:build(s,'',v1s,n(0),r(0)),
+      mar:M(sm, nm(0), marEnd(g,vr||'करतो'), rm(0)),
+      tense:'Simple Present (साधा वर्तमान)', type:'helping', helper:sub.doV.pr,
+      subject:s, helpingVerb:sub.doV.pr, mainVerb:v1s, object:n(0), remaining:r(0), remainingMar:rm(0)
+    },
+    // 2. Simple Past — verb + ले + remaining
+    {
+      eng:build(s,'',v2,n(1),r(1)),
+      mar:M(sm, nm(1), (vr||'केले'), rm(1)),
+      tense:'Simple Past (साधा भूतकाळ)', type:'helping', helper:'did',
+      subject:s, helpingVerb:'did', mainVerb:v2, object:n(1), remaining:r(1), remainingMar:rm(1)
+    },
+    // 3. Present Continuous — verb + त आहे + remaining
+    {
+      eng:build(s,BP,ving,n(2),r(2)),
+      mar:M(sm, nm(2), ve('त आहे')||'करत आहे', rm(2)),
+      tense:'Present Continuous (चालू वर्तमान)', type:'helping', helper:BP,
+      subject:s, helpingVerb:BP, mainVerb:ving, object:n(2), remaining:r(2), remainingMar:rm(2)
+    },
+    // 4. Past Continuous — verb + त होतो/होती + remaining
+    {
+      eng:build(s,BA,ving,n(3),r(12)),
+      mar:M(sm, nm(3), ve('त होतो/होती')||'करत होतो/होती', rm(12)),
+      tense:'Past Continuous (चालू भूतकाळ)', type:'helping', helper:BA,
+      subject:s, helpingVerb:BA, mainVerb:ving, object:n(3), remaining:r(12), remainingMar:rm(12)
+    },
+    // 5. Present Perfect — verb + ले आहे + remaining
+    {
+      eng:build(s,HV,v3,n(4),r(28)),
+      mar:M(sm, nm(4), ve('ले आहे')||'केले आहे', rm(28)),
+      tense:'Present Perfect (पूर्ण वर्तमान)', type:'helping', helper:HV,
+      subject:s, helpingVerb:HV, mainVerb:v3, object:n(4), remaining:r(28), remainingMar:rm(28)
+    },
+    // 6. Past Perfect — verb + ले होते + remaining
+    {
+      eng:build(s,'had',v3,n(5),r(7)),
+      mar:M(sm, nm(5), ve('ले होते')||'केले होते', rm(7)),
+      tense:'Past Perfect (पूर्ण भूतकाळ)', type:'helping', helper:'had',
+      subject:s, helpingVerb:'had', mainVerb:v3, object:n(5), remaining:r(7), remainingMar:rm(7)
+    },
+    // 7. Future will — verb + ईल/तील + remaining
+    {
+      eng:build(s,'will',v1,n(6),r(14)),
+      mar:M(sm, nm(6), ve('ईल')||'करेल', rm(14)),
+      tense:'Future — will (भविष्यकाळ)', type:'modal', helper:'will',
+      subject:s, helpingVerb:'will', mainVerb:v1, object:n(6), remaining:r(14), remainingMar:rm(14)
+    },
+    // 8. can — verb + शकतो/शकते + remaining
+    {
+      eng:build(s,'can',v1,n(7),r(20)),
+      mar:M(sm, nm(7), ve(' शकतो/शकते')||'करू शकतो/शकते', rm(20)),
+      tense:'Ability — can (शकतो)', type:'modal', helper:'can',
+      subject:s, helpingVerb:'can', mainVerb:v1, object:n(7), remaining:r(20), remainingMar:rm(20)
+    },
+    // 9. should — verb + णे पाहिजे + remaining
+    {
+      eng:build(s,'should',v1,n(8),r(29)),
+      mar:M(sm, nm(8), ve('णे पाहिजे')||'करणे पाहिजे', rm(29)),
+      tense:'Advice — should (पाहिजे)', type:'modal', helper:'should',
+      subject:s, helpingVerb:'should', mainVerb:v1, object:n(8), remaining:r(29), remainingMar:rm(29)
+    },
+    // 10. used to — आधी + obj + verb + त असे + remaining
+    {
+      eng:build(s,'used to',v1,n(9),r(8)),
+      mar:M(sm, 'आधी '+nm(9), ve('त असे')||'करत असे', rm(8)),
+      tense:'Past Habit — used to (करायचो)', type:'modal', helper:'used to',
+      subject:s, helpingVerb:'used to', mainVerb:v1, object:n(9), remaining:r(8), remainingMar:rm(8)
+    },
+    // 11. must — verb + च पाहिजे + remaining
+    {
+      eng:build(s,'must',v1,n(10),r(22)),
+      mar:M(sm, nm(10), ve('च पाहिजे')||'करणेच पाहिजे', rm(22)),
+      tense:'Obligation — must (पाहिजेच)', type:'modal', helper:'must',
+      subject:s, helpingVerb:'must', mainVerb:v1, object:n(10), remaining:r(22), remainingMar:rm(22)
+    },
+    // 12. may — कदाचित + verb + ईल + remaining
+    {
+      eng:build(s,'may',v1,n(11),r(4)),
+      mar:M(sm, nm(11), 'कदाचित '+(ve('ईल')||'करेल'), rm(4)),
+      tense:'Possibility — may (कदाचित)', type:'modal', helper:'may',
+      subject:s, helpingVerb:'may', mainVerb:v1, object:n(11), remaining:r(4), remainingMar:rm(4)
+    },
+    // 13. would — verb + त असे/असते + remaining
+    {
+      eng:build(s,'would',v1,n(0),r(30)),
+      mar:M(sm, nm(0), ve('त असे')||'करत असे', rm(30)),
+      tense:'Habit/Conditional — would', type:'modal', helper:'would',
+      subject:s, helpingVerb:'would', mainVerb:v1, object:n(0), remaining:r(30), remainingMar:rm(30)
+    },
+    // 14. might — शक्यतो + verb + शकेल + remaining
+    {
+      eng:build(s,'might',v1,n(2),r(16)),
+      mar:M(sm, nm(2), 'शक्यतो '+(ve(' शकेल')||'करू शकेल'), rm(16)),
+      tense:'Mild Possibility — might', type:'modal', helper:'might',
+      subject:s, helpingVerb:'might', mainVerb:v1, object:n(2), remaining:r(16), remainingMar:rm(16)
+    },
+    // 15. going to — verb + ण्याच्या तयारीत आहे + remaining
+    {
+      eng:build(s,BP+' going to',v1,n(3),r(3)),
+      mar:M(sm, nm(3), ve('ण्याच्या तयारीत आहे')||'करण्याच्या तयारीत आहे', rm(3)),
+      tense:'Future Plan — going to (जाणार आहे)', type:'modal', helper:BP+' going to',
+      subject:s, helpingVerb:BP+' going to', mainVerb:v1, object:n(3), remaining:r(3), remainingMar:rm(3)
+    },
   ];
 }
 
@@ -1611,7 +2389,11 @@ function generateSentences(){
   const v1=document.getElementById('v1').value.trim().toLowerCase();
   const v2=document.getElementById('v2').value.trim().toLowerCase()||v1+'ed';
   const v3=document.getElementById('v3').value.trim().toLowerCase()||v2;
-  const vmar=document.getElementById('vmar').value.trim();
+  let vmar=document.getElementById('vmar').value.trim();
+  if(!vmar){
+    const dictEntry=VERB_DICT.find(x=>x.v1.toLowerCase()===v1);
+    if(dictEntry&&dictEntry.mar){vmar=dictEntry.mar;document.getElementById('vmar').value=vmar;}
+  }
   if(!v1){alert('Please enter V1 (base form) of the verb.');return;}
   const ving=makeVing(v1);
   allSentences=[];
@@ -1658,19 +2440,45 @@ function renderTable(){
   const groups={};
   SUBJECTS.forEach(sub=>{groups[sub.word]=[];});
   filtered.forEach(s=>{if(groups[s.subject])groups[s.subject].push(s);});
-  let html='<div class="master-table-wrap"><table class="master-table">';
-  html+=`<thead><tr><th>#</th><th>Subject</th><th>English Sentence</th><th>मराठी अर्थ</th><th>Tense / Pattern</th><th>Type</th><th>Helper</th></tr></thead><tbody>`;
+  let html='<div class="master-table-wrap"><table class="master-table structured-table">';
+  html+=`<thead><tr>
+    <th>#</th>
+    <th>Sentence &nbsp;<span style="font-size:9px;color:var(--muted)">(colour-coded)</span></th>
+    <th style="color:var(--red)">Subject<br><span style="color:var(--muted);font-size:9px;font-weight:400">कर्ता</span></th>
+    <th style="color:var(--accent2)">Helping / Modal<br><span style="color:var(--muted);font-size:9px;font-weight:400">सहायक क्रियापद</span></th>
+    <th style="color:var(--green)">Main Verb<br><span style="color:var(--muted);font-size:9px;font-weight:400">मुख्य क्रियापद</span></th>
+    <th style="color:var(--accent3)">Object<br><span style="color:var(--muted);font-size:9px;font-weight:400">कर्म</span></th>
+    <th style="color:var(--orange)">Remaining Part<br><span style="color:var(--muted);font-size:9px;font-weight:400">उर्वरित भाग</span></th>
+    <th>मराठी अर्थ</th>
+    <th>Tense</th>
+  </tr></thead><tbody>`;
   let num=1,hasAny=false;
   SUBJECTS.forEach(sub=>{
     const grp=groups[sub.word];
     if(!grp||!grp.length)return;
     hasAny=true;
-    html+=`<tr class="group-header"><td colspan="7"><div class="subject-pill"><span class="subject-word">${sub.word}</span><span class="subject-mar">${sub.mar}</span></div></td></tr>`;
+    html+=`<tr class="group-header"><td colspan="9"><div class="subject-pill"><span class="subject-word">${sub.word}</span><span class="subject-mar">${sub.mar}</span></div></td></tr>`;
     grp.forEach(s=>{
-      html+=`<tr><td class="row-num">${num++}</td><td class="subject-word" style="font-size:13px;color:var(--red)">${s.subject}</td><td class="eng-cell">${colorise(s.eng)}</td><td class="mar-text">${s.mar||'—'}</td><td class="tense-text">${s.tense}</td><td><span class="type-badge type-${s.type}">${s.type}</span></td><td><span class="helper-tag">${s.helper}</span></td></tr>`;
+      const safeEng=(s.eng||'').replace(/'/g,"\\'");
+      html+=`<tr>
+        <td class="row-num">${num++}</td>
+        <td class="eng-cell" style="min-width:280px">
+          <div class="structured-sent">
+            <span class="w-sub">${s.subject||''}</span>${s.helpingVerb?` <span class="w-help">${s.helpingVerb}</span>`:''} <span class="w-verb">${s.mainVerb||''}</span>${s.object?` <span class="w-obj">${s.object}</span>`:''}${s.remaining?` <span class="w-rem" title="${s.remainingMar||''}">${s.remaining}</span>`:''}<span class="w-dot">.</span>
+          </div>
+          <button class="row-analyse-btn" onclick="quickAnalyse('${safeEng}')">🧩 Analyse</button>
+        </td>
+        <td class="sc-sub">${s.subject||'—'}</td>
+        <td class="sc-help">${s.helpingVerb||'—'}</td>
+        <td class="sc-verb">${s.mainVerb||'—'}</td>
+        <td class="sc-obj">${s.object||'—'}</td>
+        <td class="sc-rem">${s.remaining||'—'}<br><span style="color:var(--orange);opacity:.75;font-size:10px;">${s.remainingMar||''}</span></td>
+        <td class="mar-text">${s.mar||'—'}</td>
+        <td class="tense-text">${s.tense}</td>
+      </tr>`;
     });
   });
-  if(!hasAny)html+=`<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;">No results found</td></tr>`;
+  if(!hasAny)html+=`<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;">No results found</td></tr>`;
   html+='</tbody></table></div>';
   container.innerHTML=html;
 }
@@ -1791,7 +2599,13 @@ function useSelectedVerb(){
   document.getElementById('v3').value=v.v3.toLowerCase();
   document.getElementById('vmar').value=v.mar;
   document.getElementById('v1').scrollIntoView({behavior:'smooth',block:'center'});
-  setTimeout(()=>generateSentences(),300);
+  setTimeout(()=>{
+    generateSentences();
+    // Auto-populate the analyse bar with a sample sentence using this verb
+    const sampleSent=`She will ${v.v1.toLowerCase()} something carefully today.`;
+    document.getElementById('analyseInput').value=sampleSent;
+    analyseSentence();
+  },300);
 }
 
 /* ════════════════════════════════════════════════════════
@@ -4822,6 +5636,777 @@ if(typeof sendChat !== 'undefined'){
 
 // Init progress UI
 document.addEventListener('DOMContentLoaded', updateProgressUI);
+
+
+
+/* ════════════════════════════════════════════════════
+   VOCABULARY BUILDER DATA & LOGIC
+════════════════════════════════════════════════════ */
+const VOCAB_WORDS = [
+  {word:"Persevere",pos:"verb",phonetic:"/ˌpɜːrsɪˈvɪər/",cat:"academic",
+   meaning_en:"To continue doing something despite difficulty",
+   meaning_mar:"अडचणींवर मात करत पुढे चालत राहणे",
+   example:"She persevered with her English studies even when it was hard.",
+   synonyms:["persist","endure","continue"],antonyms:["quit","give up","surrender"]},
+  {word:"Grateful",pos:"adjective",phonetic:"/ˈɡreɪtf(ə)l/",cat:"emotion",
+   meaning_en:"Feeling or showing thanks",
+   meaning_mar:"कृतज्ञ असणे, आभारी असणे",
+   example:"I am grateful for your help today.",
+   synonyms:["thankful","appreciative","obliged"],antonyms:["ungrateful","unthankful"]},
+  {word:"Accomplish",pos:"verb",phonetic:"/əˈkʌmplɪʃ/",cat:"work",
+   meaning_en:"To successfully achieve or complete something",
+   meaning_mar:"यशस्वीपणे पूर्ण करणे",
+   example:"She accomplished all her goals this year.",
+   synonyms:["achieve","complete","fulfill"],antonyms:["fail","abandon"]},
+  {word:"Eager",pos:"adjective",phonetic:"/ˈiːɡər/",cat:"emotion",
+   meaning_en:"Very keen or enthusiastic to do something",
+   meaning_mar:"उत्सुक, उत्साही असणे",
+   example:"The students were eager to learn new words.",
+   synonyms:["enthusiastic","keen","excited"],antonyms:["reluctant","indifferent","unenthusiastic"]},
+  {word:"Routine",pos:"noun",phonetic:"/ruːˈtiːn/",cat:"daily",
+   meaning_en:"A regular set of activities done in a fixed order",
+   meaning_mar:"नियमित दिनचर्या, ठराविक कार्यक्रम",
+   example:"Morning exercise is part of my daily routine.",
+   synonyms:["habit","schedule","pattern"],antonyms:["disorder","irregularity"]},
+  {word:"Fluent",pos:"adjective",phonetic:"/ˈfluːənt/",cat:"academic",
+   meaning_en:"Able to speak or write a language very well",
+   meaning_mar:"प्रवाही, अस्खलित",
+   example:"He became fluent in English after two years of practice.",
+   synonyms:["articulate","eloquent","proficient"],antonyms:["hesitant","stumbling"]},
+  {word:"Ambitious",pos:"adjective",phonetic:"/æmˈbɪʃəs/",cat:"work",
+   meaning_en:"Having a strong desire to succeed or achieve",
+   meaning_mar:"महत्त्वाकांक्षी",
+   example:"She is ambitious and wants to become a doctor.",
+   synonyms:["driven","determined","aspiring"],antonyms:["lazy","unambitious","content"]},
+  {word:"Curious",pos:"adjective",phonetic:"/ˈkjʊərɪəs/",cat:"emotion",
+   meaning_en:"Eager to know or learn something",
+   meaning_mar:"जिज्ञासू, उत्सुक",
+   example:"Children are naturally curious about the world.",
+   synonyms:["inquisitive","interested","nosy"],antonyms:["indifferent","uninterested"]},
+  {word:"Reliable",pos:"adjective",phonetic:"/rɪˈlaɪəb(ə)l/",cat:"work",
+   meaning_en:"Consistently good in quality; can be trusted",
+   meaning_mar:"विश्वासार्ह, भरवशाचे",
+   example:"She is a reliable worker who never misses a deadline.",
+   synonyms:["trustworthy","dependable","steady"],antonyms:["unreliable","untrustworthy"]},
+  {word:"Habitat",pos:"noun",phonetic:"/ˈhæbɪtæt/",cat:"nature",
+   meaning_en:"The natural home or environment of an animal or plant",
+   meaning_mar:"नैसर्गिक निवासस्थान",
+   example:"Forests are the natural habitat of many animals.",
+   synonyms:["environment","home","ecosystem"],antonyms:[]},
+  {word:"Negotiate",pos:"verb",phonetic:"/nɪˈɡəʊʃɪeɪt/",cat:"work",
+   meaning_en:"To discuss something to reach an agreement",
+   meaning_mar:"वाटाघाटी करणे, सौदा करणे",
+   example:"They negotiated a better salary with the company.",
+   synonyms:["bargain","discuss","arrange"],antonyms:["dictate","refuse"]},
+  {word:"Vivid",pos:"adjective",phonetic:"/ˈvɪvɪd/",cat:"academic",
+   meaning_en:"Producing powerful feelings; very bright or clear",
+   meaning_mar:"स्पष्ट, ठळक, जिवंत",
+   example:"She has a vivid memory of her first day at school.",
+   synonyms:["bright","clear","striking"],antonyms:["dull","faint","vague"]},
+  {word:"Humble",pos:"adjective",phonetic:"/ˈhʌmb(ə)l/",cat:"emotion",
+   meaning_en:"Not proud; having a modest opinion of oneself",
+   meaning_mar:"विनम्र, नम्र",
+   example:"Despite his success, he remained humble.",
+   synonyms:["modest","unassuming","simple"],antonyms:["arrogant","proud","boastful"]},
+  {word:"Drizzle",pos:"verb/noun",phonetic:"/ˈdrɪz(ə)l/",cat:"nature",
+   meaning_en:"Light rain falling in fine drops",
+   meaning_mar:"बारीक पाऊस, रिमझिम पाऊस",
+   example:"There was a light drizzle this morning.",
+   synonyms:["sprinkle","mist","shower"],antonyms:["downpour","torrent"]},
+  {word:"Postpone",pos:"verb",phonetic:"/pəˈspəʊn/",cat:"daily",
+   meaning_en:"To arrange for something to happen at a later time",
+   meaning_mar:"पुढे ढकलणे, तहकूब करणे",
+   example:"They postponed the meeting until next Monday.",
+   synonyms:["delay","defer","reschedule"],antonyms:["advance","accelerate","bring forward"]},
+  {word:"Adequate",pos:"adjective",phonetic:"/ˈædɪkwət/",cat:"academic",
+   meaning_en:"Enough; satisfactory for a particular purpose",
+   meaning_mar:"पुरेसे, समाधानकारक",
+   example:"Make sure you have adequate sleep before the exam.",
+   synonyms:["sufficient","enough","satisfactory"],antonyms:["inadequate","insufficient"]},
+  {word:"Collaborate",pos:"verb",phonetic:"/kəˈlæbəreɪt/",cat:"work",
+   meaning_en:"To work jointly with others on a task",
+   meaning_mar:"सहकार्य करणे, एकत्र काम करणे",
+   example:"The two teams collaborated on the project.",
+   synonyms:["cooperate","partner","join forces"],antonyms:["compete","oppose"]},
+  {word:"Fragrant",pos:"adjective",phonetic:"/ˈfreɪɡrənt/",cat:"nature",
+   meaning_en:"Having a pleasant, sweet smell",
+   meaning_mar:"सुगंधी, खुशबूदार",
+   example:"The garden was full of fragrant flowers.",
+   synonyms:["sweet-smelling","aromatic","perfumed"],antonyms:["odourless","foul-smelling","stinking"]},
+  {word:"Embarrassed",pos:"adjective",phonetic:"/ɪmˈbærəst/",cat:"emotion",
+   meaning_en:"Feeling awkward, self-conscious, or ashamed",
+   meaning_mar:"लाजणे, संकोचणे",
+   example:"She was embarrassed when she forgot the answer.",
+   synonyms:["ashamed","self-conscious","awkward"],antonyms:["confident","proud","comfortable"]},
+  {word:"Punctual",pos:"adjective",phonetic:"/ˈpʌŋktʃuəl/",cat:"daily",
+   meaning_en:"Arriving or doing things at the expected time",
+   meaning_mar:"वेळेचे पालन करणारा, वक्तशीर",
+   example:"Being punctual shows respect for other people's time.",
+   synonyms:["on time","prompt","timely"],antonyms:["late","tardy","unpunctual"]},
+];
+
+let vocabLearned = new Set();
+let vocabFilter = 'all';
+let wodIndex = 0;
+
+function filterVocab(cat, btn){
+  vocabFilter = cat;
+  document.querySelectorAll('.vcat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderVocabGrid();
+}
+
+function renderVocabGrid(){
+  const grid = document.getElementById('vocabGrid');
+  if(!grid) return;
+  const words = vocabFilter==='all' ? VOCAB_WORDS : VOCAB_WORDS.filter(w=>w.cat===vocabFilter);
+  grid.innerHTML = words.map(w=>`
+    <div class="vocab-card ${vocabLearned.has(w.word)?'learned':''}" id="vc-${w.word}">
+      <button class="vc-learn-btn" onclick="markLearned('${w.word}')">${vocabLearned.has(w.word)?'✓ Learned':'Mark Learned'}</button>
+      <div class="vc-top">
+        <div class="vc-word">${w.word}</div>
+        <div class="vc-pos">${w.pos}</div>
+      </div>
+      <div class="vc-phonetic">${w.phonetic}</div>
+      <div class="vc-meaning-en">${w.meaning_en}</div>
+      <div class="vc-meaning-mar">🔶 ${w.meaning_mar}</div>
+      <div class="vc-example">"${w.example}"</div>
+      ${w.synonyms.length?`<div class="vc-synonyms"><strong>≈ Synonyms:</strong> ${w.synonyms.join(', ')}</div>`:''}
+      ${w.antonyms.length?`<div class="vc-antonyms"><strong>↔ Antonyms:</strong> ${w.antonyms.join(', ')}</div>`:''}
+    </div>`).join('');
+}
+
+function markLearned(word){
+  if(vocabLearned.has(word)) vocabLearned.delete(word);
+  else vocabLearned.add(word);
+  updateVocabProgress();
+  renderVocabGrid();
+}
+
+function updateVocabProgress(){
+  const n = vocabLearned.size;
+  const total = VOCAB_WORDS.length;
+  const pct = Math.round((n/total)*100);
+  const el = id=>document.getElementById(id);
+  if(el('learnedCount')) el('learnedCount').textContent = n;
+  if(el('vpbFill')) el('vpbFill').style.width = pct+'%';
+  if(el('sentVal')) el('sentVal').textContent = parseInt(el('sentVal').textContent||0)+1;
+}
+
+function nextWordOfDay(){
+  wodIndex = (wodIndex+1) % VOCAB_WORDS.length;
+  const w = VOCAB_WORDS[wodIndex];
+  const el = id=>document.getElementById(id);
+  if(el('wodWord')) el('wodWord').textContent = w.word;
+  if(el('wodPhon')) el('wodPhon').textContent = w.phonetic;
+  if(el('wodMean')) el('wodMean').textContent = w.meaning_en+' · '+w.meaning_mar;
+  if(el('wodEx'))   el('wodEx').textContent   = '"'+w.example+'"';
+}
+
+
+
+/* ════════════════════════════════════════════════════
+   30-DAY CHALLENGE DATA & LOGIC
+════════════════════════════════════════════════════ */
+const CHALLENGE_DAYS = [
+  {day:1,topic:"Introductions",icon:"👋",task:"Introduce yourself in 3–5 English sentences. Include your name, where you are from, and what you like.",examples:[{e:"My name is Rahul. I am from Nagpur.",m:"माझं नाव राहुल आहे. मी नागपूरचा आहे."},{e:"I like playing cricket and reading books.",m:"मला क्रिकेट खेळणे आणि पुस्तके वाचणे आवडते."},{e:"Nice to meet you. I hope we can be friends.",m:"तुम्हाला भेटून आनंद झाला. आपण मित्र होऊ शकतो."}]},
+  {day:2,topic:"I'm + adjective",icon:"😊",task:"Write 5 sentences using 'I'm + adjective' to describe how you feel or who you are.",examples:[{e:"I'm happy today because the weather is nice.",m:"आज मी आनंदी आहे कारण हवामान छान आहे."},{e:"I'm confident that I will succeed.",m:"मला विश्वास आहे की मी यशस्वी होईल."},{e:"I'm grateful for everything I have.",m:"माझ्याकडे जे आहे त्याबद्दल मी आभारी आहे."}]},
+  {day:3,topic:"I have to...",icon:"📋",task:"Describe your daily responsibilities using 'I have to'. Write 5 sentences about things you must do.",examples:[{e:"I have to wake up early every morning.",m:"मला रोज सकाळी लवकर उठावे लागते."},{e:"I have to study for at least two hours.",m:"मला किमान दोन तास अभ्यास करावा लागतो."},{e:"I have to help my mother with the housework.",m:"मला आईला घरकाम करण्यात मदत करावी लागते."}]},
+  {day:4,topic:"Describing People",icon:"👤",task:"Describe a family member or friend using at least 5 sentences. Include their personality and habits.",examples:[{e:"My father is hardworking and kind.",m:"माझे वडील मेहनती आणि दयाळू आहेत."},{e:"She has a great sense of humour.",m:"तिला विनोदाची चांगली जाण आहे."},{e:"He always encourages me to do my best.",m:"तो मला नेहमी सर्वोत्तम करण्यासाठी प्रोत्साहित करतो."}]},
+  {day:5,topic:"Past Tense Stories",icon:"📖",task:"Write a short paragraph (4–6 sentences) about something interesting that happened to you last week.",examples:[{e:"Last week, I went to the market with my mother.",m:"गेल्या आठवड्यात मी आईसोबत बाजारात गेलो."},{e:"We bought vegetables and fresh fruits.",m:"आम्ही भाज्या आणि ताजी फळे विकत घेतली."},{e:"It was a fun and busy day.",m:"तो एक मजेदार आणि व्यस्त दिवस होता."}]},
+  {day:6,topic:"Future Plans",icon:"🚀",task:"Write about your plans for the next month using 'I'm going to' or 'I will'. Write 5 sentences.",examples:[{e:"I'm going to start exercising every morning.",m:"मी रोज सकाळी व्यायाम करायला सुरुवात करणार आहे."},{e:"I will read one English book this month.",m:"मी या महिन्यात एक इंग्रजी पुस्तक वाचेन."},{e:"I'm going to practise speaking English daily.",m:"मी रोज इंग्रजी बोलण्याचा सराव करणार आहे."}]},
+  {day:7,topic:"Opinion Sentences",icon:"💭",task:"Share your opinion on 3 topics using 'I think...', 'I believe...', or 'In my opinion...'",examples:[{e:"I think education is the most important thing.",m:"माझ्या मते शिक्षण सर्वात महत्त्वाची गोष्ट आहे."},{e:"I believe kindness can change the world.",m:"मला विश्वास आहे की दयाळूपणा जग बदलू शकतो."},{e:"In my opinion, reading is the best habit.",m:"माझ्या मते वाचन ही सर्वोत्तम सवय आहे."}]},
+  {day:8,topic:"Asking Questions",icon:"❓",task:"Write 5 polite questions you could ask a new friend or colleague.",examples:[{e:"What do you do in your free time?",m:"रिकाम्या वेळात तुम्ही काय करता?"},{e:"How long have you been learning English?",m:"तुम्ही किती दिवसांपासून इंग्रजी शिकत आहात?"},{e:"What kind of music do you enjoy?",m:"तुम्हाला कोणत्या प्रकारचे संगीत आवडते?"}]},
+  {day:9,topic:"Comparisons",icon:"⚖️",task:"Compare two things using 'more...than', 'less...than', or 'as...as'. Write 5 comparison sentences.",examples:[{e:"English is more useful than I thought.",m:"इंग्रजी मला वाटले होते त्यापेक्षा अधिक उपयुक्त आहे."},{e:"Reading is as important as writing.",m:"वाचणे हे लिहिण्याइतकेच महत्त्वाचे आहे."},{e:"This city is bigger than my hometown.",m:"हे शहर माझ्या गावापेक्षा मोठे आहे."}]},
+  {day:10,topic:"Gratitude & Kindness",icon:"❤️",task:"Write a thank-you note to someone who helped you. Include what they did and how it made you feel.",examples:[{e:"Thank you for helping me with my homework.",m:"माझ्या गृहपाठात मदत केल्याबद्दल धन्यवाद."},{e:"I really appreciate your patience and kindness.",m:"मी तुमचा संयम आणि दयाळूपणाची खूप कदर करतो."},{e:"You made a big difference in my life.",m:"तुम्ही माझ्या जीवनात मोठा फरक केला."}]},
+  {day:11,topic:"If I were...",icon:"🌟",task:"Write 4 conditional sentences using 'If I were..., I would...' to share your dreams and wishes.",examples:[{e:"If I were a teacher, I would make learning fun.",m:"जर मी शिक्षक असतो, तर मी शिकणे मजेदार केले असते."},{e:"If I were rich, I would help the poor.",m:"जर मी श्रीमंत असतो, तर मी गरिबांना मदत केली असती."},{e:"If I were a bird, I would fly everywhere.",m:"जर मी पक्षी असतो, तर मी सर्वत्र उडालो असतो."}]},
+  {day:12,topic:"Giving Advice",icon:"💡",task:"Give advice to a student who wants to improve their English. Use 'You should', 'You'd better', or 'I suggest'.",examples:[{e:"You should read English newspapers every day.",m:"तुम्ही रोज इंग्रजी वर्तमानपत्र वाचले पाहिजे."},{e:"I suggest you speak English with your friends.",m:"मी सुचवतो की तुम्ही मित्रांशी इंग्रजीत बोला."},{e:"You'd better practise speaking aloud every morning.",m:"तुम्ही रोज सकाळी मोठ्याने बोलण्याचा सराव करणे चांगले."}]},
+  {day:13,topic:"Describing a Place",icon:"🗺️",task:"Describe your city or village in 5–7 sentences. Include what makes it special.",examples:[{e:"I live in Nagpur, which is known as the Orange City.",m:"मी नागपुरात राहतो, जे नारंगी शहर म्हणून ओळखले जाते."},{e:"It has a beautiful old fort and many parks.",m:"येथे एक सुंदर जुना किल्ला आणि अनेक उद्याने आहेत."},{e:"The people here are very warm and friendly.",m:"इथले लोक खूप उबदार आणि मैत्रीपूर्ण आहेत."}]},
+  {day:14,topic:"Weekend Review",icon:"🏆",task:"You've completed 2 weeks! Write a paragraph about what English skill you've improved most and what you want to work on next.",examples:[{e:"I have improved my ability to write sentences.",m:"मी वाक्ये लिहिण्याची क्षमता सुधारली आहे."},{e:"I still need to practise speaking more confidently.",m:"मला अजूनही अधिक आत्मविश्वासाने बोलण्याचा सराव करणे आवश्यक आहे."},{e:"I am proud of how far I have come.",m:"मी किती पुढे आलो आहे याचा मला अभिमान आहे."}]},
+  {day:15,topic:"I used to...",icon:"⏳",task:"Write 5 sentences about habits or things you did in the past using 'I used to'.",examples:[{e:"I used to be afraid of speaking English.",m:"मला इंग्रजी बोलण्याची भीती वाटायची."},{e:"I used to think grammar was very difficult.",m:"मला वाटायचे की व्याकरण खूप कठीण आहे."},{e:"I used to watch English cartoons as a child.",m:"मी लहान असताना इंग्रजी व्यंगचित्रे पाहायचो."}]},
+  {day:16,topic:"Expressing Feelings",icon:"🎭",task:"Describe a time when you felt a strong emotion. Use adjectives and 'because' to explain.",examples:[{e:"I felt very proud because I passed my exam.",m:"मला खूप अभिमान वाटला कारण मी परीक्षा पास केली."},{e:"I was nervous when I spoke in front of the class.",m:"वर्गासमोर बोलताना मी घाबरलो होतो."},{e:"I felt grateful when my friend helped me.",m:"मित्राने मदत केल्यावर मला कृतज्ञ वाटले."}]},
+  {day:17,topic:"Writing a Letter",icon:"✉️",task:"Write a short letter to a friend inviting them to your birthday party. Include the date, time, place and a special request.",examples:[{e:"Dear Priya, I am writing to invite you to my birthday party.",m:"प्रिय प्रिया, मी तुम्हाला माझ्या वाढदिवसाच्या पार्टीसाठी आमंत्रण देण्यासाठी लिहित आहे."},{e:"The party will be on Saturday at 6 PM at my house.",m:"पार्टी शनिवारी संध्याकाळी ६ वाजता माझ्या घरी असेल."},{e:"Please bring your beautiful smile! See you soon.",m:"कृपया तुमचे सुंदर स्मित घेऊन या! लवकरच भेटू."}]},
+  {day:18,topic:"Problem & Solution",icon:"🔧",task:"Describe one problem you have faced and how you solved it, using past tense.",examples:[{e:"I had a problem with my English pronunciation.",m:"मला माझ्या इंग्रजी उच्चारणाचा प्रश्न होता."},{e:"I practised by listening to English songs and podcasts.",m:"मी इंग्रजी गाणी आणि पॉडकास्ट ऐकून सराव केला."},{e:"After one month, my pronunciation improved a lot.",m:"एका महिन्यानंतर माझा उच्चार खूप सुधारला."}]},
+  {day:19,topic:"Polite Requests",icon:"🤝",task:"Write 5 polite requests for different situations (shop, school, office, home).",examples:[{e:"Could you please help me find this book?",m:"कृपया मला हे पुस्तक शोधण्यात मदत कराल का?"},{e:"Would you mind speaking a bit more slowly?",m:"कृपया थोडे हळू बोलाल का?"},{e:"May I please have a glass of water?",m:"कृपया मला एक ग्लास पाणी मिळेल का?"}]},
+  {day:20,topic:"Storytelling",icon:"📚",task:"Write a short story (6–8 sentences) about an animal or a child who overcame a challenge.",examples:[{e:"Once upon a time, a small tortoise wanted to climb a hill.",m:"एके दिवशी एक छोटा कासव एका टेकडीवर चढायला निघाला."},{e:"Everyone said it was impossible, but the tortoise kept trying.",m:"सर्वांनी सांगितले की हे अशक्य आहे, पण कासव प्रयत्न करत राहिले."},{e:"Finally, it reached the top and proved them wrong.",m:"शेवटी ते शिखरावर पोहोचले आणि सर्वांना चुकीचे सिद्ध केले."}]},
+  {day:21,topic:"I should have...",icon:"💭",task:"Reflect on things you wish you had done differently. Write 5 sentences using 'I should have'.",examples:[{e:"I should have started learning English earlier.",m:"मी लवकरच इंग्रजी शिकायला सुरुवात केली असती."},{e:"I should have read more books in school.",m:"मी शाळेत अधिक पुस्तके वाचायला हवी होती."},{e:"I should have asked more questions in class.",m:"मी वर्गात अधिक प्रश्न विचारायला हवे होते."}]},
+  {day:22,topic:"Health & Wellbeing",icon:"🏃",task:"Write about your health habits using 'I make sure that', 'I try to', and 'It's important to'.",examples:[{e:"I make sure that I drink at least 8 glasses of water daily.",m:"मी खात्री करतो की मी दररोज किमान 8 ग्लास पाणी पितो."},{e:"I try to exercise for at least 30 minutes every day.",m:"मी रोज किमान 30 मिनिटे व्यायाम करण्याचा प्रयत्न करतो."},{e:"It's important to get enough sleep every night.",m:"दररोज रात्री पुरेशी झोप घेणे महत्त्वाचे आहे."}]},
+  {day:23,topic:"Technology & Life",icon:"📱",task:"Write your opinion on how technology has changed your daily life. Use at least 5 sentences.",examples:[{e:"Technology has made communication much easier.",m:"तंत्रज्ञानामुळे संवाद खूप सोपा झाला आहे."},{e:"I can now learn English on my phone anytime.",m:"मी आता कधीही फोनवर इंग्रजी शिकू शकतो."},{e:"However, too much screen time can be harmful.",m:"तथापि, जास्त वेळ स्क्रीन पाहणे हानिकारक असू शकते."}]},
+  {day:24,topic:"Describing Food",icon:"🍱",task:"Write about your favourite food or a meal you enjoy. Describe the taste, smell, and when you eat it.",examples:[{e:"My favourite food is varan bhat with ghee.",m:"माझे आवडते अन्न म्हणजे तूपातील वरण भात."},{e:"It smells wonderful and tastes very comforting.",m:"त्याचा वास अद्भुत असतो आणि चव खूप आरामदायी असते."},{e:"My mother makes it specially on weekends.",m:"आई ते विशेषतः आठवड्याच्या शेवटी बनवते."}]},
+  {day:25,topic:"Idioms in Context",icon:"💬",task:"Use 5 idioms from the Idioms tab in meaningful sentences that relate to your real life.",examples:[{e:"Learning English has been a blessing in disguise for me.",m:"इंग्रजी शिकणे माझ्यासाठी अनपेक्षित वरदान ठरले."},{e:"I was on cloud nine when I got my result.",m:"निकाल मिळाल्यावर मी आनंदाने बेहोश होतो."},{e:"Every cloud has a silver lining — hard times teach us strength.",m:"प्रत्येक संकटात एक संधी असते — कठीण काळ आपल्याला शक्ती शिकवतो."}]},
+  {day:26,topic:"Job Interview",icon:"💼",task:"Prepare answers to these 3 interview questions in English: Tell me about yourself. What are your strengths? Why should we hire you?",examples:[{e:"I am a hardworking person who loves to learn new things.",m:"मी एक मेहनती व्यक्ती आहे जो नवीन गोष्टी शिकण्यास आवडतो."},{e:"My strength is that I never give up, even when it is difficult.",m:"माझी शक्ती म्हणजे मी कधीही हार मानत नाही, जरी ते कठीण असले तरी."},{e:"You should hire me because I am reliable and eager to grow.",m:"तुम्ही मला नियुक्त करावे कारण मी विश्वासार्ह आणि वाढण्यास उत्सुक आहे."}]},
+  {day:27,topic:"I wish I could...",icon:"✨",task:"Write about your dreams and wishes using 'I wish I could'. Include 5 wishes and explain why.",examples:[{e:"I wish I could speak English fluently right now.",m:"मला इच्छा आहे की मी आत्ताच इंग्रजी प्रवाही बोलू शकतो."},{e:"I wish I could travel to England to improve my accent.",m:"मला इच्छा आहे की मी उच्चार सुधारण्यासाठी इंग्लंडला जाऊ शकतो."},{e:"I wish I could read English novels without a dictionary.",m:"मला इच्छा आहे की मी शब्दकोशाशिवाय इंग्रजी कादंबऱ्या वाचू शकतो."}]},
+  {day:28,topic:"Giving a Speech",icon:"🎤",task:"Write a short 1-minute speech (8–10 sentences) on the topic: 'Why learning English is important for me'.",examples:[{e:"Good morning everyone. Today I want to talk about why English is important.",m:"सुप्रभात सर्वांना. आज मला इंग्रजी का महत्त्वाचे आहे याबद्दल बोलायचे आहे."},{e:"English opens doors to better jobs and opportunities.",m:"इंग्रजी चांगल्या नोकऱ्या आणि संधींचे दरवाजे उघडते."},{e:"That is why I am committed to learning English every single day.",m:"म्हणूनच मी दररोज इंग्रजी शिकण्यासाठी वचनबद्ध आहे."}]},
+  {day:29,topic:"Reflections",icon:"🪞",task:"Write a reflection on your 30-day journey. What changed? What did you learn? How do you feel now?",examples:[{e:"This 30-day challenge has truly transformed my English.",m:"या ३० दिवसांच्या आव्हानाने माझे इंग्रजी खरोखरच बदलले आहे."},{e:"I am now more confident when I speak or write in English.",m:"मी आता इंग्रजी बोलताना किंवा लिहिताना अधिक आत्मविश्वासी आहे."},{e:"I will continue this habit for the rest of my life.",m:"मी हे आयुष्यभर चालू ठेवेन."}]},
+  {day:30,topic:"Your English Story",icon:"🏅",task:"Write a complete short essay (10–12 sentences) titled: 'My English Learning Journey'. This is your final challenge!",examples:[{e:"Six months ago, I was afraid to speak a single word of English.",m:"सहा महिन्यांपूर्वी, मला इंग्रजीचा एकही शब्द बोलण्याची भीती वाटायची."},{e:"Now I can write paragraphs, express my feelings, and hold conversations.",m:"आता मी परिच्छेद लिहू शकतो, माझ्या भावना व्यक्त करू शकतो आणि संभाषण करू शकतो."},{e:"The journey was hard, but every step was worth it. I am proud of myself!",m:"हा प्रवास कठीण होता, पण प्रत्येक पाऊल सार्थक होता. मला माझा अभिमान आहे!"}]},
+];
+
+const BADGES = ['Starter 🌱','Explorer 🔍','Builder 🔨','Achiever ⭐','Master 🏆','Champion 🥇'];
+let challengeState = {};
+try{ challengeState = JSON.parse(localStorage.getItem('hub-challenge')||'{}'); }catch(e){}
+let activeDay = 1;
+
+function renderChallengeGrid(){
+  const grid = document.getElementById('chalGrid');
+  if(!grid) return;
+  const done = Object.keys(challengeState).filter(k=>challengeState[k]).length;
+  grid.innerHTML = CHALLENGE_DAYS.map(d=>{
+    const isDone = challengeState[d.day];
+    const isActive = d.day === activeDay;
+    const isLocked = d.day > done+1 && !isDone;
+    return `<div class="chal-day-btn ${isDone?'done':''} ${isActive?'active':''} ${isLocked?'locked':''}"
+      onclick="${isLocked?'':'setActiveDay('+d.day+')'}" title="Day ${d.day}: ${d.topic}">
+      <div class="chal-day-num">${d.day}</div>
+      <div class="chal-day-icon">${isDone?'✅':d.icon}</div>
+    </div>`;
+  }).join('');
+  const streak = calcStreak();
+  document.getElementById('chalStreak').textContent = streak;
+  document.getElementById('chalDone').textContent = done;
+  document.getElementById('chalPoints').textContent = done * 10;
+  const bi = Math.floor(done/5); 
+  document.getElementById('chalBadge').textContent = BADGES[Math.min(bi,BADGES.length-1)];
+}
+
+function calcStreak(){
+  let s=0;
+  for(let i=1;i<=30;i++){if(challengeState[i])s++;else break;}
+  return s;
+}
+
+function setActiveDay(n){
+  activeDay = n;
+  renderChallengeGrid();
+  renderChalActiveTask();
+}
+
+function renderChalActiveTask(){
+  const d = CHALLENGE_DAYS[activeDay-1];
+  if(!d) return;
+  const el = id=>document.getElementById(id);
+  el('chalTaskDay').textContent = 'DAY '+d.day;
+  el('chalTaskTopic').textContent = d.icon+' '+d.topic;
+  el('chalTaskBody').innerHTML = `
+    <p>${d.task}</p>
+    <div class="chal-examples">
+      ${d.examples.map(ex=>`<div class="chal-ex-row"><strong>${ex.e}</strong><br><span style="color:var(--orange);font-size:11px">${ex.m}</span></div>`).join('')}
+    </div>`;
+  const isDone = challengeState[activeDay];
+  el('chalInput').value = '';
+  el('chalFeedback').style.display='none';
+  el('chalSubmitBtn').disabled = isDone;
+  el('chalSubmitBtn').textContent = isDone ? '✅ Completed!' : '✓ Complete Day';
+}
+
+async function submitChalDay(){
+  const input = document.getElementById('chalInput').value.trim();
+  if(!input || input.length < 10) {
+    alert('Please write at least a few sentences to complete this task!');
+    return;
+  }
+  const btn = document.getElementById('chalSubmitBtn');
+  const feedback = document.getElementById('chalFeedback');
+  btn.disabled = true;
+  btn.textContent = '⏳ Checking...';
+  feedback.style.display='block';
+  feedback.className='chal-feedback loading';
+  feedback.textContent='AI is reviewing your writing…';
+  const d = CHALLENGE_DAYS[activeDay-1];
+  try{
+    const res = await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:400,messages:[{role:"user",content:`You are a kind English tutor for Marathi-speaking learners. The student is doing Day ${d.day} of a 30-day challenge on topic: "${d.topic}".
+Task: ${d.task}
+Student's writing: "${input}"
+Give brief encouraging feedback (2-3 sentences) in English + one sentence in Marathi (Devanagari). Mention 1 specific thing they did well and 1 improvement tip. Keep it warm and motivating.`}]})});
+    const data = await res.json();
+    const text = data.content?.[0]?.text || 'Great work! Keep going!';
+    challengeState[activeDay] = true;
+    try{localStorage.setItem('hub-challenge', JSON.stringify(challengeState));}catch(e){}
+    feedback.className='chal-feedback success';
+    feedback.innerHTML='✅ Day '+activeDay+' Complete! +10 points 🎉<br><br>'+text.replace(/\n/g,'<br>');
+    btn.textContent='✅ Completed!';
+    launchConfetti&&launchConfetti();
+    renderChallengeGrid();
+  }catch(e){
+    challengeState[activeDay] = true;
+    try{localStorage.setItem('hub-challenge', JSON.stringify(challengeState));}catch(e2){}
+    feedback.className='chal-feedback success';
+    feedback.textContent='✅ Day '+activeDay+' marked complete! Well done! Keep writing every day.';
+    btn.textContent='✅ Completed!';
+    renderChallengeGrid();
+  }
+}
+
+
+
+/* ════════════════════════════════════════════════════
+   GRAMMAR FIXER
+════════════════════════════════════════════════════ */
+let fixerHistory = [];
+
+async function fixGrammar(){
+  const input = document.getElementById('fixerInput').value.trim();
+  if(!input){ alert('Please type a sentence first!'); return; }
+
+  const result = document.getElementById('fixerResult');
+  const loading = document.getElementById('fixerLoading');
+  const output = document.getElementById('fixerOutput');
+  result.style.display='block';
+  loading.style.display='flex';
+  output.innerHTML='';
+
+  const prompt = `You are a grammar correction expert for Marathi-speaking English learners.
+Analyze this sentence: "${input}"
+
+Respond in this EXACT JSON format (no other text):
+{
+  "corrected": "the fully corrected sentence",
+  "hasErrors": true or false,
+  "errors": [
+    {
+      "wrong": "the wrong phrase/word",
+      "right": "the correct phrase/word",
+      "explain_en": "brief explanation in English (1 sentence)",
+      "explain_mar": "same explanation in Marathi (Devanagari)"
+    }
+  ]
+}
+If the sentence is correct, set hasErrors to false and errors to [].`;
+
+  try{
+    const res = await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:800,messages:[{role:"user",content:prompt}]})});
+    const data = await res.json();
+    loading.style.display='none';
+    let text = data.content?.[0]?.text||'{}';
+    text = text.replace(/```json|```/g,'').trim();
+    let parsed;
+    try{ parsed = JSON.parse(text); }
+    catch(e){
+      output.innerHTML=`<div class="fixer-no-errors"><div class="fixer-check-icon">🔧</div><p style="font-size:14px;color:var(--text)">Analysis complete. ${text}</p></div>`;
+      return;
+    }
+    if(!parsed.hasErrors){
+      output.innerHTML=`<div class="fixer-no-errors">
+        <div class="fixer-check-icon">✅</div>
+        <p style="font-size:16px;font-weight:600;color:var(--green)">Perfect sentence!</p>
+        <p style="color:var(--muted);font-size:13px">No grammar errors found · व्याकरणात कोणतीही चूक नाही</p>
+      </div>`;
+    } else {
+      let highlighted = parsed.corrected;
+      (parsed.errors||[]).forEach(err=>{
+        highlighted = highlighted.replace(err.right, `<mark>${err.right}</mark>`);
+      });
+      output.innerHTML=`
+        <div class="fixer-corrected">
+          <div class="fixer-corrected-label">✅ CORRECTED SENTENCE</div>
+          <div class="fixer-corrected-text">${highlighted}</div>
+        </div>
+        <div class="fixer-errors-list">
+          ${(parsed.errors||[]).map(err=>`
+            <div class="fixer-error-item">
+              <div class="fixer-err-wrong">✗ Wrong: "${err.wrong}"</div>
+              <div class="fixer-err-right">✓ Correct: "${err.right}"</div>
+              <div class="fixer-err-explain">${err.explain_en}</div>
+              <div class="fixer-err-explain-mar">🔶 ${err.explain_mar}</div>
+            </div>`).join('')}
+        </div>`;
+      fixerHistory.unshift({orig:input, fixed:parsed.corrected});
+      if(fixerHistory.length>8) fixerHistory.pop();
+      renderFixerHistory();
+    }
+  }catch(e){
+    loading.style.display='none';
+    output.innerHTML='<p style="color:var(--red);font-size:13px">Could not connect. Please check your internet and try again.</p>';
+  }
+}
+
+function clearFixer(){
+  document.getElementById('fixerInput').value='';
+  document.getElementById('fixerResult').style.display='none';
+  document.getElementById('fixerOutput').innerHTML='';
+}
+
+function renderFixerHistory(){
+  const hist = document.getElementById('fixerHistory');
+  const list = document.getElementById('fixerHistoryList');
+  if(!hist||!list||fixerHistory.length===0){ if(hist)hist.style.display='none'; return; }
+  hist.style.display='block';
+  list.innerHTML = fixerHistory.map((h,i)=>`
+    <div class="fixer-hist-item" onclick="document.getElementById('fixerInput').value='${h.orig.replace(/'/g,"\\'")}';fixGrammar()">
+      <div class="fixer-hist-orig">✗ ${h.orig}</div>
+      <div class="fixer-hist-fixed">✓ ${h.fixed}</div>
+    </div>`).join('');
+}
+
+/* ════════════════════════════════════════════════════
+   WORD GAMES
+════════════════════════════════════════════════════ */
+let currentGame = 'scramble';
+let gameScore = 0, gameCorrect = 0, gameWrong = 0;
+let gameState = {};
+
+const GAME_SCRAMBLES = [
+  {words:["I","am","learning","English","every","day"],mar:"मी रोज इंग्रजी शिकत आहे."},
+  {words:["She","is","very","hardworking","and","kind"],mar:"ती खूप मेहनती आणि दयाळू आहे."},
+  {words:["We","should","practise","speaking","English","daily"],mar:"आपण रोज इंग्रजी बोलण्याचा सराव केला पाहिजे."},
+  {words:["He","has","been","studying","for","two","hours"],mar:"तो दोन तासांपासून अभ्यास करत आहे."},
+  {words:["Please","make","sure","that","you","bring","your","book"],mar:"कृपया तुमचे पुस्तक आणण्याची खात्री करा."},
+  {words:["I","would","like","to","improve","my","English"],mar:"मला माझे इंग्रजी सुधारायचे आहे."},
+  {words:["It","is","very","kind","of","you","to","help","me"],mar:"तुम्ही मला मदत करणे खूप दयाळूपणाचे आहे."},
+  {words:["There","is","no","need","to","worry","about","this"],mar:"याबद्दल काळजी करण्याची गरज नाही."},
+  {words:["How","often","do","you","speak","English","at","home"],mar:"तुम्ही घरी किती वेळा इंग्रजी बोलता?"},
+  {words:["I","am","not","used","to","waking","up","early"],mar:"मला लवकर उठण्याची सवय नाही."},
+];
+
+const GAME_MATCHES = [
+  [{e:"Happy",m:"आनंदी"},{e:"Sad",m:"दुःखी"},{e:"Angry",m:"रागावलेला"},{e:"Tired",m:"थकलेला"},{e:"Hungry",m:"भुकेलेला"},{e:"Brave",m:"शूर"}],
+  [{e:"Learn",m:"शिकणे"},{e:"Teach",m:"शिकवणे"},{e:"Speak",m:"बोलणे"},{e:"Write",m:"लिहिणे"},{e:"Listen",m:"ऐकणे"},{e:"Read",m:"वाचणे"}],
+  [{e:"House",m:"घर"},{e:"School",m:"शाळा"},{e:"Market",m:"बाजार"},{e:"Hospital",m:"रुग्णालय"},{e:"Station",m:"स्थानक"},{e:"Garden",m:"बाग"}],
+  [{e:"Always",m:"नेहमी"},{e:"Never",m:"कधीच नाही"},{e:"Often",m:"वारंवार"},{e:"Sometimes",m:"कधी कधी"},{e:"Rarely",m:"क्वचितच"},{e:"Already",m:"आधीच"}],
+];
+
+const GAME_FILLS = [
+  {sentence:"I am looking forward ___ the holidays.",blank:"to",options:["to","for","at","in"],mar:"मी सुट्टींची वाट पाहत आहे."},
+  {sentence:"She has been studying English ___ two years.",blank:"for",options:["since","for","from","during"],mar:"ती दोन वर्षांपासून इंग्रजी शिकत आहे."},
+  {sentence:"I ___ rather walk than take the bus.",blank:"would",options:["could","would","should","might"],mar:"मी बसऐवजी चालणे पसंत करेन."},
+  {sentence:"It ___ no use worrying about the past.",blank:"is",options:["was","has","is","are"],mar:"भूतकाळाबद्दल काळजी करण्यात काही फायदा नाही."},
+  {sentence:"You ___ better apologize to him.",blank:"had",options:["had","have","could","would"],mar:"तुम्ही त्याची माफी मागितली पाहिजे."},
+  {sentence:"How ___ does it cost to fly to Delhi?",blank:"much",options:["many","much","often","long"],mar:"दिल्लीला विमानाने जाण्यासाठी किती खर्च येतो?"},
+  {sentence:"I ___ heard that she won the competition.",blank:"have",options:["had","have","has","was"],mar:"मी ऐकले आहे की ती स्पर्धा जिंकली."},
+  {sentence:"There is something wrong ___ my phone.",blank:"with",options:["in","at","with","on"],mar:"माझ्या फोनमध्ये काहीतरी चुकीचे आहे."},
+  {sentence:"What ___ the chances of getting selected?",blank:"are",options:["is","are","were","have"],mar:"निवड होण्याची शक्यता काय आहे?"},
+  {sentence:"Let's not ___ about this now.",blank:"worry",options:["worrying","worried","worry","worries"],mar:"आपण याबद्दल आत्ता काळजी करूया नको."},
+];
+
+const GAME_MEANINGS = [
+  {word:"Persevere",phonetic:"/ˌpɜːrsɪˈvɪər/",correct:"To continue despite difficulty",options:["To rest","To continue despite difficulty","To speak loudly","To forget easily"],mar:"अडचणींवर मात करत पुढे जाणे"},
+  {word:"Grateful",phonetic:"/ˈɡreɪtf(ə)l/",correct:"Feeling thankful",options:["Feeling angry","Feeling confused","Feeling thankful","Feeling tired"],mar:"कृतज्ञ असणे"},
+  {word:"Fluent",phonetic:"/ˈfluːənt/",correct:"Able to speak a language very well",options:["Unable to read","Able to speak a language very well","Very intelligent","Very shy"],mar:"प्रवाही, अस्खलित"},
+  {word:"Ambitious",phonetic:"/æmˈbɪʃəs/",correct:"Having a strong desire to succeed",options:["Feeling afraid","Having a strong desire to succeed","Being very tall","Liking to sleep"],mar:"महत्त्वाकांक्षी"},
+  {word:"Reliable",phonetic:"/rɪˈlaɪəb(ə)l/",correct:"Consistently trustworthy",options:["Hard to find","Often late","Consistently trustworthy","Very funny"],mar:"विश्वासार्ह"},
+  {word:"Humble",phonetic:"/ˈhʌmb(ə)l/",correct:"Not proud; having modest opinion of oneself",options:["Not proud; having modest opinion of oneself","Very proud","Very loud","Very strong"],mar:"विनम्र, नम्र"},
+  {word:"Punctual",phonetic:"/ˈpʌŋktʃuəl/",correct:"Arriving at the expected time",options:["Very strict","Very friendly","Arriving at the expected time","Very creative"],mar:"वक्तशीर"},
+  {word:"Collaborate",phonetic:"/kəˈlæbəreɪt/",correct:"To work jointly with others",options:["To work alone","To argue with others","To work jointly with others","To avoid others"],mar:"सहकार्य करणे"},
+];
+
+function selectGame(g, tile){
+  currentGame = g;
+  document.querySelectorAll('.game-tile').forEach(t=>t.classList.remove('active-game'));
+  tile.classList.add('active-game');
+  resetGame();
+}
+
+function resetGame(){
+  gameState = {};
+  renderGame();
+}
+
+function updateGameScore(correct){
+  if(correct){ gameScore+=10; gameCorrect++; }
+  else{ gameScore=Math.max(0,gameScore-3); gameWrong++; }
+  document.getElementById('gameScore').textContent=gameScore;
+  document.getElementById('gameCorrect').textContent=gameCorrect;
+  document.getElementById('gameWrong').textContent=gameWrong;
+}
+
+function renderGame(){
+  const arena = document.getElementById('gameArena');
+  if(!arena) return;
+  if(currentGame==='scramble') renderScramble(arena);
+  else if(currentGame==='match') renderMatch(arena);
+  else if(currentGame==='fill') renderFill(arena);
+  else if(currentGame==='meaning') renderMeaning(arena);
+}
+
+/* ── SCRAMBLE ── */
+function renderScramble(arena){
+  const q = GAME_SCRAMBLES[Math.floor(Math.random()*GAME_SCRAMBLES.length)];
+  gameState = {q, selected:[], correct:false};
+  const shuffled = [...q.words].sort(()=>Math.random()-.5);
+  arena.innerHTML=`
+    <div class="game-question">Arrange the words to make a correct English sentence:</div>
+    <div class="scramble-word-row" id="scrambleSlots">
+      ${q.words.map((_,i)=>`<div class="scramble-slot" id="slot-${i}" onclick="removeFromSlot(${i})"></div>`).join('')}
+    </div>
+    <div class="scramble-words-pool" id="scramblePool">
+      ${shuffled.map((w,i)=>`<div class="scramble-word-chip" id="chip-${i}" onclick="addToSlot('${w}',${i})">${w}</div>`).join('')}
+    </div>
+    <div class="game-mar-hint">मराठी: ${q.mar}</div>
+    <button class="game-next-btn" onclick="checkScramble()">✓ Check Answer</button>`;
+  gameState.slots = Array(q.words.length).fill(null);
+}
+
+function addToSlot(word, chipIdx){
+  const chip = document.getElementById('chip-'+chipIdx);
+  if(chip.classList.contains('used')) return;
+  const emptySlot = gameState.slots.findIndex(s=>s===null);
+  if(emptySlot===-1) return;
+  gameState.slots[emptySlot]={word,chipIdx};
+  chip.classList.add('used');
+  const slot = document.getElementById('slot-'+emptySlot);
+  slot.textContent=word; slot.classList.add('filled');
+  slot.dataset.chipIdx=chipIdx;
+}
+function removeFromSlot(si){
+  const s=gameState.slots[si];
+  if(!s) return;
+  gameState.slots[si]=null;
+  document.getElementById('chip-'+s.chipIdx)?.classList.remove('used');
+  const slot=document.getElementById('slot-'+si);
+  slot.textContent=''; slot.classList.remove('filled','correct','wrong');
+}
+function checkScramble(){
+  const ans=gameState.slots.map(s=>s?s.word:'').join(' ');
+  const correct=ans.trim()===gameState.q.words.join(' ');
+  updateGameScore(correct);
+  gameState.slots.forEach((s,i)=>{
+    if(s){ const sl=document.getElementById('slot-'+i); sl.classList.add(correct?'correct':'wrong'); }
+  });
+  document.querySelector('.game-next-btn').textContent = correct ? '✅ Correct! Next →' : '❌ Try Again →';
+  setTimeout(()=>renderScramble(document.getElementById('gameArena')),1800);
+}
+
+/* ── WORD MATCH ── */
+function renderMatch(arena){
+  const set = GAME_MATCHES[Math.floor(Math.random()*GAME_MATCHES.length)];
+  gameState={set,selected:null,matched:new Set()};
+  arena.innerHTML=`
+    <div class="game-question">Match the English words with their Marathi meaning:</div>
+    <div class="match-grid">
+      <div>
+        <div class="match-col-label">ENGLISH</div>
+        ${set.map((p,i)=>`<div class="match-item" id="eng-${i}" onclick="matchSelect('eng',${i},'${p.e}')">${p.e}</div>`).join('')}
+      </div>
+      <div>
+        <div class="match-col-label">मराठी</div>
+        ${[...set].sort(()=>Math.random()-.5).map((p,i)=>`<div class="match-item" id="mar-${p.m.replace(/[^a-zA-Z0-9]/g,'')}" onclick="matchSelect('mar',${set.findIndex(x=>x.m===p.m)},'${p.m}')">${p.m}</div>`).join('')}
+      </div>
+    </div>`;
+}
+function matchSelect(lang,idx,val){
+  if(!gameState.selected){
+    gameState.selected={lang,idx,val};
+    const id=lang==='eng'?'eng-'+idx:'mar-'+val.replace(/[^a-zA-Z0-9]/g,'');
+    document.getElementById(id)?.classList.add('selected');
+  } else {
+    const prev=gameState.selected;
+    if(prev.lang===lang){document.querySelectorAll('.match-item.selected').forEach(e=>e.classList.remove('selected'));gameState.selected=null;return;}
+    const engIdx=lang==='eng'?idx:prev.idx;
+    const marIdx=lang==='mar'?idx:prev.idx;
+    const correct=gameState.set[engIdx].m===gameState.set[marIdx].m;
+    const engEl=document.getElementById('eng-'+engIdx);
+    const marEl=document.getElementById('mar-'+gameState.set[marIdx].m.replace(/[^a-zA-Z0-9]/g,''));
+    if(correct){
+      engEl?.classList.replace('selected','matched'); marEl?.classList.replace('selected','matched');
+      updateGameScore(true); gameState.matched.add(engIdx);
+      if(gameState.matched.size===gameState.set.length) setTimeout(()=>renderMatch(document.getElementById('gameArena')),1200);
+    } else {
+      engEl?.classList.add('wrong-flash'); marEl?.classList.add('wrong-flash');
+      updateGameScore(false);
+      setTimeout(()=>{engEl?.classList.remove('selected','wrong-flash');marEl?.classList.remove('selected','wrong-flash');},600);
+    }
+    gameState.selected=null;
+  }
+}
+
+/* ── FILL IN BLANK ── */
+function renderFill(arena){
+  const q=GAME_FILLS[Math.floor(Math.random()*GAME_FILLS.length)];
+  gameState={q,answered:false};
+  const display=q.sentence.replace('___',`<span class="fill-blank" id="fillBlank">___</span>`);
+  arena.innerHTML=`
+    <div class="game-question">Fill in the blank:</div>
+    <div class="fill-sentence">${display}</div>
+    <div class="fill-options">
+      ${q.options.sort(()=>Math.random()-.5).map(o=>`<div class="fill-option" onclick="checkFill('${o}',this)">${o}</div>`).join('')}
+    </div>
+    <div class="game-mar-hint">मराठी: ${q.mar}</div>`;
+}
+function checkFill(opt,el){
+  if(gameState.answered) return;
+  gameState.answered=true;
+  const correct=opt===gameState.q.blank;
+  el.classList.add(correct?'correct':'wrong');
+  if(!correct) document.querySelectorAll('.fill-option').forEach(o=>{if(o.textContent===gameState.q.blank)o.classList.add('correct');});
+  document.getElementById('fillBlank').textContent=gameState.q.blank;
+  updateGameScore(correct);
+  const btn=document.createElement('button'); btn.className='game-next-btn';
+  btn.textContent=correct?'✅ Correct! Next →':'❌ Wrong. Next →';
+  btn.onclick=()=>renderFill(document.getElementById('gameArena'));
+  document.querySelector('.game-arena').appendChild(btn);
+}
+
+/* ── WORD MEANING ── */
+function renderMeaning(arena){
+  const q=GAME_MEANINGS[Math.floor(Math.random()*GAME_MEANINGS.length)];
+  gameState={q,answered:false};
+  arena.innerHTML=`
+    <div class="meaning-word">${q.word}</div>
+    <div class="meaning-phonetic">${q.phonetic}</div>
+    <div class="game-question">Choose the correct meaning:</div>
+    <div class="meaning-options">
+      ${q.options.sort(()=>Math.random()-.5).map(o=>`<div class="meaning-opt" onclick="checkMeaning('${o.replace(/'/g,"\\'")}',this)">${o}</div>`).join('')}
+    </div>
+    <div class="game-mar-hint">मराठी: ${q.mar}</div>`;
+}
+function checkMeaning(opt,el){
+  if(gameState.answered) return;
+  gameState.answered=true;
+  const correct=opt===gameState.q.correct;
+  el.classList.add(correct?'correct':'wrong');
+  if(!correct) document.querySelectorAll('.meaning-opt').forEach(o=>{if(o.textContent===gameState.q.correct)o.classList.add('correct');});
+  updateGameScore(correct);
+  const btn=document.createElement('button'); btn.className='game-next-btn';
+  btn.textContent=correct?'✅ Correct! Next →':'❌ Wrong. Next →';
+  btn.onclick=()=>renderMeaning(document.getElementById('gameArena'));
+  document.querySelector('.game-arena').appendChild(btn);
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded',()=>{
+  renderVocabGrid();
+  renderChallengeGrid();
+  renderChalActiveTask();
+  renderGame();
+});
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SENTENCE STRUCTURE ANALYSER — AI Powered
+═══════════════════════════════════════════════════════════════ */
+
+const ANALYSE_SYSTEM = `You are an expert English grammar teacher for Marathi-medium students.
+
+When given an English sentence, analyse it using this EXACT structure and respond ONLY in JSON (no extra text, no markdown):
+
+{
+  "sentence": "the full sentence",
+  "subject": { "text": "the subject word(s)", "mar": "मराठी अर्थ", "note": "1-line grammar note" },
+  "helpingVerb": { "text": "helping or modal verb (or empty if none)", "mar": "मराठी अर्थ", "note": "what kind - helping/modal/auxiliary" },
+  "mainVerb": { "text": "the main verb form used", "mar": "मराठी क्रियापद", "note": "V1/V2/V3/V-ing - tense name" },
+  "object": { "text": "the object (who/what receives the action)", "mar": "मराठी अर्थ", "note": "what kind of object" },
+  "remainingPart": { "text": "time/place/reason/manner phrase remaining", "mar": "मराठी अर्थ", "note": "type: time/place/reason/manner" },
+  "fullMarathi": "complete Marathi translation of sentence",
+  "tense": "tense name in English",
+  "tenseMarathi": "काळाचे नाव मराठीत",
+  "formula": "Subject + Helping Verb + Main Verb + Object + Remaining Part (with actual values)"
+}
+
+Rules:
+- If there is no helping verb, set helpingVerb.text to "" and helpingVerb.mar to "नाही"
+- If there is no object, set object.text to "" and object.mar to "नाही"  
+- If there is no remaining part, set remainingPart.text to "" and remainingPart.mar to "नाही"
+- Be precise about verb forms: V1=base, V2=past simple, V3=past participle, V-ing=present participle
+- Respond ONLY with the JSON object, nothing else`;
+
+async function analyseSentence(){
+  const input = document.getElementById('analyseInput');
+  const sentence = (input ? input.value.trim() : '');
+  if(!sentence){
+    document.getElementById('analysePanel').innerHTML='<div class="analyse-strip"><div class="analyse-empty">Please type or paste a sentence above to analyse.</div></div>';
+    return;
+  }
+  runAnalyser(sentence);
+}
+
+function quickAnalyse(sentence){
+  // Called from 🧩 row button — scrolls up and fills the input
+  const input = document.getElementById('analyseInput');
+  if(input){ input.value = sentence; input.scrollIntoView({behavior:'smooth',block:'center'}); }
+  runAnalyser(sentence);
+}
+
+async function runAnalyser(sentence){
+  const panel = document.getElementById('analysePanel');
+  panel.innerHTML = '<div class="analyse-strip"><div class="analyse-loading">🤖 Analysing sentence structure · वाक्याचे विश्लेषण होत आहे...</div></div>';
+  panel.scrollIntoView({behavior:'smooth', block:'start'});
+
+  try{
+    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:800,
+        system: ANALYSE_SYSTEM,
+        messages:[{role:'user', content: sentence}]
+      })
+    });
+    const data = await resp.json();
+    const raw = data.content.find(c=>c.type==='text')?.text || '{}';
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean);
+    renderAnalysis(parsed);
+  } catch(e){
+    panel.innerHTML = '<div class="analyse-strip"><div class="analyse-empty" style="color:var(--red)">Error analysing sentence. Please try again.<br><small>'+e.message+'</small></div></div>';
+  }
+}
+
+function renderAnalysis(d){
+  const panel = document.getElementById('analysePanel');
+
+  // Build the coloured formula line
+  const fParts = [];
+  if(d.subject?.text)      fParts.push(`<span class="af-sub">${d.subject.text}</span>`);
+  if(d.helpingVerb?.text)  fParts.push(`<span class="af-help">${d.helpingVerb.text}</span>`);
+  if(d.mainVerb?.text)     fParts.push(`<span class="af-verb">${d.mainVerb.text}</span>`);
+  if(d.object?.text)       fParts.push(`<span class="af-obj">${d.object.text}</span>`);
+  if(d.remainingPart?.text)fParts.push(`<span class="af-rem">${d.remainingPart.text}</span>`);
+  const formulaColour = fParts.join('<span class="af-plus"> + </span>');
+
+  // Part cards
+  const parts = [
+    { key:'subject',      label:'Subject',             labelMar:'कर्ता',            cls:'ap-sub',  icon:'👤' },
+    { key:'helpingVerb',  label:'Helping / Modal Verb', labelMar:'सहायक/Modal क्रियापद', cls:'ap-help', icon:'🔧' },
+    { key:'mainVerb',     label:'Main Verb',            labelMar:'मुख्य क्रियापद',   cls:'ap-verb', icon:'⚡' },
+    { key:'object',       label:'Object',               labelMar:'कर्म',             cls:'ap-obj',  icon:'🎯' },
+    { key:'remainingPart',label:'Remaining Part',       labelMar:'उर्वरित भाग',      cls:'ap-rem',  icon:'📌' },
+  ];
+
+  const partsHTML = parts.map(p=>{
+    const val = d[p.key];
+    const hasVal = val?.text;
+    return `
+    <div class="analyse-part ${p.cls}" ${!hasVal?'style="opacity:.5"':''}>
+      <div class="analyse-part-label">${p.icon} ${p.label} · ${p.labelMar}</div>
+      <div class="analyse-part-value">${hasVal ? val.text : '—'}</div>
+      ${val?.mar ? `<div class="analyse-part-mar">${val.mar}</div>` : ''}
+      ${val?.note ? `<div class="analyse-part-note">${val.note}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+  <div class="analyse-strip">
+    <div class="analyse-hd"><span>🧩</span> SENTENCE STRUCTURE ANALYSIS · वाक्य रचना विश्लेषण <span style="margin-left:auto;font-size:10px;color:var(--accent)">${d.tense||''}</span></div>
+
+    <div class="analyse-sent-display">"${d.sentence}"</div>
+
+    <div class="analyse-formula">
+      <span style="color:var(--muted);font-size:9px;letter-spacing:2px;">COLOUR-CODED FORMULA &nbsp;→&nbsp; </span>
+      ${formulaColour}
+      <br>
+      <span style="font-size:9px;color:var(--muted)">
+        <span class="af-sub">■ Subject</span> &nbsp;
+        <span class="af-help">■ Helping Verb</span> &nbsp;
+        <span class="af-verb">■ Main Verb</span> &nbsp;
+        <span class="af-obj">■ Object</span> &nbsp;
+        <span class="af-rem">■ Remaining</span>
+      </span>
+    </div>
+
+    <div class="analyse-grid">${partsHTML}</div>
+
+    <div class="analyse-maravali">
+      🇮🇳 <strong>मराठी अनुवाद:</strong> ${d.fullMarathi||'—'}
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      📚 <strong>काळ:</strong> ${d.tenseMarathi||d.tense||'—'}
+    </div>
+
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);padding:8px 12px;background:var(--card);border-radius:8px;border:1px solid var(--border);">
+      📐 FORMULA: <span style="color:var(--text)">${d.formula||'—'}</span>
+    </div>
+  </div>`;
+}
+
 </script>
 
 <!-- MOBILE BOTTOM NAV -->
