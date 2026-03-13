@@ -1141,12 +1141,6 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
 .analyse-empty{text-align:center;padding:32px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;}
 .analyse-loading{text-align:center;padding:24px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:1px;}
 
-/* Smart Analyse bar above the table */
-.smart-analyse-bar{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px;flex-wrap:wrap;}
-.smart-analyse-input{flex:1;min-width:220px;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s;}
-.smart-analyse-input:focus{border-color:rgba(240,192,64,.4);}
-.smart-analyse-btn{background:linear-gradient(135deg,var(--accent),var(--orange));color:#000;border:none;border-radius:10px;padding:11px 22px;font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;font-weight:700;letter-spacing:.5px;white-space:nowrap;transition:all .2s;}
-.smart-analyse-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(240,192,64,.35);}
 
 /* Row analyse button inside table */
 .row-analyse-btn{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 9px;border-radius:6px;border:1px solid rgba(240,192,64,.3);background:rgba(240,192,64,.07);color:var(--accent);cursor:pointer;letter-spacing:.5px;transition:all .18s;margin-left:6px;}
@@ -1183,6 +1177,46 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
 
 /* formula bar legend update */
 .f-rem{color:var(--orange);font-weight:700;}
+
+/* ════════════════════════════════════════════════════
+   NEW FEATURE TABS — Tense Converter · Pronunciation · AI Rewriter
+════════════════════════════════════════════════════ */
+.rewrite-compare { grid-template-columns: 1fr 1fr; }
+@media(max-width:600px){ .rewrite-compare { grid-template-columns: 1fr; } }
+
+/* TTS range inputs */
+input[type=range] {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Tense Converter grid responsive */
+#tenseConvGrid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+@media(max-width:500px) {
+  #tenseConvGrid { grid-template-columns: 1fr; }
+}
+
+/* Speak tab record btn pulse when recording */
+@keyframes recordPulse {
+  0%,100%{box-shadow:0 0 0 0 rgba(240,112,112,.5);}
+  50%{box-shadow:0 0 0 8px rgba(240,112,112,0);}
+}
+#recordBtn.recording { animation: recordPulse 1s infinite; }
+
+/* home WOTD card */
+#wotd-widget { transition: border-color .3s; }
+
+
+/* ── Essay Mode Buttons ── */
+.essay-mode-btn{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:7px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap;}
+.essay-mode-btn:hover{color:var(--text);border-color:var(--accent);}
+.essay-mode-btn.active{color:var(--accent);border-color:var(--accent);background:rgba(240,192,64,.08);}
+/* Plan form grid responsive */
+.plan-form-grid{grid-template-columns:1fr 1fr;}
+@media(max-width:600px){.plan-form-grid{grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body>
@@ -1238,6 +1272,12 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
   <button class="nav-tab" onclick="switchTab('tab-correct',this)">✅ Grammar Check</button>
   <button class="nav-tab" onclick="switchTab('tab-challenge',this)">🏆 30-Day Challenge</button>
   <button class="nav-tab" onclick="switchTab('tab-convo',this)">🗣️ Conversation</button>
+  <button class="nav-tab" onclick="switchTab('tab-tense-conv',this)">🔄 Tense Converter</button>
+  <button class="nav-tab" onclick="switchTab('tab-speak',this)">🎤 Pronunciation</button>
+  <button class="nav-tab" onclick="switchTab('tab-rewrite',this)">✨ AI Rewriter</button>
+  <button class="nav-tab" onclick="switchTab('tab-essay',this)">📝 AI Essay</button>
+  <button class="nav-tab" onclick="switchTab('tab-vocab-ai',this)">💡 Vocab AI</button>
+  <button class="nav-tab" onclick="switchTab('tab-plan',this)">🗺️ My Plan</button>
 </nav>
 
 <main>
@@ -1248,6 +1288,12 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
     <div class="home-hero-badge">// English Learning Hub · v5.0</div>
     <h2 class="home-hero-title">इंग्रजीचा आत्मा</h2>
     <p class="home-hero-sub">Your complete Marathi–English learning companion · मराठीतून इंग्रजी शिका</p>
+  </div>
+
+
+  <!-- Word of the Day -->
+  <div id="wotd-widget" class="card" style="margin-bottom:18px;border-left:4px solid var(--accent);min-height:80px;">
+    <div style="color:var(--muted);font-size:12px;">Loading Word of the Day...</div>
   </div>
 
   <!-- Feature Cards Grid -->
@@ -1487,19 +1533,8 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
       <span class="f-sub">Subject (कर्ता)</span><span class="f-plus">+</span>
       <span class="f-help">Helping / Modal Verb</span><span class="f-plus">+</span>
       <span class="f-verb">Main Verb (V1/V2/V3/V-ing)</span><span class="f-plus">+</span>
-      <span class="f-obj">Object (कर्म)</span><span class="f-plus">+</span>
-      <span class="f-rem">Remaining Part (वेळ · ठिकाण · कारण · पद्धत)</span>
-    </div>
+      <span class="f-obj">Object (कर्म)</span></div>
   </div>
-
-  <!-- ═══ SMART ANALYSE BAR ═══ -->
-<div class="smart-analyse-bar" style="margin-top:18px;">
-  <input class="smart-analyse-input" id="analyseInput" 
-    placeholder="Paste or type any sentence here to analyse its structure… e.g. She will write a long letter tonight."
-    onkeydown="if(event.key==='Enter')analyseSentence()"/>
-  <button class="smart-analyse-btn" onclick="analyseSentence()">🧩 Analyse Sentence</button>
-</div>
-<div id="analysePanel"></div>
 
 <div id="output-wrapper">
     <div class="stats-bar">
@@ -1771,7 +1806,7 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
     <button class="chat-chip" onclick="chatQuickPrompt('Explain passive voice with 5 examples in English and Marathi.')">🔄 Passive Voice</button>
     <button class="chat-chip" onclick="chatQuickPrompt('Give me 5 polite ways to make requests in English with Marathi translation.')">🙏 Polite Requests</button>
     <button class="chat-chip" onclick="chatQuickPrompt('What are conditionals in English? Explain all 4 types with Marathi examples.')">❓ Conditionals</button>
-    <button class="chat-chip" onclick="chatQuickPrompt('What is the difference between can and could? Give Marathi examples.')">🎯 can vs could</button>
+    <button class="chat-chip" onclick="chatQuickPrompt('What is the difference between can and could ? Give Marathi examples.')">🎯 can vs could</button>
   </div>
 
   <!-- Chat window -->
@@ -1977,6 +2012,312 @@ main{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:28px 32p
       <button class="chat-send-btn" onclick="sendConvo()">Send</button>
     </div>
     <div class="convo-footer">💡 Make mistakes freely — AI will gently correct you · चुका केल्या तरी चालेल</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ TAB: TENSE CONVERTER ═══════════════════════════ -->
+<div id="tab-tense-conv" class="tab-content">
+  <div class="section-tag">// TENSE CONVERTER</div>
+  <h2 class="section-title">🔄 Tense Converter <span style="color:var(--muted);font-size:14px;font-family:'DM Sans'">— One sentence → All 12 tenses</span></h2>
+  <div class="card" style="margin-bottom:18px;">
+    <div style="margin-bottom:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;">ENTER YOUR BASE SENTENCE</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <input id="tenseConvInput" class="smart-analyse-input" style="flex:1;min-width:260px;" placeholder="e.g. I eat an apple every day" />
+      <button class="gen-btn" onclick="convertAllTenses()" style="white-space:nowrap;">🔄 Convert All Tenses</button>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;" id="tenseConvExamples">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-right:4px;">Try:</span>
+    </div>
+  </div>
+  <div id="tenseConvPanel" style="display:none;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;" id="tenseConvGrid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ TAB: PRONUNCIATION STUDIO ═══════════════════════════ -->
+<div id="tab-speak" class="tab-content">
+  <div class="section-tag">// PRONUNCIATION STUDIO</div>
+  <h2 class="section-title">🎤 Pronunciation Practice <span style="color:var(--muted);font-size:14px;font-family:'DM Sans'">— Listen · Repeat · Score</span></h2>
+
+  <!-- TTS Section -->
+  <div class="card" style="margin-bottom:18px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:12px;">📢 TEXT TO SPEECH — SENTENCE READER</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+      <input id="ttsInput" class="smart-analyse-input" style="flex:1;min-width:240px;" placeholder="Type any sentence to hear it spoken..." />
+      <button class="gen-btn" onclick="speakText()" style="background:linear-gradient(135deg,var(--accent2),var(--green));">▶ Speak</button>
+      <button class="gen-btn" onclick="stopSpeak()" style="background:var(--card);color:var(--text);border:1px solid var(--border);">⏹ Stop</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <label style="font-size:12px;color:var(--muted);">Speed:</label>
+      <input type="range" id="ttsRate" min="0.5" max="1.5" step="0.1" value="0.85" style="width:120px;" oninput="document.getElementById('ttsRateVal').textContent=this.value">
+      <span id="ttsRateVal" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);">0.85</span>
+      <label style="font-size:12px;color:var(--muted);margin-left:12px;">Pitch:</label>
+      <input type="range" id="ttsPitch" min="0.5" max="2" step="0.1" value="1" style="width:100px;" oninput="document.getElementById('ttsPitchVal').textContent=this.value">
+      <span id="ttsPitchVal" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);">1.0</span>
+    </div>
+  </div>
+
+  <!-- Pronunciation Practice -->
+  <div class="card" style="margin-bottom:18px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:2px;margin-bottom:12px;">🎤 SPEAK & CHECK — PRONUNCIATION EXERCISE</div>
+    <div id="speakExCard" style="background:var(--surface);border-radius:10px;padding:16px;text-align:center;margin-bottom:14px;">
+      <div id="speakExText" style="font-size:22px;font-family:'Playfair Display',serif;font-weight:700;color:var(--text);margin-bottom:6px;">Press "New Sentence" to start</div>
+      <div id="speakExMarathi" style="font-size:13px;color:var(--muted);font-family:'DM Sans',sans-serif;"></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:14px;">
+      <button class="gen-btn" onclick="newPronounceEx()" style="background:linear-gradient(135deg,var(--accent3),var(--accent));">🎲 New Sentence</button>
+      <button class="gen-btn" id="listenBtn" onclick="listenToSentence()" style="background:linear-gradient(135deg,var(--accent2),var(--green));">👂 Listen First</button>
+      <button class="gen-btn" id="recordBtn" onclick="toggleRecording()" style="background:linear-gradient(135deg,var(--red),var(--orange));">🎤 Start Speaking</button>
+    </div>
+    <div id="speakResult" style="display:none;border-radius:10px;padding:14px;margin-top:10px;border:1px solid var(--border);">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:8px;">YOU SAID:</div>
+      <div id="spokenText" style="font-size:16px;color:var(--text);margin-bottom:10px;"></div>
+      <div id="speakScore" style="font-size:13px;font-family:'DM Sans',sans-serif;"></div>
+    </div>
+  </div>
+
+  <!-- Repeat After Me -->
+  <div class="card">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--orange);letter-spacing:2px;margin-bottom:12px;">🔁 REPEAT AFTER ME — DRILLING EXERCISE</div>
+    <div id="ramGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ TAB: AI REWRITER ═══════════════════════════ -->
+<div id="tab-rewrite" class="tab-content">
+  <div class="section-tag">// AI TOOLS</div>
+  <h2 class="section-title">✨ AI Rewriter <span style="color:var(--muted);font-size:14px;font-family:'DM Sans'">— Rewrite · Improve · Simplify · Formalize</span></h2>
+
+  <div class="card" style="margin-bottom:18px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:12px;">YOUR TEXT</div>
+    <textarea id="rewriteInput" rows="4" style="width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;resize:vertical;transition:border-color .2s;" placeholder="Enter any sentence or paragraph to rewrite...&#10;&#10;e.g. I go to market daily for buying vegetables and fruits."></textarea>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+      <button class="gen-btn" onclick="aiRewrite('improve')"    style="background:linear-gradient(135deg,var(--accent),var(--accent2));">⬆️ Improve</button>
+      <button class="gen-btn" onclick="aiRewrite('simplify')"   style="background:linear-gradient(135deg,var(--green),var(--accent2));">🔽 Simplify</button>
+      <button class="gen-btn" onclick="aiRewrite('formalize')"  style="background:linear-gradient(135deg,var(--accent3),var(--accent));">🎩 Formalize</button>
+      <button class="gen-btn" onclick="aiRewrite('casual')"     style="background:linear-gradient(135deg,var(--orange),var(--red));">😊 Make Casual</button>
+      <button class="gen-btn" onclick="aiRewrite('expand')"     style="background:linear-gradient(135deg,var(--accent2),var(--green));">📝 Expand</button>
+      <button class="gen-btn" onclick="aiRewrite('shorten')"    style="background:linear-gradient(135deg,var(--muted),var(--accent3));">✂️ Shorten</button>
+    </div>
+  </div>
+
+  <div id="rewritePanel" style="display:none;">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:2px;" id="rewriteModeLabel">RESULT</div>
+        <button onclick="copyRewrite()" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--muted);cursor:pointer;">📋 Copy</button>
+      </div>
+      <!-- Side by side comparison -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" class="rewrite-compare">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:1px;">ORIGINAL</div>
+          <div id="rewriteOrigBox" style="background:var(--surface);border-left:3px solid var(--red);padding:12px;border-radius:0 8px 8px 0;font-size:14px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;"></div>
+        </div>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);margin-bottom:6px;letter-spacing:1px;">REWRITTEN</div>
+          <div id="rewriteResultBox" style="background:var(--surface);border-left:3px solid var(--green);padding:12px;border-radius:0 8px 8px 0;font-size:14px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;"></div>
+        </div>
+      </div>
+      <div id="rewriteExplanation" style="background:var(--surface);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--muted);font-family:'DM Sans',sans-serif;line-height:1.6;border-left:3px solid var(--accent);"></div>
+      <!-- Variations -->
+      <div id="rewriteVariations" style="margin-top:14px;display:none;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;letter-spacing:1px;">ALTERNATIVE VERSIONS</div>
+        <div id="rewriteVarList" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Examples -->
+  <div class="card" style="margin-top:18px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--orange);letter-spacing:2px;margin-bottom:12px;">💡 EXAMPLE SENTENCES TO TRY</div>
+    <div style="display:flex;flex-direction:column;gap:8px;" id="rewriteExList"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TAB: AI ESSAY HELPER ═══════════════════ -->
+<div id="tab-essay" class="tab-content">
+  <div class="section-tag">// AI TOOLS</div>
+  <h2 class="section-title">📝 AI Essay Helper <span style="color:var(--muted);font-size:14px;font-family:'DM Sans'">— Write · Improve · Structure · Feedback</span></h2>
+
+  <!-- Mode Selector -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;" id="essayModeBar">
+    <button class="essay-mode-btn active" data-mode="write"    onclick="setEssayMode('write')">✍️ Write Essay</button>
+    <button class="essay-mode-btn"        data-mode="improve"  onclick="setEssayMode('improve')">⬆️ Improve Mine</button>
+    <button class="essay-mode-btn"        data-mode="outline"  onclick="setEssayMode('outline')">📋 Get Outline</button>
+    <button class="essay-mode-btn"        data-mode="feedback" onclick="setEssayMode('feedback')">🔍 Get Feedback</button>
+    <button class="essay-mode-btn"        data-mode="points"   onclick="setEssayMode('points')">💡 Key Points</button>
+  </div>
+
+  <div class="card" style="margin-bottom:18px;">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+      <input id="essayTopic" class="smart-analyse-input" style="flex:1;min-width:220px;"
+        placeholder="Topic: e.g. Importance of education in rural India" />
+      <select id="essayLevel" style="background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);cursor:pointer;">
+        <option value="beginner">Beginner (Simple)</option>
+        <option value="intermediate" selected>Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+      <select id="essayLen" style="background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);cursor:pointer;">
+        <option value="short">Short (100w)</option>
+        <option value="medium" selected>Medium (200w)</option>
+        <option value="long">Long (350w)</option>
+      </select>
+    </div>
+    <textarea id="essayUserText" rows="5" style="width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;resize:vertical;display:none;" placeholder="Paste your essay here for improvement / feedback..."></textarea>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+      <button class="gen-btn" id="essayRunBtn" onclick="runEssayAI()">📝 Generate</button>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;" id="essayTopicChips"></div>
+    </div>
+  </div>
+
+  <!-- Output -->
+  <div id="essayOutput" style="display:none;">
+    <div class="card" style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+        <div id="essayOutLabel" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);letter-spacing:2px;"></div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="speakText2('essayMainText')" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--muted);cursor:pointer;">▶ Listen</button>
+          <button onclick="copyEl('essayMainText')" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--muted);cursor:pointer;">📋 Copy</button>
+        </div>
+      </div>
+      <div id="essayMainText" style="font-size:15px;line-height:1.8;color:var(--text);font-family:'DM Sans',sans-serif;white-space:pre-wrap;border-left:3px solid var(--accent);padding-left:16px;"></div>
+    </div>
+    <div id="essayFeedbackBox" style="display:none;" class="card">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--orange);letter-spacing:2px;margin-bottom:10px;">FEEDBACK & SUGGESTIONS</div>
+      <div id="essayFeedbackText" style="font-size:14px;line-height:1.7;color:var(--text);font-family:'DM Sans',sans-serif;"></div>
+    </div>
+    <div id="essayVocabBox" style="display:none;" class="card">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent2);letter-spacing:2px;margin-bottom:10px;">KEY VOCABULARY IN THIS ESSAY</div>
+      <div id="essayVocabList" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+    </div>
+  </div>
+
+  <!-- Sample Topics -->
+  <div class="card">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent3);letter-spacing:2px;margin-bottom:12px;">💡 POPULAR ESSAY TOPICS</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;" id="essaySampleTopics"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TAB: AI VOCAB SUGGESTION ═══════════════════ -->
+<div id="tab-vocab-ai" class="tab-content">
+  <div class="section-tag">// AI TOOLS</div>
+  <h2 class="section-title">💡 AI Vocabulary Suggester <span style="color:var(--muted);font-size:14px;font-family:'DM Sans'">— Learn · Expand · Use in Context</span></h2>
+
+  <div class="card" style="margin-bottom:18px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:12px;">ENTER A WORD OR TOPIC TO EXPLORE</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+      <input id="vocabAiInput" class="smart-analyse-input" style="flex:1;min-width:200px;" placeholder="e.g. happy  OR  business  OR  describe the weather" />
+      <select id="vocabAiMode" style="background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);cursor:pointer;">
+        <option value="synonyms">Synonyms & Antonyms</option>
+        <option value="topic">Words for a Topic</option>
+        <option value="upgrade">Upgrade My Word</option>
+        <option value="collocations">Collocations</option>
+        <option value="phrasal">Phrasal Verbs</option>
+      </select>
+      <button class="gen-btn" onclick="runVocabAI()" style="background:linear-gradient(135deg,var(--accent2),var(--accent3));">💡 Suggest</button>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;" id="vocabAiChips"></div>
+  </div>
+
+  <div id="vocabAiOutput" style="display:none;">
+    <!-- Word cards grid -->
+    <div id="vocabAiGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:18px;"></div>
+    <!-- Usage examples -->
+    <div class="card" id="vocabAiUsageBox" style="display:none;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:12px;">📖 HOW TO USE THESE WORDS</div>
+      <div id="vocabAiUsageList" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+    <!-- Collocation table -->
+    <div class="card" id="vocabAiColBox" style="display:none;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--orange);letter-spacing:2px;margin-bottom:12px;">🔗 COLLOCATIONS — COMMON WORD PAIRS</div>
+      <div id="vocabAiColList" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+  </div>
+
+  <!-- Quick vocab chips by category -->
+  <div class="card">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent3);letter-spacing:2px;margin-bottom:12px;">⚡ QUICK EXPLORE</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;" id="vocabQuickChips"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TAB: AI PERSONALIZED PLAN ═══════════════════ -->
+<div id="tab-plan" class="tab-content">
+  <div class="section-tag">// AI TOOLS</div>
+  <h2 class="section-title">🗺️ My Learning Plan <span style="color:var(--muted);font-size:14px;font-family:'DM Sans'">— AI-Personalized · Step by Step · Track Progress</span></h2>
+
+  <!-- Assessment Form -->
+  <div id="planForm" class="card" style="margin-bottom:18px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:16px;">📋 TELL US ABOUT YOURSELF — आपल्याबद्दल सांगा</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" class="plan-form-grid">
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:6px;">YOUR LEVEL · तुमची पातळी</label>
+        <select id="planLevel" style="width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);cursor:pointer;">
+          <option value="beginner">🌱 Beginner — I know very little English</option>
+          <option value="elementary">📗 Elementary — I know basic sentences</option>
+          <option value="intermediate" selected>📘 Intermediate — I can have simple conversations</option>
+          <option value="upper">📙 Upper-Intermediate — I can write paragraphs</option>
+          <option value="advanced">🎓 Advanced — I want to master English</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:6px;">YOUR GOAL · तुमचे ध्येय</label>
+        <select id="planGoal" style="width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);cursor:pointer;">
+          <option value="speaking">🎤 Speak confidently in daily life</option>
+          <option value="exam">📝 Pass an English exam (IELTS/TOEFL)</option>
+          <option value="job">💼 Get a better job / workplace English</option>
+          <option value="writing">✍️ Write good essays & emails</option>
+          <option value="academic">🎓 Academic English for college</option>
+          <option value="all">🌟 All-round improvement</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:6px;">TIME AVAILABLE · रोज किती वेळ</label>
+        <select id="planTime" style="width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);cursor:pointer;">
+          <option value="15">⏱️ 15 minutes/day</option>
+          <option value="30" selected>⏱️ 30 minutes/day</option>
+          <option value="60">⏱️ 1 hour/day</option>
+          <option value="120">⏱️ 2+ hours/day</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:6px;">BIGGEST STRUGGLE · सर्वात कठीण काय</label>
+        <select id="planStruggle" style="width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);cursor:pointer;">
+          <option value="grammar">📚 Grammar — I make mistakes</option>
+          <option value="speaking">🎤 Speaking — I feel shy or nervous</option>
+          <option value="vocabulary">📖 Vocabulary — I don't know enough words</option>
+          <option value="writing">✍️ Writing — I can't form good sentences</option>
+          <option value="listening">👂 Listening — I can't understand fast speech</option>
+          <option value="confidence">💪 Confidence — I know but feel hesitant</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <label style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:6px;">ANYTHING ELSE? (optional)</label>
+      <input id="planExtra" class="smart-analyse-input" placeholder="e.g. I have a job interview in 2 weeks, I need to write emails for work..." style="width:100%;" />
+    </div>
+    <button class="gen-btn" onclick="generatePlan()" style="margin-top:16px;background:linear-gradient(135deg,var(--accent),var(--accent3),var(--accent2));font-size:14px;padding:14px 32px;">🗺️ Generate My Personalized Plan</button>
+  </div>
+
+  <!-- Plan Output -->
+  <div id="planOutput" style="display:none;">
+    <!-- Summary banner -->
+    <div id="planBanner" class="card" style="margin-bottom:14px;border-left:4px solid var(--accent);"></div>
+    <!-- Week-by-week plan -->
+    <div id="planWeeks" style="display:flex;flex-direction:column;gap:14px;margin-bottom:14px;"></div>
+    <!-- Daily routine -->
+    <div id="planRoutine" class="card" style="margin-bottom:14px;display:none;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:12px;">📅 YOUR DAILY ROUTINE</div>
+      <div id="planRoutineText" style="font-size:14px;line-height:1.8;color:var(--text);font-family:'DM Sans',sans-serif;"></div>
+    </div>
+    <!-- Tips -->
+    <div id="planTips" class="card" style="display:none;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--orange);letter-spacing:2px;margin-bottom:12px;">⭐ PERSONAL TIPS FOR YOU</div>
+      <div id="planTipsText" style="font-size:14px;line-height:1.8;color:var(--text);font-family:'DM Sans',sans-serif;"></div>
+    </div>
+    <button onclick="document.getElementById('planForm').style.display='block';document.getElementById('planOutput').style.display='none';"
+      style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 20px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;">← Regenerate Plan</button>
   </div>
 </div>
 
@@ -2448,7 +2789,6 @@ function renderTable(){
     <th style="color:var(--accent2)">Helping / Modal<br><span style="color:var(--muted);font-size:9px;font-weight:400">सहायक क्रियापद</span></th>
     <th style="color:var(--green)">Main Verb<br><span style="color:var(--muted);font-size:9px;font-weight:400">मुख्य क्रियापद</span></th>
     <th style="color:var(--accent3)">Object<br><span style="color:var(--muted);font-size:9px;font-weight:400">कर्म</span></th>
-    <th style="color:var(--orange)">Remaining Part<br><span style="color:var(--muted);font-size:9px;font-weight:400">उर्वरित भाग</span></th>
     <th>मराठी अर्थ</th>
     <th>Tense</th>
   </tr></thead><tbody>`;
@@ -2457,28 +2797,27 @@ function renderTable(){
     const grp=groups[sub.word];
     if(!grp||!grp.length)return;
     hasAny=true;
-    html+=`<tr class="group-header"><td colspan="9"><div class="subject-pill"><span class="subject-word">${sub.word}</span><span class="subject-mar">${sub.mar}</span></div></td></tr>`;
+    html+=`<tr class="group-header"><td colspan="8"><div class="subject-pill"><span class="subject-word">${sub.word}</span><span class="subject-mar">${sub.mar}</span></div></td></tr>`;
     grp.forEach(s=>{
       const safeEng=(s.eng||'').replace(/'/g,"\\'");
       html+=`<tr>
         <td class="row-num">${num++}</td>
         <td class="eng-cell" style="min-width:280px">
           <div class="structured-sent">
-            <span class="w-sub">${s.subject||''}</span>${s.helpingVerb?` <span class="w-help">${s.helpingVerb}</span>`:''} <span class="w-verb">${s.mainVerb||''}</span>${s.object?` <span class="w-obj">${s.object}</span>`:''}${s.remaining?` <span class="w-rem" title="${s.remainingMar||''}">${s.remaining}</span>`:''}<span class="w-dot">.</span>
+            <span class="w-sub">${s.subject||''}</span>${s.helpingVerb?` <span class="w-help">${s.helpingVerb}</span>`:''} <span class="w-verb">${s.mainVerb||''}</span>${s.object?` <span class="w-obj">${s.object}</span>`:''}<span class="w-dot">.</span>
           </div>
-          <button class="row-analyse-btn" onclick="quickAnalyse('${safeEng}')">🧩 Analyse</button>
+         
         </td>
         <td class="sc-sub">${s.subject||'—'}</td>
         <td class="sc-help">${s.helpingVerb||'—'}</td>
         <td class="sc-verb">${s.mainVerb||'—'}</td>
         <td class="sc-obj">${s.object||'—'}</td>
-        <td class="sc-rem">${s.remaining||'—'}<br><span style="color:var(--orange);opacity:.75;font-size:10px;">${s.remainingMar||''}</span></td>
         <td class="mar-text">${s.mar||'—'}</td>
         <td class="tense-text">${s.tense}</td>
       </tr>`;
     });
   });
-  if(!hasAny)html+=`<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;">No results found</td></tr>`;
+  if(!hasAny)html+=`<tr><td colspan="8" style="text-align:center;padding:28px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;">No results found</td></tr>`;
   html+='</tbody></table></div>';
   container.innerHTML=html;
 }
@@ -2599,13 +2938,7 @@ function useSelectedVerb(){
   document.getElementById('v3').value=v.v3.toLowerCase();
   document.getElementById('vmar').value=v.mar;
   document.getElementById('v1').scrollIntoView({behavior:'smooth',block:'center'});
-  setTimeout(()=>{
-    generateSentences();
-    // Auto-populate the analyse bar with a sample sentence using this verb
-    const sampleSent=`She will ${v.v1.toLowerCase()} something carefully today.`;
-    document.getElementById('analyseInput').value=sampleSent;
-    analyseSentence();
-  },300);
+  setTimeout(()=>{ generateSentences(); },300);
 }
 
 /* ════════════════════════════════════════════════════════
@@ -6270,142 +6603,869 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 
-/* ═══════════════════════════════════════════════════════════════
-   SENTENCE STRUCTURE ANALYSER — AI Powered
-═══════════════════════════════════════════════════════════════ */
 
-const ANALYSE_SYSTEM = `You are an expert English grammar teacher for Marathi-medium students.
 
-When given an English sentence, analyse it using this EXACT structure and respond ONLY in JSON (no extra text, no markdown):
 
-{
-  "sentence": "the full sentence",
-  "subject": { "text": "the subject word(s)", "mar": "मराठी अर्थ", "note": "1-line grammar note" },
-  "helpingVerb": { "text": "helping or modal verb (or empty if none)", "mar": "मराठी अर्थ", "note": "what kind - helping/modal/auxiliary" },
-  "mainVerb": { "text": "the main verb form used", "mar": "मराठी क्रियापद", "note": "V1/V2/V3/V-ing - tense name" },
-  "object": { "text": "the object (who/what receives the action)", "mar": "मराठी अर्थ", "note": "what kind of object" },
-  "remainingPart": { "text": "time/place/reason/manner phrase remaining", "mar": "मराठी अर्थ", "note": "type: time/place/reason/manner" },
-  "fullMarathi": "complete Marathi translation of sentence",
-  "tense": "tense name in English",
-  "tenseMarathi": "काळाचे नाव मराठीत",
-  "formula": "Subject + Helping Verb + Main Verb + Object + Remaining Part (with actual values)"
+
+
+/* ════════════════════════════════════════════════════
+   🔄 TENSE CONVERTER
+════════════════════════════════════════════════════ */
+const TENSE_CONV_EXAMPLES = [
+  'I eat an apple every day',
+  'She reads books at night',
+  'We play cricket on weekends',
+  'He drinks tea every morning',
+  'They work in the office',
+];
+
+const TENSE_CARDS = [
+  {name:'Simple Present',       color:'#40c8f0', formula:'Subject + V1(s/es) + Object',
+   build:(s,v,o)=>`${s} ${conjugateV1(s,v)} ${o}`},
+  {name:'Present Continuous',   color:'#f0c040', formula:'Subject + is/am/are + V-ing + Object',
+   build:(s,v,o)=>`${s} ${beForm(s,'present')} ${v}ing ${o}`},
+  {name:'Present Perfect',      color:'#40f0a0', formula:'Subject + has/have + V3 + Object',
+   build:(s,v,o)=>`${s} ${haveForm(s)} ${getV3(v)} ${o}`},
+  {name:'Present Perfect Cont.',color:'#a0f040', formula:'Subject + has/have + been + V-ing + Object',
+   build:(s,v,o)=>`${s} ${haveForm(s)} been ${v}ing ${o}`},
+  {name:'Simple Past',          color:'#f07070', formula:'Subject + V2 + Object',
+   build:(s,v,o)=>`${s} ${getV2(v)} ${o}`},
+  {name:'Past Continuous',      color:'#f0a060', formula:'Subject + was/were + V-ing + Object',
+   build:(s,v,o)=>`${s} ${beForm(s,'past')} ${v}ing ${o}`},
+  {name:'Past Perfect',         color:'#c040f0', formula:'Subject + had + V3 + Object',
+   build:(s,v,o)=>`${s} had ${getV3(v)} ${o}`},
+  {name:'Past Perfect Cont.',   color:'#e090ff', formula:'Subject + had + been + V-ing + Object',
+   build:(s,v,o)=>`${s} had been ${v}ing ${o}`},
+  {name:'Simple Future',        color:'#70d0ff', formula:'Subject + will + V1 + Object',
+   build:(s,v,o)=>`${s} will ${v} ${o}`},
+  {name:'Future Continuous',    color:'#ffd070', formula:'Subject + will be + V-ing + Object',
+   build:(s,v,o)=>`${s} will be ${v}ing ${o}`},
+  {name:'Future Perfect',       color:'#70ffb0', formula:'Subject + will have + V3 + Object',
+   build:(s,v,o)=>`${s} will have ${getV3(v)} ${o}`},
+  {name:'Future Perfect Cont.', color:'#ff90c0', formula:'Subject + will have been + V-ing + Object',
+   build:(s,v,o)=>`${s} will have been ${v}ing ${o}`},
+];
+
+function conjugateV1(subj,v){
+  const s=subj.toLowerCase();
+  if(['he','she','it'].includes(s)||(!['i','we','you','they'].includes(s)&&s.split(' ').length===1)){
+    if(/[szxo]$|[sc]h$/.test(v)) return v+'es';
+    if(/[^aeiou]y$/.test(v)) return v.slice(0,-1)+'ies';
+    return v+'s';
+  }
+  return v;
+}
+function beForm(s,t){
+  const sub=s.toLowerCase();
+  if(t==='present'){
+    if(sub==='i') return 'am';
+    if(['he','she','it'].includes(sub)) return 'is';
+    return 'are';
+  } else {
+    if(['i','he','she','it'].includes(sub)) return 'was';
+    return 'were';
+  }
+}
+function haveForm(s){
+  const sub=s.toLowerCase();
+  return ['he','she','it'].includes(sub)?'has':'have';
+}
+function getV2(v){
+  // Look up in VERB_DICT
+  const found=VERB_DICT.find(x=>x.v1.toLowerCase()===v.toLowerCase());
+  if(found) return found.v2;
+  // Simple rule: if ends in e, add d
+  if(/e$/.test(v)) return v+'d';
+  if(/[^aeiou]y$/.test(v)) return v.slice(0,-1)+'ied';
+  return v+'ed';
+}
+function getV3(v){
+  const found=VERB_DICT.find(x=>x.v1.toLowerCase()===v.toLowerCase());
+  if(found) return found.v3;
+  return getV2(v); // fallback
 }
 
-Rules:
-- If there is no helping verb, set helpingVerb.text to "" and helpingVerb.mar to "नाही"
-- If there is no object, set object.text to "" and object.mar to "नाही"  
-- If there is no remaining part, set remainingPart.text to "" and remainingPart.mar to "नाही"
-- Be precise about verb forms: V1=base, V2=past simple, V3=past participle, V-ing=present participle
-- Respond ONLY with the JSON object, nothing else`;
+function parseSentence(input){
+  // Simple heuristic: first word = subject, last noun phrase = object, middle = verb
+  const words=input.trim().split(/\s+/);
+  if(words.length<2) return {s:words[0]||'I',v:'go',o:''};
+  // Strip helping verbs to find main verb
+  const helpers=['is','am','are','was','were','have','has','had','will','do','does','did','can','could','should','would','may','might','must','shall','need'];
+  let si=0, vi=-1, oi='';
+  const s=words[0];
+  for(let i=1;i<words.length;i++){
+    if(!helpers.includes(words[i].toLowerCase())){
+      // base form: strip s/es/ed/ing
+      let base=words[i].toLowerCase();
+      base=base.replace(/ing$/,'').replace(/ies$/,'y').replace(/es$/,'').replace(/s$/,'').replace(/ed$/,'').replace(/ied$/,'y');
+      // verify against VERB_DICT
+      const found=VERB_DICT.find(x=>x.v1.toLowerCase()===base||x.v4.toLowerCase()===words[i].toLowerCase()+'ing'||x.v2.toLowerCase()===words[i].toLowerCase());
+      vi=i;
+      oi=words.slice(i+1).join(' ');
+      return {s, v: found?found.v1:base, o:oi};
+    }
+  }
+  return {s:words[0], v:words[1]||'go', o:words.slice(2).join(' ')};
+}
 
-async function analyseSentence(){
-  const input = document.getElementById('analyseInput');
-  const sentence = (input ? input.value.trim() : '');
-  if(!sentence){
-    document.getElementById('analysePanel').innerHTML='<div class="analyse-strip"><div class="analyse-empty">Please type or paste a sentence above to analyse.</div></div>';
+function convertAllTenses(){
+  const input=document.getElementById('tenseConvInput').value.trim();
+  if(!input){alert('Please enter a sentence first!');return;}
+  const {s,v,o}=parseSentence(input);
+  const grid=document.getElementById('tenseConvGrid');
+  const panel=document.getElementById('tenseConvPanel');
+  panel.style.display='block';
+  grid.innerHTML='';
+  TENSE_CARDS.forEach((tc,i)=>{
+    const sentence=tc.build(s,v,o).replace(/\s+/g,' ').trim();
+    const card=document.createElement('div');
+    card.style.cssText=`background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;border-top:3px solid ${tc.color};`;
+    card.innerHTML=`
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:${tc.color};letter-spacing:2px;margin-bottom:6px;">${String(i+1).padStart(2,'0')}. ${tc.name.toUpperCase()}</div>
+      <div style="font-size:16px;font-weight:600;color:var(--text);font-family:'DM Sans',sans-serif;margin-bottom:8px;line-height:1.4;">${sentence}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;">${tc.formula}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button onclick="speakSentence('${sentence.replace(/'/g,"\'")}',this)" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--muted);">▶ Listen</button>
+        <button onclick="navigator.clipboard.writeText('${sentence.replace(/'/g,"\'")}');this.textContent='✓ Copied!';setTimeout(()=>this.textContent='📋 Copy',1500)" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--muted);">📋 Copy</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+  // Scroll to result
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Populate tense converter quick-try examples
+function initTenseConv(){
+  const el=document.getElementById('tenseConvExamples');
+  if(!el) return;
+  TENSE_CONV_EXAMPLES.forEach(ex=>{
+    const b=document.createElement('button');
+    b.textContent=ex;
+    b.style.cssText="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--muted);cursor:pointer;";
+    b.onclick=()=>{document.getElementById('tenseConvInput').value=ex;convertAllTenses();};
+    el.appendChild(b);
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   🎤 PRONUNCIATION STUDIO
+════════════════════════════════════════════════════ */
+let isRecording=false;
+let speechRecog=null;
+let currentPronounceEx='';
+
+const PRONOUNCE_SENTENCES=[
+  {eng:'She sells seashells by the seashore.',mar:'ती समुद्रकिनारी शंख विकते.'},
+  {eng:'I can read this book clearly.',mar:'मी हे पुस्तक स्पष्टपणे वाचू शकतो.'},
+  {eng:'The weather is very nice today.',mar:'आज हवामान खूप छान आहे.'},
+  {eng:'Please speak slowly and clearly.',mar:'कृपया हळू आणि स्पष्टपणे बोला.'},
+  {eng:'He goes to school every morning.',mar:'तो दर सकाळी शाळेत जातो.'},
+  {eng:'We are learning English together.',mar:'आपण एकत्र इंग्रजी शिकत आहोत.'},
+  {eng:'The bird is flying in the sky.',mar:'पक्षी आकाशात उडत आहे.'},
+  {eng:'I drink a glass of water daily.',mar:'मी रोज एक ग्लास पाणी पितो.'},
+  {eng:'My mother cooks delicious food.',mar:'माझी आई चवदार जेवण बनवते.'},
+  {eng:'The children are playing in the park.',mar:'मुले बागेत खेळत आहेत.'},
+  {eng:'Education is the key to success.',mar:'शिक्षण हे यशाची गुरुकिल्ली आहे.'},
+  {eng:'I will work hard and achieve my goals.',mar:'मी कठोर परिश्रम करेन आणि माझ्या ध्येयांपर्यंत पोहोचेन.'},
+];
+
+const RAM_SENTENCES=[
+  'Good morning. How are you?',
+  'I would like some water please.',
+  'Can you help me understand this?',
+  'She is a very good student.',
+  'We should practice speaking English daily.',
+  'The sun rises in the east.',
+  'Please repeat after me.',
+  'I am happy to learn new things.',
+];
+
+function speakText(){
+  const text=document.getElementById('ttsInput').value.trim();
+  if(!text){alert('Please enter text to speak!');return;}
+  speakSentence(text);
+}
+function speakSentence(text, btn){
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    const utt=new SpeechSynthesisUtterance(text);
+    const rate=parseFloat(document.getElementById('ttsRate')?.value||0.85);
+    const pitch=parseFloat(document.getElementById('ttsPitch')?.value||1);
+    utt.rate=rate; utt.pitch=pitch; utt.lang='en-US';
+    if(btn){btn.textContent='🔊 Playing...';utt.onend=()=>btn.textContent='▶ Listen';}
+    window.speechSynthesis.speak(utt);
+  } else { alert('Your browser does not support text-to-speech.'); }
+}
+function stopSpeak(){window.speechSynthesis&&window.speechSynthesis.cancel();}
+
+function listenToSentence(){
+  speakSentence(currentPronounceEx || 'Please press New Sentence first.');
+}
+
+function newPronounceEx(){
+  const ex=PRONOUNCE_SENTENCES[Math.floor(Math.random()*PRONOUNCE_SENTENCES.length)];
+  currentPronounceEx=ex.eng;
+  document.getElementById('speakExText').textContent=ex.eng;
+  document.getElementById('speakExMarathi').textContent=ex.mar;
+  document.getElementById('speakResult').style.display='none';
+}
+
+function toggleRecording(){
+  if(isRecording){stopRecording();}
+  else{startRecording();}
+}
+
+function startRecording(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){
+    alert('Speech recognition is not supported in this browser. Try Chrome.');
     return;
   }
-  runAnalyser(sentence);
+  if(!currentPronounceEx){alert('Press "New Sentence" first!');return;}
+  speechRecog=new SR();
+  speechRecog.lang='en-US';
+  speechRecog.interimResults=false;
+  speechRecog.onresult=function(e){
+    const spoken=e.results[0][0].transcript;
+    showPronounceScore(spoken);
+  };
+  speechRecog.onerror=function(e){
+    isRecording=false;
+    document.getElementById('recordBtn').textContent='🎤 Start Speaking';
+    document.getElementById('recordBtn').style.background='linear-gradient(135deg,var(--red),var(--orange))';
+  };
+  speechRecog.onend=function(){
+    isRecording=false;
+    document.getElementById('recordBtn').textContent='🎤 Start Speaking';
+    document.getElementById('recordBtn').style.background='linear-gradient(135deg,var(--red),var(--orange))';
+  };
+  speechRecog.start();
+  isRecording=true;
+  document.getElementById('recordBtn').textContent='⏹ Stop & Check';
+  document.getElementById('recordBtn').style.background='linear-gradient(135deg,var(--orange),var(--accent))';
 }
 
-function quickAnalyse(sentence){
-  // Called from 🧩 row button — scrolls up and fills the input
-  const input = document.getElementById('analyseInput');
-  if(input){ input.value = sentence; input.scrollIntoView({behavior:'smooth',block:'center'}); }
-  runAnalyser(sentence);
+function stopRecording(){
+  if(speechRecog) speechRecog.stop();
+  isRecording=false;
 }
 
-async function runAnalyser(sentence){
-  const panel = document.getElementById('analysePanel');
-  panel.innerHTML = '<div class="analyse-strip"><div class="analyse-loading">🤖 Analysing sentence structure · वाक्याचे विश्लेषण होत आहे...</div></div>';
-  panel.scrollIntoView({behavior:'smooth', block:'start'});
+function showPronounceScore(spoken){
+  const target=currentPronounceEx.toLowerCase().replace(/[^a-z\s]/g,'');
+  const said=spoken.toLowerCase().replace(/[^a-z\s]/g,'');
+  const targetWords=target.split(/\s+/);
+  const saidWords=said.split(/\s+/);
+  let matches=0;
+  targetWords.forEach(w=>{if(saidWords.includes(w))matches++;});
+  const pct=Math.round((matches/targetWords.length)*100);
+  const result=document.getElementById('speakResult');
+  result.style.display='block';
+  document.getElementById('spokenText').textContent='"'+spoken+'"';
+  let color,msg;
+  if(pct>=85){color=getComputedStyle(document.documentElement).getPropertyValue('--green').trim();msg='Excellent! 🎉 Perfect pronunciation!';}
+  else if(pct>=65){color='#f0c040';msg='Good! 👍 Keep practicing for perfection.';}
+  else if(pct>=40){color='#f0a060';msg='Fair. 🔄 Listen again and try once more.';}
+  else{color='#f07070';msg='Keep trying! 💪 Listen carefully and repeat slowly.';}
+  result.style.borderColor=color;
+  document.getElementById('speakScore').innerHTML=
+    `<div style="font-size:24px;font-weight:700;color:${color};font-family:'IBM Plex Mono',monospace;">${pct}% match</div>`+
+    `<div style="margin-top:4px;color:var(--muted);font-size:13px;">${msg}</div>`;
+}
 
+function initSpeakTab(){
+  const grid=document.getElementById('ramGrid');
+  if(!grid) return;
+  RAM_SENTENCES.forEach(s=>{
+    const card=document.createElement('div');
+    card.style.cssText='background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;';
+    card.innerHTML=`<span style="font-size:14px;color:var(--text);font-family:'DM Sans',sans-serif;flex:1;">${s}</span>
+      <button onclick="speakSentence('${s.replace(/'/g,"\'")}',this)" style="background:linear-gradient(135deg,var(--accent2),var(--green));color:#000;border:none;border-radius:8px;padding:6px 14px;font-size:11px;font-family:'IBM Plex Mono',monospace;cursor:pointer;white-space:nowrap;">▶ Listen</button>`;
+    grid.appendChild(card);
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   ✨ AI REWRITER
+════════════════════════════════════════════════════ */
+const REWRITE_EXAMPLES=[
+  {text:'I go to market daily for buying vegetables.',hint:'Improve grammar & flow'},
+  {text:'He not come yesterday in office.',hint:'Fix errors'},
+  {text:'The utilization of sophisticated methodologies in the realm of education facilitates enhanced pedagogical outcomes.',hint:'Simplify'},
+  {text:'She is good.',hint:'Expand into a detailed sentence'},
+  {text:'Can you please help me? I am not understanding this topic very well.',hint:'Formalize'},
+];
+
+function initRewriteTab(){
+  const el=document.getElementById('rewriteExList');
+  if(!el) return;
+  REWRITE_EXAMPLES.forEach(ex=>{
+    const div=document.createElement('div');
+    div.style.cssText='background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;flex-wrap:wrap;';
+    div.innerHTML=`<div><div style="font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;">${ex.text}</div><div style="font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-top:3px;">→ ${ex.hint}</div></div>
+      <button onclick="document.getElementById('rewriteInput').value='${ex.text.replace(/'/g,"\'")}';document.getElementById('rewriteInput').focus();" style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--muted);cursor:pointer;white-space:nowrap;">Use →</button>`;
+    el.appendChild(div);
+  });
+}
+
+const REWRITE_SYSTEM=`You are an expert English tutor helping Marathi-speaking students improve their English writing.
+Given a sentence or paragraph, rewrite it according to the specified mode.
+Return ONLY valid JSON (no markdown) with these fields:
+{
+  "original": "...",
+  "rewritten": "...",
+  "explanation": "Short explanation in simple English of what was changed and why (2-3 sentences max)",
+  "variations": ["alternative 1", "alternative 2"]
+}`;
+
+async function aiRewrite(mode){
+  const text=document.getElementById('rewriteInput').value.trim();
+  if(!text){alert('Please enter text to rewrite!');return;}
+  const modeLabels={improve:'⬆️ IMPROVING',simplify:'🔽 SIMPLIFYING',formalize:'🎩 FORMALIZING',casual:'😊 MAKING CASUAL',expand:'📝 EXPANDING',shorten:'✂️ SHORTENING'};
+  const panel=document.getElementById('rewritePanel');
+  const resultBox=document.getElementById('rewriteResultBox');
+  const origBox=document.getElementById('rewriteOrigBox');
+  const expBox=document.getElementById('rewriteExplanation');
+  const varDiv=document.getElementById('rewriteVariations');
+  const varList=document.getElementById('rewriteVarList');
+  const modeLabel=document.getElementById('rewriteModeLabel');
+  panel.style.display='block';
+  modeLabel.textContent=modeLabels[mode]||'PROCESSING...';
+  resultBox.textContent='⏳ Rewriting...';
+  origBox.textContent=text;
+  expBox.textContent='';
+  varDiv.style.display='none';
+  const modePrompts={
+    improve:'Improve this text: fix grammar, improve sentence structure, make it flow naturally.',
+    simplify:'Simplify this text: use shorter words, simpler sentences, easy vocabulary for beginners.',
+    formalize:'Make this text more formal and professional.',
+    casual:'Make this text sound friendly, casual, and conversational.',
+    expand:'Expand this text with more details, examples, and description while keeping the same meaning.',
+    shorten:'Shorten this text to its most essential points while keeping the core meaning.',
+  };
+  const prompt=`${modePrompts[mode]}\n\nText: "${text}"`;
   try{
-    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:800,
-        system: ANALYSE_SYSTEM,
-        messages:[{role:'user', content: sentence}]
-      })
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:REWRITE_SYSTEM,messages:[{role:'user',content:prompt}]})
     });
-    const data = await resp.json();
-    const raw = data.content.find(c=>c.type==='text')?.text || '{}';
-    const clean = raw.replace(/```json|```/g,'').trim();
-    const parsed = JSON.parse(clean);
-    renderAnalysis(parsed);
-  } catch(e){
-    panel.innerHTML = '<div class="analyse-strip"><div class="analyse-empty" style="color:var(--red)">Error analysing sentence. Please try again.<br><small>'+e.message+'</small></div></div>';
+    const data=await res.json();
+    const raw=data.content.find(b=>b.type==='text')?.text||'{}';
+    let parsed;
+    try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());}
+    catch{parsed={rewritten:raw,explanation:'',variations:[]};}
+    resultBox.textContent=parsed.rewritten||'Could not rewrite.';
+    expBox.textContent=parsed.explanation||'';
+    if(parsed.variations&&parsed.variations.length){
+      varDiv.style.display='block';
+      varList.innerHTML='';
+      parsed.variations.forEach((v,i)=>{
+        const d=document.createElement('div');
+        d.style.cssText=`background:var(--surface);border-left:3px solid var(--accent3);padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;display:flex;justify-content:space-between;align-items:center;gap:10px;`;
+        d.innerHTML=`<span>${v}</span><button onclick="speakSentence('${v.replace(/'/g,"\'")}',this)" style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:10px;cursor:pointer;color:var(--muted);white-space:nowrap;">▶ Listen</button>`;
+        varList.appendChild(d);
+      });
+    }
+    modeLabel.textContent=modeLabels[mode].replace(/⏳/g,'')+'— DONE';
+    panel.scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){
+    resultBox.textContent='Error: Could not connect to AI. Please try again.';
+    console.error(e);
   }
 }
 
-function renderAnalysis(d){
-  const panel = document.getElementById('analysePanel');
-
-  // Build the coloured formula line
-  const fParts = [];
-  if(d.subject?.text)      fParts.push(`<span class="af-sub">${d.subject.text}</span>`);
-  if(d.helpingVerb?.text)  fParts.push(`<span class="af-help">${d.helpingVerb.text}</span>`);
-  if(d.mainVerb?.text)     fParts.push(`<span class="af-verb">${d.mainVerb.text}</span>`);
-  if(d.object?.text)       fParts.push(`<span class="af-obj">${d.object.text}</span>`);
-  if(d.remainingPart?.text)fParts.push(`<span class="af-rem">${d.remainingPart.text}</span>`);
-  const formulaColour = fParts.join('<span class="af-plus"> + </span>');
-
-  // Part cards
-  const parts = [
-    { key:'subject',      label:'Subject',             labelMar:'कर्ता',            cls:'ap-sub',  icon:'👤' },
-    { key:'helpingVerb',  label:'Helping / Modal Verb', labelMar:'सहायक/Modal क्रियापद', cls:'ap-help', icon:'🔧' },
-    { key:'mainVerb',     label:'Main Verb',            labelMar:'मुख्य क्रियापद',   cls:'ap-verb', icon:'⚡' },
-    { key:'object',       label:'Object',               labelMar:'कर्म',             cls:'ap-obj',  icon:'🎯' },
-    { key:'remainingPart',label:'Remaining Part',       labelMar:'उर्वरित भाग',      cls:'ap-rem',  icon:'📌' },
-  ];
-
-  const partsHTML = parts.map(p=>{
-    const val = d[p.key];
-    const hasVal = val?.text;
-    return `
-    <div class="analyse-part ${p.cls}" ${!hasVal?'style="opacity:.5"':''}>
-      <div class="analyse-part-label">${p.icon} ${p.label} · ${p.labelMar}</div>
-      <div class="analyse-part-value">${hasVal ? val.text : '—'}</div>
-      ${val?.mar ? `<div class="analyse-part-mar">${val.mar}</div>` : ''}
-      ${val?.note ? `<div class="analyse-part-note">${val.note}</div>` : ''}
-    </div>`;
-  }).join('');
-
-  panel.innerHTML = `
-  <div class="analyse-strip">
-    <div class="analyse-hd"><span>🧩</span> SENTENCE STRUCTURE ANALYSIS · वाक्य रचना विश्लेषण <span style="margin-left:auto;font-size:10px;color:var(--accent)">${d.tense||''}</span></div>
-
-    <div class="analyse-sent-display">"${d.sentence}"</div>
-
-    <div class="analyse-formula">
-      <span style="color:var(--muted);font-size:9px;letter-spacing:2px;">COLOUR-CODED FORMULA &nbsp;→&nbsp; </span>
-      ${formulaColour}
-      <br>
-      <span style="font-size:9px;color:var(--muted)">
-        <span class="af-sub">■ Subject</span> &nbsp;
-        <span class="af-help">■ Helping Verb</span> &nbsp;
-        <span class="af-verb">■ Main Verb</span> &nbsp;
-        <span class="af-obj">■ Object</span> &nbsp;
-        <span class="af-rem">■ Remaining</span>
-      </span>
-    </div>
-
-    <div class="analyse-grid">${partsHTML}</div>
-
-    <div class="analyse-maravali">
-      🇮🇳 <strong>मराठी अनुवाद:</strong> ${d.fullMarathi||'—'}
-      &nbsp;&nbsp;|&nbsp;&nbsp;
-      📚 <strong>काळ:</strong> ${d.tenseMarathi||d.tense||'—'}
-    </div>
-
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);padding:8px 12px;background:var(--card);border-radius:8px;border:1px solid var(--border);">
-      📐 FORMULA: <span style="color:var(--text)">${d.formula||'—'}</span>
-    </div>
-  </div>`;
+function copyRewrite(){
+  const text=document.getElementById('rewriteResultBox').textContent;
+  if(text&&text!=='⏳ Rewriting...'){
+    navigator.clipboard.writeText(text);
+    const btn=event.target;
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>btn.textContent='📋 Copy',1500);
+  }
 }
+
+/* ════════════════════════════════════════════════════
+   WORD OF THE DAY (Home Tab Widget)
+════════════════════════════════════════════════════ */
+const WOTD_LIST=[
+  {word:'Perseverance',pos:'noun',def:'Continued effort despite difficulty',mar:'चिकाटी',ex:'Perseverance is the key to success.'},
+  {word:'Eloquent',pos:'adjective',def:'Fluent and persuasive in speech',mar:'वाकपटू',ex:'She gave an eloquent speech at the ceremony.'},
+  {word:'Meticulous',pos:'adjective',def:'Showing great attention to detail',mar:'काळजीपूर्वक',ex:'He was meticulous in his work.'},
+  {word:'Resilient',pos:'adjective',def:'Able to recover quickly from difficulties',mar:'लवचिक / खंबीर',ex:'Children are often more resilient than adults.'},
+  {word:'Diligent',pos:'adjective',def:'Having or showing care in work',mar:'परिश्रमी',ex:'She is a diligent student who never misses class.'},
+  {word:'Profound',pos:'adjective',def:'Very great or intense; having deep meaning',mar:'गहन / खोल',ex:'The book had a profound effect on him.'},
+  {word:'Ambiguous',pos:'adjective',def:'Open to more than one interpretation',mar:'अस्पष्ट',ex:'His instructions were ambiguous and confusing.'},
+  {word:'Collaborate',pos:'verb',def:'Work together towards a shared goal',mar:'सहकार्य करणे',ex:'We need to collaborate on this project.'},
+  {word:'Empathy',pos:'noun',def:"Ability to understand others' feelings",mar:'सहानुभूती',ex:'A good teacher shows empathy to students.'},
+  {word:'Spontaneous',pos:'adjective',def:'Done without planning; natural',mar:'उत्स्फूर्त',ex:"Her spontaneous smile made everyone happy."},
+  {word:'Tenacious',pos:'adjective',def:"Holding firmly to something; determined",mar:'दृढनिश्चयी',ex:'He was tenacious in pursuing his dreams.'},
+  {word:'Eloquence',pos:'noun',def:"The quality of being persuasive in speech",mar:'वाकचातुर्य',ex:'His eloquence won the hearts of the audience.'},
+  {word:'Pragmatic',pos:'adjective',def:"Dealing with problems in a practical way",mar:'व्यावहारिक',ex:'We need a pragmatic solution to this problem.'},
+  {word:'Gratitude',pos:'noun',def:"The quality of being thankful",mar:'कृतज्ञता',ex:'She expressed gratitude for all the help received.'},
+  {word:'Integrity',pos:'noun',def:"The quality of being honest and having strong principles",mar:'प्रामाणिकपणा',ex:"A leader must have integrity above all else."},
+  {word:'Versatile',pos:'adjective',def:"Able to adapt to many different functions",mar:'बहुगुणी',ex:"She is a versatile writer who covers many topics."},
+  {word:'Persevere',pos:'verb',def:"Continue despite difficulty",mar:'चिकाटीने प्रयत्न करणे',ex:'You must persevere to achieve your goals.'},
+  {word:'Phenomenon',pos:'noun',def:"A fact or situation that is observed",mar:'घटना / प्रघटना',ex:'The northern lights are a natural phenomenon.'},
+  {word:'Inevitable',pos:'adjective',def:"Certain to happen; unavoidable",mar:'अटळ',ex:'Change is inevitable in life.'},
+  {word:'Accomplish',pos:'verb',def:"Achieve or complete successfully",mar:'पूर्ण करणे',ex:'She accomplished all her goals this year.'},
+  {word:'Aspiration',pos:'noun',def:"A hope or ambition to achieve something",mar:'महत्त्वाकांक्षा',ex:'His aspiration was to become a doctor.'},
+  {word:'Concise',pos:'adjective',def:"Giving a lot of information briefly",mar:'थोडक्यात / संक्षिप्त',ex:'Please be concise in your answer.'},
+  {word:'Dedicate',pos:'verb',def:"Give all one's time and effort to",mar:'समर्पित करणे',ex:"She dedicated herself to helping others."},
+  {word:'Enthusiasm',pos:'noun',def:'Great eagerness and interest',mar:'उत्साह',ex:'He joined the team with great enthusiasm.'},
+  {word:'Flourish',pos:'verb',def:'Grow or develop in a healthy way',mar:'भरभराट होणे',ex:"Plants flourish in sunlight and water."},
+  {word:'Genuine',pos:'adjective',def:"Truly what it is said to be; authentic",mar:'खरे / प्रामाणिक',ex:"Her concern for students was genuine."},
+  {word:'Harmony',pos:'noun',def:'A pleasing combination; peaceful agreement',mar:'सुसंगती / शांती',ex:'There was harmony in the classroom.'},
+  {word:'Innovative',pos:'noun',def:'Featuring new ideas or methods',mar:'नाविन्यपूर्ण',ex:'The school used innovative teaching methods.'},
+  {word:'Justice',pos:'noun',def:"The quality of being fair and reasonable",mar:'न्याय',ex:"Everyone deserves justice and equality."},
+  {word:'Knowledgeable',pos:'adjective',def:'Intelligent and well-informed',mar:'ज्ञानी',ex:'She is very knowledgeable about history.'},
+];
+
+function initWOTD(){
+  const el=document.getElementById('wotd-widget');
+  if(!el) return;
+  const idx=new Date().getDate() % WOTD_LIST.length;
+  const w=WOTD_LIST[idx];
+  el.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:3px;margin-bottom:4px;">✨ WORD OF THE DAY</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--text);">${w.word}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent3);margin-top:2px;">${w.pos} &nbsp;|&nbsp; <span style="color:var(--orange)">${w.mar}</span></div>
+        <div style="margin-top:8px;font-size:14px;color:var(--muted);font-family:'DM Sans',sans-serif;">${w.def}</div>
+        <div style="margin-top:8px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;border-left:3px solid var(--accent);padding-left:10px;font-style:italic;">"${w.ex}"</div>
+      </div>
+      <button onclick="speakSentence('${w.word}. ${w.def}')" style="background:linear-gradient(135deg,var(--accent2),var(--green));color:#000;border:none;border-radius:10px;padding:10px 18px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;white-space:nowrap;align-self:flex-start;">▶ Hear it</button>
+    </div>`;
+}
+
+/* ════════════════════════════════════════════════════
+   INIT HOOKS — run new features on tab switch
+════════════════════════════════════════════════════ */
+const _origSwitchTab=switchTab;
+switchTab=function(tabId,btn){
+  _origSwitchTab(tabId,btn);
+  if(tabId==='tab-tense-conv') initTenseConv();
+  if(tabId==='tab-speak') initSpeakTab();
+  if(tabId==='tab-rewrite') initRewriteTab();
+  if(tabId==='tab-home') initWOTD();
+};
+
+// Auto-init on page load
+document.addEventListener('DOMContentLoaded',()=>{
+  initWOTD();
+  initTenseConv();
+});
+
+
+/* ════════════════════════════════════════════════
+   📝 AI ESSAY HELPER
+════════════════════════════════════════════════ */
+const ESSAY_TOPICS = [
+  'Importance of education in rural India',
+  'Effect of mobile phones on students',
+  'My favourite festival — Ganesh Chaturthi',
+  'Why trees are important for us',
+  'Discipline — key to success',
+  'My dream job',
+  'Women empowerment in India',
+  'Pollution — causes and solutions',
+  'The importance of exercise',
+  'How internet changed our lives',
+  'Importance of mother tongue',
+  'Save water save life',
+];
+
+const ESSAY_SYSTEM = `You are an expert English writing tutor helping Marathi-medium students.
+Return ONLY valid JSON (no markdown, no extra text) with this exact structure:
+{
+  "label": "mode label in CAPS e.g. ESSAY · INTERMEDIATE",
+  "mainText": "the essay / outline / improved text / feedback as plain text",
+  "feedback": "2-3 sentences of feedback on the writing or content (empty string if not relevant)",
+  "vocabWords": [{"word":"...","meaning":"...","marathi":"..."}]
+}
+Keep language appropriate to the level. Always include 4-6 vocabulary words from the output.`;
+
+let currentEssayMode = 'write';
+
+function setEssayMode(mode) {
+  currentEssayMode = mode;
+  document.querySelectorAll('.essay-mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  const userBox = document.getElementById('essayUserText');
+  const btn = document.getElementById('essayRunBtn');
+  const topicInput = document.getElementById('essayTopic');
+  if (mode === 'improve' || mode === 'feedback') {
+    userBox.style.display = 'block';
+    userBox.placeholder = mode === 'improve' ? 'Paste your essay here — AI will improve it...' : 'Paste your essay here — AI will give detailed feedback...';
+    topicInput.placeholder = 'Topic (optional)';
+    btn.textContent = mode === 'improve' ? '⬆️ Improve It' : '🔍 Get Feedback';
+  } else {
+    userBox.style.display = 'none';
+    topicInput.placeholder = mode === 'outline' ? 'Topic for outline: e.g. Climate change' : mode === 'points' ? 'Topic for key points: e.g. Health and fitness' : 'Topic: e.g. Importance of education in rural India';
+    btn.textContent = mode === 'outline' ? '📋 Make Outline' : mode === 'points' ? '💡 Key Points' : '📝 Generate Essay';
+  }
+}
+
+async function runEssayAI() {
+  const topic = document.getElementById('essayTopic').value.trim();
+  const level = document.getElementById('essayLevel').value;
+  const len = document.getElementById('essayLen').value;
+  const userText = document.getElementById('essayUserText').value.trim();
+  const mode = currentEssayMode;
+
+  if (!topic && !userText) { alert('Please enter a topic or paste your text!'); return; }
+
+  const lenWords = { short: '100', medium: '200', long: '350' }[len];
+  const modePrompts = {
+    write:    `Write a ${lenWords}-word essay at ${level} level on: "${topic}". Use simple, clear English suitable for Indian students.`,
+    improve:  `Improve this essay at ${level} level. Make it better — fix grammar, improve vocabulary, better structure. Original text: "${userText || topic}"`,
+    outline:  `Create a detailed essay outline for topic: "${topic || userText}". Include introduction, 3-4 main points with sub-points, and conclusion.`,
+    feedback: `Give detailed constructive feedback on this essay. Mention: grammar issues, vocabulary, structure, what is good, what to improve. Essay: "${userText || topic}"`,
+    points:   `Give 8-10 key points about: "${topic || userText}". Each point should be 1-2 sentences, clear and easy to understand.`,
+  };
+
+  const outEl = document.getElementById('essayOutput');
+  const mainEl = document.getElementById('essayMainText');
+  const lblEl = document.getElementById('essayOutLabel');
+  const fbBox = document.getElementById('essayFeedbackBox');
+  const fbEl = document.getElementById('essayFeedbackText');
+  const vcBox = document.getElementById('essayVocabBox');
+  const vcEl = document.getElementById('essayVocabList');
+
+  outEl.style.display = 'block';
+  mainEl.textContent = '⏳ AI is writing...';
+  lblEl.textContent = 'GENERATING...';
+  fbBox.style.display = 'none';
+  vcBox.style.display = 'none';
+  outEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
+        system: ESSAY_SYSTEM,
+        messages: [{ role: 'user', content: modePrompts[mode] }]
+      })
+    });
+    const data = await res.json();
+    const raw = data.content.find(b => b.type === 'text')?.text || '{}';
+    let parsed;
+    try { parsed = JSON.parse(raw.replace(/```json|```/g, '').trim()); }
+    catch { parsed = { label: 'RESULT', mainText: raw, feedback: '', vocabWords: [] }; }
+
+    lblEl.textContent = parsed.label || mode.toUpperCase();
+    mainEl.textContent = parsed.mainText || '';
+    if (parsed.feedback) {
+      fbBox.style.display = 'block';
+      fbEl.textContent = parsed.feedback;
+    }
+    if (parsed.vocabWords && parsed.vocabWords.length) {
+      vcBox.style.display = 'block';
+      vcEl.innerHTML = '';
+      parsed.vocabWords.forEach(w => {
+        const chip = document.createElement('div');
+        chip.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-family:"DM Sans",sans-serif;';
+        chip.innerHTML = `<div style="font-weight:600;color:var(--accent);font-size:13px;">${w.word}</div><div style="font-size:11px;color:var(--muted);">${w.meaning}</div><div style="font-size:11px;color:var(--orange);">${w.marathi}</div>`;
+        vcEl.appendChild(chip);
+      });
+    }
+  } catch(e) {
+    mainEl.textContent = 'Error — could not connect to AI. Please try again.';
+  }
+}
+
+function speakText2(elId) {
+  const text = document.getElementById(elId)?.textContent?.trim();
+  if (text && 'speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text.slice(0, 400));
+    utt.rate = 0.85; utt.lang = 'en-US';
+    window.speechSynthesis.speak(utt);
+  }
+}
+function copyEl(elId) {
+  const text = document.getElementById(elId)?.textContent?.trim();
+  if (text) {
+    navigator.clipboard.writeText(text);
+    event.target.textContent = '✅ Copied!';
+    setTimeout(() => event.target.textContent = '📋 Copy', 1500);
+  }
+}
+
+function initEssayTab() {
+  const topicsEl = document.getElementById('essaySampleTopics');
+  const chipsEl = document.getElementById('essayTopicChips');
+  if (!topicsEl || topicsEl.children.length > 0) return;
+  ESSAY_TOPICS.forEach(t => {
+    const card = document.createElement('div');
+    card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;font-size:12px;font-family:"DM Sans",sans-serif;color:var(--text);transition:border-color .2s;';
+    card.textContent = t;
+    card.onmouseenter = () => card.style.borderColor = 'var(--accent)';
+    card.onmouseleave = () => card.style.borderColor = 'var(--border)';
+    card.onclick = () => { document.getElementById('essayTopic').value = t; runEssayAI(); };
+    topicsEl.appendChild(card);
+  });
+  // Quick chips
+  ['Write', 'Outline', 'Feedback', 'Improve', 'Key Points'].forEach((label, i) => {
+    const modes = ['write','outline','feedback','improve','points'];
+    const b = document.createElement('button');
+    b.textContent = label;
+    b.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:10px;font-family:"IBM Plex Mono",monospace;color:var(--muted);cursor:pointer;';
+    b.onclick = () => setEssayMode(modes[i]);
+    chipsEl.appendChild(b);
+  });
+}
+
+/* ════════════════════════════════════════════════
+   💡 AI VOCABULARY SUGGESTER
+════════════════════════════════════════════════ */
+const VOCAB_QUICK = ['happy','sad','big','small','beautiful','work','travel','food','health','money','family','education','nature','technology','problem','success','think','help','understand','difficult'];
+
+const VOCAB_AI_SYSTEM = `You are an English vocabulary expert helping Marathi-speaking learners.
+Return ONLY valid JSON (no markdown) with this exact structure:
+{
+  "words": [
+    {
+      "word": "...",
+      "type": "adj/noun/verb/adverb",
+      "meaning": "simple English definition",
+      "marathi": "मराठी अर्थ",
+      "level": "basic/intermediate/advanced",
+      "example": "example sentence using this word"
+    }
+  ],
+  "usage": ["Complete example sentence 1", "Complete example sentence 2", "Complete example sentence 3"],
+  "collocations": ["word1 + word2 (meaning)", "word1 + word3 (meaning)", "word1 + word4 (meaning)"]
+}
+Return 6-10 words. Always include marathi meaning. Keep examples simple and natural.`;
+
+async function runVocabAI() {
+  const input = document.getElementById('vocabAiInput').value.trim();
+  const mode = document.getElementById('vocabAiMode').value;
+  if (!input) { alert('Please enter a word or topic!'); return; }
+
+  const modePrompts = {
+    synonyms:    `Give synonyms and antonyms for the word "${input}". Include a range from basic to advanced.`,
+    topic:       `Give 8-10 important English words related to the topic "${input}". Include useful vocabulary a learner would need.`,
+    upgrade:     `The word is "${input}". Give better, more impressive synonyms that a student can use to upgrade their English. Include formal and informal options.`,
+    collocations:`Give collocations for the word "${input}" — common word pairs/phrases where this word is used.`,
+    phrasal:     `Give phrasal verbs related to or using the word "${input}". Include meaning and example for each.`,
+  };
+
+  const outEl = document.getElementById('vocabAiOutput');
+  const gridEl = document.getElementById('vocabAiGrid');
+  const usageBox = document.getElementById('vocabAiUsageBox');
+  const usageList = document.getElementById('vocabAiUsageList');
+  const colBox = document.getElementById('vocabAiColBox');
+  const colList = document.getElementById('vocabAiColList');
+
+  outEl.style.display = 'block';
+  gridEl.innerHTML = '<div style="color:var(--muted);font-family:\'IBM Plex Mono\',monospace;font-size:12px;padding:20px;">⏳ AI is finding words...</div>';
+  usageBox.style.display = 'none';
+  colBox.style.display = 'none';
+  outEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
+        system: VOCAB_AI_SYSTEM,
+        messages: [{ role: 'user', content: modePrompts[mode] }]
+      })
+    });
+    const data = await res.json();
+    const raw = data.content.find(b => b.type === 'text')?.text || '{}';
+    let parsed;
+    try { parsed = JSON.parse(raw.replace(/```json|```/g, '').trim()); }
+    catch { parsed = { words: [], usage: [], collocations: [] }; }
+
+    gridEl.innerHTML = '';
+    const levelColors = { basic: 'var(--green)', intermediate: 'var(--accent)', advanced: 'var(--accent3)' };
+    (parsed.words || []).forEach(w => {
+      const card = document.createElement('div');
+      card.style.cssText = 'background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;border-top:3px solid ' + (levelColors[w.level] || 'var(--accent)') + ';';
+      card.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--text);">${w.word}</div>
+          <div style="display:flex;gap:4px;">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);background:var(--surface);padding:2px 6px;border-radius:4px;">${w.type||''}</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:${levelColors[w.level]||'var(--accent)'};background:var(--surface);padding:2px 6px;border-radius:4px;">${w.level||''}</span>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--orange);font-family:'IBM Plex Mono',monospace;margin-bottom:4px;">${w.marathi||''}</div>
+        <div style="font-size:13px;color:var(--muted);font-family:'DM Sans',sans-serif;margin-bottom:8px;">${w.meaning||''}</div>
+        <div style="font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;border-left:2px solid var(--border);padding-left:8px;font-style:italic;">${w.example||''}</div>
+        <button onclick="speakSentence('${(w.word||'').replace(/'/g,"\\'")}',this)" style="margin-top:8px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--muted);cursor:pointer;">▶ Hear</button>`;
+      gridEl.appendChild(card);
+    });
+
+    if (parsed.usage && parsed.usage.length) {
+      usageBox.style.display = 'block';
+      usageList.innerHTML = '';
+      parsed.usage.forEach(u => {
+        const d = document.createElement('div');
+        d.style.cssText = 'background:var(--surface);border-left:3px solid var(--green);padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px;color:var(--text);font-family:"DM Sans",sans-serif;display:flex;justify-content:space-between;align-items:center;gap:10px;';
+        d.innerHTML = `<span>${u}</span><button onclick="speakSentence('${u.replace(/'/g,"\\'")}',this)" style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:10px;cursor:pointer;color:var(--muted);white-space:nowrap;">▶ Listen</button>`;
+        usageList.appendChild(d);
+      });
+    }
+
+    if (parsed.collocations && parsed.collocations.length) {
+      colBox.style.display = 'block';
+      colList.innerHTML = '';
+      parsed.collocations.forEach(c => {
+        const d = document.createElement('div');
+        d.style.cssText = 'background:var(--surface);border-left:3px solid var(--orange);padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px;color:var(--text);font-family:"DM Sans",sans-serif;';
+        d.textContent = c;
+        colList.appendChild(d);
+      });
+    }
+  } catch(e) {
+    gridEl.innerHTML = '<div style="color:var(--red);padding:20px;">Error — could not connect to AI.</div>';
+  }
+}
+
+function initVocabAI() {
+  const el = document.getElementById('vocabQuickChips');
+  if (!el || el.children.length > 0) return;
+  VOCAB_QUICK.forEach(w => {
+    const b = document.createElement('button');
+    b.textContent = w;
+    b.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:12px;font-family:"DM Sans",sans-serif;color:var(--muted);cursor:pointer;transition:all .2s;';
+    b.onmouseenter = () => { b.style.borderColor = 'var(--accent2)'; b.style.color = 'var(--accent2)'; };
+    b.onmouseleave = () => { b.style.borderColor = 'var(--border)'; b.style.color = 'var(--muted)'; };
+    b.onclick = () => { document.getElementById('vocabAiInput').value = w; runVocabAI(); };
+    el.appendChild(b);
+  });
+}
+
+/* ════════════════════════════════════════════════
+   🗺️ AI PERSONALIZED LEARNING PLAN
+════════════════════════════════════════════════ */
+const PLAN_SYSTEM = `You are an expert English language coach creating personalized study plans for Marathi-speaking Indian students.
+Return ONLY valid JSON (no markdown) with this exact structure:
+{
+  "summary": "2-sentence encouraging summary of the plan",
+  "duration": "e.g. 8 weeks",
+  "weeklyGoal": "main weekly focus in one line",
+  "weeks": [
+    {
+      "week": 1,
+      "title": "Week title",
+      "focus": "main focus area",
+      "color": "one of: gold, blue, green, purple, orange",
+      "tasks": ["Task 1 description", "Task 2", "Task 3", "Task 4"]
+    }
+  ],
+  "dailyRoutine": "A clear daily routine as plain text — what to do each day, step by step",
+  "tips": "3-5 personalized tips as plain text, numbered list, based on their struggle and goal"
+}
+Create 4-6 weeks. Keep tasks specific, actionable, and use this app's features where relevant.`;
+
+async function generatePlan() {
+  const level = document.getElementById('planLevel').value;
+  const goal = document.getElementById('planGoal').value;
+  const time = document.getElementById('planTime').value;
+  const struggle = document.getElementById('planStruggle').value;
+  const extra = document.getElementById('planExtra').value.trim();
+
+  const prompt = `Create a personalized English learning plan for a Marathi-speaking student with these details:
+- Current level: ${level}
+- Main goal: ${goal}
+- Time available daily: ${time} minutes
+- Biggest struggle: ${struggle}
+${extra ? '- Additional info: ' + extra : ''}
+Make it practical, motivating, and achievable. Include tasks that use an app with: Sentence Generator, Tense Explorer, Grammar Quiz, AI Chat, Vocabulary Builder, Word Games, Conversation Practice, AI Grammar Checker, Pronunciation Practice.`;
+
+  const formEl = document.getElementById('planForm');
+  const outEl = document.getElementById('planOutput');
+  const bannerEl = document.getElementById('planBanner');
+  const weeksEl = document.getElementById('planWeeks');
+  const routineBox = document.getElementById('planRoutine');
+  const routineEl = document.getElementById('planRoutineText');
+  const tipsBox = document.getElementById('planTips');
+  const tipsEl = document.getElementById('planTipsText');
+
+  formEl.style.display = 'none';
+  outEl.style.display = 'block';
+  bannerEl.innerHTML = '<div style="color:var(--muted);font-family:\'IBM Plex Mono\',monospace;font-size:12px;padding:10px;">⏳ AI is building your personalized plan...</div>';
+  weeksEl.innerHTML = '';
+  routineBox.style.display = 'none';
+  tipsBox.style.display = 'none';
+  outEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514', max_tokens: 1500,
+        system: PLAN_SYSTEM,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const raw = data.content.find(b => b.type === 'text')?.text || '{}';
+    let parsed;
+    try { parsed = JSON.parse(raw.replace(/```json|```/g, '').trim()); }
+    catch { parsed = { summary: raw, weeks: [], dailyRoutine: '', tips: '' }; }
+
+    const colorMap = { gold:'var(--accent)', blue:'var(--accent2)', green:'var(--green)', purple:'var(--accent3)', orange:'var(--orange)' };
+
+    bannerEl.innerHTML = `
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px;">🗺️ YOUR PERSONALIZED PLAN · ${(parsed.duration||'').toUpperCase()}</div>
+      <div style="font-size:15px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.7;margin-bottom:10px;">${parsed.summary||''}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);">🎯 Weekly Goal: ${parsed.weeklyGoal||''}</div>`;
+
+    (parsed.weeks || []).forEach(w => {
+      const col = colorMap[w.color] || 'var(--accent)';
+      const card = document.createElement('div');
+      card.style.cssText = `background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;border-left:4px solid ${col};`;
+      card.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;">
+          <div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:${col};letter-spacing:2px;">WEEK ${w.week}</span>
+            <div style="font-size:16px;font-weight:700;color:var(--text);font-family:'DM Sans',sans-serif;">${w.title||''}</div>
+          </div>
+          <div style="background:var(--surface);border-radius:8px;padding:4px 10px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);">Focus: ${w.focus||''}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          ${(w.tasks||[]).map((t,i) => `<div style="display:flex;gap:10px;align-items:flex-start;">
+            <div style="width:20px;height:20px;border-radius:50%;background:${col};color:#000;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${i+1}</div>
+            <div style="font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.5;">${t}</div>
+          </div>`).join('')}
+        </div>`;
+      weeksEl.appendChild(card);
+    });
+
+    if (parsed.dailyRoutine) {
+      routineBox.style.display = 'block';
+      routineEl.style.whiteSpace = 'pre-wrap';
+      routineEl.textContent = parsed.dailyRoutine;
+    }
+    if (parsed.tips) {
+      tipsBox.style.display = 'block';
+      tipsEl.style.whiteSpace = 'pre-wrap';
+      tipsEl.textContent = parsed.tips;
+    }
+  } catch(e) {
+    bannerEl.innerHTML = '<div style="color:var(--red);">Error — could not generate plan. Please try again.</div>';
+    formEl.style.display = 'block';
+  }
+}
+
+/* ════════════════════════════════════════════════
+   INIT HOOKS — wire new tabs into switchTab
+════════════════════════════════════════════════ */
+const _origSwitch2 = switchTab;
+switchTab = function(tabId, btn) {
+  _origSwitch2(tabId, btn);
+  if (tabId === 'tab-essay')     initEssayTab();
+  if (tabId === 'tab-vocab-ai')  initVocabAI();
+};
 
 </script>
 
